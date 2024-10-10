@@ -2,7 +2,7 @@
 (Notes: Merge Logo and Background + fix visuals)
     -Start Game
 	(Notes: State previous player action + fix visuals)
-        -Place **
+        -Place ** 
         -Swap **
 	-Obstacle (Visualized by DARK_GRAY) **
 	-Eliminate (Sets color to WHITE again) **
@@ -36,3 +36,4 @@
 
 - Place, Swap, Obstacle: finished prior to the creation of log (before 10/10/2024)
 - Eliminate, Win Popup: 10/10/2024 - George Kolios
+- Create documentation for the 3-in-1 class version code - s.wu

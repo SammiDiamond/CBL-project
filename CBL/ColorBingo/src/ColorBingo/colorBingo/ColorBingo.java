@@ -23,22 +23,20 @@ public class ColorBingo extends JFrame implements ActionListener {
 
     ColorBingo() {
 
-        JLabel pic = new JLabel(new ImageIcon(
-                "D:\\programming\\CBL\\Materials\\pics\\elements\\ColorBingo.png"));
+        JLabel pic = new JLabel(new ImageIcon("pics\\elements\\ColorBingo.png"));
         pic.setSize(1200, 550);
 
         JLabel backGround = new JLabel(
-                new ImageIcon("D:\\programming\\CBL\\Materials\\pics\\elements\\background.png"));
+                new ImageIcon("CBL-project\\CBL\\ColorBingo\\src\\ColorBingo\\background.png"));
         backGround.setSize(1200, 850);
 
-        ImageIcon gridIcon = new ImageIcon(ColorBingo.class.getClassLoader().getResource(
-                "CBL-project\\CBL\\Materials\\pics\\elements\\gridicon.png"));
+        ImageIcon gridIcon = new ImageIcon("pics\\elements\\gridIcon.png");
 
-        ImageIcon calanderIcon = new ImageIcon(ColorBingo.class.getClassLoader().getResource(
-                "CBL-project\\CBL\\Materials\\pics\\elements\\calanderIcon.png"));
+        ImageIcon calanderIcon = new ImageIcon(
+                "pics\\elements\\calandericon.png");
 
-        ImageIcon ruleCustomizeIcon = new ImageIcon(ColorBingo.class.getClassLoader().getResource(
-                "CBL-project\\CBL\\Materials\\pics\\elements\\rulecustomize.png"));
+        ImageIcon ruleCustomizeIcon = new ImageIcon(
+                "pics\\elements\\rulecustomizeicon.png");
 
         game.setBounds(0, 0, 1200, 700);
         game.setVisible(false);
@@ -109,5 +107,11 @@ public class ColorBingo extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new ColorBingo();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }

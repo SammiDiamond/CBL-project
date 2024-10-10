@@ -41,3 +41,4 @@
 - Create documentation for the 3-in-1 class version code: 10/10/2024 - s.wu
 - Merged previous commit java files into 1: 10/10/2024 - George Kolios
 - Created additional class for the Start Game Event: 10/10/2024 - George Kolios
+- CustomizeRule: add description for each item (set:function; last time; cd time); set components - s.wu

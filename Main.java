@@ -1,4 +1,4 @@
-package CBL;
+package CBL.gitProject;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,18 +8,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Main {
-    JFrame mainMenu;
-    JButton startGame;
-    JButton customizeRules;
-    JButton gameHistory;
+    static JFrame mainMenu;
+    static JButton startGame;
+    static JButton customizeRules;
+    static JButton gameHistory;
     static boolean playerTurn = true; // true for player 1
-    static boolean obstacleActive = false;
+    boolean obstacleActive = false;
+    boolean eliminateActive = false;
 
     static int gridSize = 8;
     static Color p1Color = Color.RED;
     static Color p2Color = Color.YELLOW;
     boolean swapRule = true;
     boolean obstacleRule = true;
+    boolean eliminateRule = true;
     JButton[][] buttonGrid = new JButton[gridSize][gridSize];
     static int[][] grid = new int[gridSize][gridSize];
 
@@ -52,6 +54,7 @@ public class Main {
                 JButton place = new JButton("Place");
                 JButton swap = new JButton("Swap");
                 JButton obstacle = new JButton("Obstacle");
+                JButton eliminate = new JButton("Eliminate");
 
                 JPanel gridPanel = new JPanel();
                 gridPanel.setSize(800, 800);
@@ -64,7 +67,9 @@ public class Main {
                         place.setEnabled(false);
                         swap.setEnabled(true);
                         obstacle.setEnabled(true);
+                        eliminate.setEnabled(true);
                         obstacleActive = false;
+                        eliminateActive = false;
                         place(buttonGrid);
                         
                     }
@@ -80,7 +85,9 @@ public class Main {
                         place.setEnabled(true);
                         swap.setEnabled(false);
                         obstacle.setEnabled(true);
+                        eliminate.setEnabled(true);
                         obstacleActive = false;
+                        eliminateActive = false;
                         swap(buttonGrid);
                     }
                 });
@@ -95,8 +102,27 @@ public class Main {
                         place.setEnabled(true);
                         swap.setEnabled(true);
                         obstacle.setEnabled(false);
+                        eliminate.setEnabled(true);
                         obstacleActive = true;
+                        eliminateActive = false;
                         obstacle(buttonGrid);
+                    }
+                });
+
+                eliminate.setAlignmentX(Component.CENTER_ALIGNMENT);
+                eliminate.setFont(new Font("Arial", Font.BOLD, 25));
+                if (!eliminateRule) {
+                    eliminate.setVisible(false);
+                }
+                eliminate.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        place.setEnabled(true);
+                        swap.setEnabled(true);
+                        obstacle.setEnabled(true);
+                        eliminate.setEnabled(false);
+                        obstacleActive = false;
+                        eliminateActive = true;
+                        eliminate(buttonGrid);
                     }
                 });
 
@@ -116,23 +142,29 @@ public class Main {
                                 if (playerTurn) {
                                     turnLabel.setText("Player 2's turn.");
                                     turnLabel.setForeground(p2Color);
-                                    if (!obstacleActive){
+                                    if (!obstacleActive && !eliminateActive){
                                         buttonGrid[row][col].setBackground(p1Color);
                                         grid[row][col] = 1;
-                                    } else {
+                                    } else if (obstacleActive && !eliminateActive) {
                                         buttonGrid[row][col].setBackground(Color.DARK_GRAY);
                                         grid[row][col] = - 1;
+                                    } else {
+                                        buttonGrid[row][col].setBackground(Color.WHITE);
+                                        grid[row][col] = 0;
                                     }
                                     
                                 } else {
                                     turnLabel.setText("Player 1's turn.");
                                     turnLabel.setForeground(p1Color);
-                                    if (!obstacleActive) {
+                                    if (!obstacleActive && !eliminateActive) {
                                         buttonGrid[row][col].setBackground(p2Color);
                                         grid[row][col] = 2;
-                                    } else {
+                                    } else if (obstacleActive && !eliminateActive) {
                                         buttonGrid[row][col].setBackground(Color.DARK_GRAY);
                                         grid[row][col] = - 1;
+                                    } else {
+                                        buttonGrid[row][col].setBackground(Color.WHITE);
+                                        grid[row][col] = 0;
                                     }
                                 }
                                 playerTurn = !playerTurn;
@@ -145,9 +177,11 @@ public class Main {
                                 place.setEnabled(true);
                                 swap.setEnabled(true);
                                 obstacle.setEnabled(true);
+                                eliminate.setEnabled(true);
 
-                                if (winCondition() != 0) {
-                                    // To-do
+                                int storeWinNum = checkWin();
+                                if (storeWinNum != 0) {
+                                    postWin(storeWinNum, game);
                                 }
                             }
                         });
@@ -165,6 +199,7 @@ public class Main {
                 buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
                 buttonPanel.add(obstacle);
                 buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+                buttonPanel.add(eliminate);
                 game.add(buttonPanel);
                 game.add(gridPanel);
                 gridPanel.validate();
@@ -185,7 +220,7 @@ public class Main {
         buttonPanel.setLocation(435, 450);
 
         try {
-            mainMenu.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("C:\\Users\\e-gko\\Desktop\\Visual Studio Sandbox\\CBL\\ColorBingo.png")))));
+            mainMenu.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("CBL/gitProject/ColorBingo.png")))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -239,7 +274,19 @@ public class Main {
         }
     }
 
-    public static int winCondition() {
+    public static void eliminate(JButton[][] buttonGrid) {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                buttonGrid[i][j].setEnabled(false);
+                if ((buttonGrid[i][j].getBackground() == p1Color && !playerTurn)
+                    || (buttonGrid[i][j].getBackground() == p2Color && playerTurn)) {
+                    buttonGrid[i][j].setEnabled(true);
+                }
+            }
+        }
+    }
+
+    public static int checkWin() {
         if (horizontalWin() != 0) {
             return horizontalWin();
         } else if (verticalWin() != 0) {
@@ -254,7 +301,7 @@ public class Main {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize - 3; j++) {
                 if (grid[i][j] == grid[i][j + 1] && grid[i][j + 1] == grid[i][j + 2]
-                    && grid[i][j + 2] == grid[i][j + 3] && grid[i][j] != 0) {
+                    && grid[i][j + 2] == grid[i][j + 3] && grid[i][j] != 0 && grid[i][j] != - 1) {
                     return grid[i][j];
                 }
             }
@@ -266,7 +313,7 @@ public class Main {
         for (int j = 0; j < gridSize; j++) {
             for (int i = 0; i < gridSize - 3; i++) {
                 if (grid[i][j] == grid[i + 1][j] && grid[i + 1][j] == grid[i + 2][j]
-                    && grid[i + 2][j] == grid[i + 3][j] && grid[i][j] != 0) {
+                    && grid[i + 2][j] == grid[i + 3][j] && grid[i][j] != 0 && grid[i][j] != - 1) {
                     return grid[i][j];
                 }
             }
@@ -279,11 +326,11 @@ public class Main {
             for (int j = 0; j < gridSize - 3; j++) {
                 if (grid[i][j] == grid[i + 1][j + 1] && grid[i + 1][j + 1]
                     == grid[i + 2][j + 2] && grid[i + 2][j + 2] == grid[i + 3][j + 3]
-                    && grid[i][j] != 0) {
+                    && grid[i][j] != 0 && grid[i][j] != - 1) {
                     return grid[i][j];
                 } else if (grid[i + 3][j] == grid[i + 2][j + 1] && grid[i + 2][j + 1]
                     == grid[i + 1][j + 2] && grid[i + 1][j + 2] == grid[i][j + 3]
-                    && grid[i + 3][j] != 0) {
+                    && grid[i + 3][j] != 0 && grid[i][j] != - 1) {
                     return grid[i + 3][j];
                 }
             }
@@ -291,7 +338,44 @@ public class Main {
         return 0;
     }
 
-    public static void postWin() {
+    public static void postWin(int winner, JFrame game) {
+        JFrame winFrame = new JFrame();
+        JLabel winnerLabel;
+        if (winner == 1) {
+            winnerLabel = new JLabel("Player 1 won");
+            winnerLabel.setForeground(p1Color);
+            
+        } else {
+            winnerLabel = new JLabel("Player 2 won");
+            winnerLabel.setForeground(p2Color);
+        }
+        winnerLabel.setFont(new Font("Arial", Font.BOLD, 25));
+
+        JButton exitButton = new JButton("Return to Main Menu");
+        exitButton.setFont(new Font("Arial", Font.BOLD, 25));
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                startGame.setEnabled(true);
+                customizeRules.setEnabled(true);
+                gameHistory.setEnabled(true);
+
+                winFrame.dispose();
+                game.dispose();
+                mainMenu.setState(Frame.NORMAL);
+            }
+        });
+
+        JPanel winPanel = new JPanel();
+        winPanel.setSize(300, 250);
+        winPanel.setLocation(100, 0);
+        winPanel.add(winnerLabel);
+        winPanel.add(Box.createRigidArea(new Dimension(0, 140)));
+        winPanel.add(exitButton);
+        winFrame.add(winPanel);
+        winFrame.setSize(500, 250);
+        winFrame.setLocationRelativeTo(null);
+        winFrame.setLayout(null);
+        winFrame.setVisible(true);
 
     }
 

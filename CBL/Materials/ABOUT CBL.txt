@@ -1,0 +1,17 @@
+ABOUT CBL
+
+TIMELINE
+    Create project backlog(6)
+    Backlog hand-in Pitch Idea & Backlog (Tue. 8th Oct)(9)
+    Progress pitch(17th Oct)(10)
+    Project hand-in
+
+Instruction format-----ASK!!!
+
+choose 2 topics(?)
+
+1. Backlog-example
+    use whatever tools we want(search for them online)
+    e.g. Rendering a chess board
+    with a meaningful name
+

@@ -1,0 +1,60 @@
+GUI
+AWT/Swing class
+JComponent
+JContainer contain other components
+JFrame window
+JPanel window section
+Helper classes
+
+INSTANCE
+JFrame frame new JFrame("component, container, helper example")
+JButton button = new JButton("ok")
+frame.add(button, BorderLayout.SOUTH)
+Color colorVariable = new Color(1,2,3)
+panel.stBcakground(colorVariable)
+frame.setVisible(true)
+    //setVisible() also calculates the layout of the components
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+
+button(s)
+panel
+    //everthing JFrame.add() after JFrame.add(panel) will be added into panel
+lable
+panel.add(another panel)
+
+THE STRATEGY OF HOW TO PLACE SCOMPONENTS IS DECIDED BY LAYOUT MANAGER
+
+class FruitPanel extends JPanel {
+    @Override
+    public void paintComponent(Graph g) {
+    super.paintComponent(g);
+    ......
+    }
+}
+
+DRAWING METHODS IN GRAPHICS
+drawLine
+drawImage
+...
+
+Helper class Color
+Color(R, G, B)(float parameters)(values from 0.0 to 1.0)
+Color(R, G, B)(int parameters)(Values from 0 to 255)
+
+Graphics2D(provides more possiblities  than Graphics)
+e.g. more than one line thickness
+...
+use: Graphics2D g2 = (Graphics2D) graphics
+
+
+
+
+void buildGUI() {
+    frame = new JFrame("");
+
+}
+
+
+main
+new FrameWithStuff().demo()
+

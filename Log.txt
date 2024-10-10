@@ -1,0 +1,38 @@
+-Main Menu
+(Notes: Merge Logo and Background + fix visuals)
+    -Start Game
+	(Notes: State previous player action + fix visuals)
+        -Place **
+        -Swap **
+	-Obstacle (Visualized by DARK_GRAY) **
+	-Eliminate (Sets color to WHITE again) **
+	-Protect (Visualized by change in border)
+	-Spread (Visualized by change in border)
+	\Win Popup **
+	    (Notes: fix visuals)
+	    -Return to menu **
+
+    -Customize Rules
+	-Customize Grid Size (7x7, 8x8, 9x9, 10x10, 11x11, 12x12 -> changes button sizes in Start Game)
+	    \Small selection menu
+
+	-Customize Player Colors (Basic set of colors *Exceptions: WHITE, DARK_GRAY*)
+	    \Small selection menu
+
+	-Activate/Deactivate Swap
+	-Activate/Deactivate Obstacle
+	-Activate/Deactivate Eliminate
+	-Activate/Deactivate Protect
+	-Activate/Deactivate Spread
+
+    -Game History
+	(Notes: Data saved in a .txt file)
+        -Brief showcase of information of a match and winner (Colors, Date, Number of Moves)
+	    \Final Grid for each game when pressed.
+
+//
+// ** means that something is completed
+//
+
+- Place, Swap, Obstacle: finished prior to the creation of log (before 10/10/2024)
+- Eliminate, Win Popup: 10/10/2024 - George Kolios

@@ -8,7 +8,9 @@
 	-Eliminate (Sets color to WHITE again) **
 	-Protect (Visualized by change in border)
 	-Spread (Visualized by change in border)
-	\Win Popup **
+	-Win Condition
+	(Note: add a win condition for a draw)
+	\Win Popup 
 	    (Notes: fix visuals)
 	    -Return to menu **
 
@@ -36,4 +38,6 @@
 
 - Place, Swap, Obstacle: finished prior to the creation of log (before 10/10/2024)
 - Eliminate, Win Popup: 10/10/2024 - George Kolios
-- Create documentation for the 3-in-1 class version code - s.wu
+- Create documentation for the 3-in-1 class version code: 10/10/2024 - s.wu
+- Merged previous commit java files into 1: 10/10/2024 - George Kolios
+- Created additional class for the Start Game Event: 10/10/2024 - George Kolios

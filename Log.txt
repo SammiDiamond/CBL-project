@@ -1,5 +1,5 @@
 -Main Menu
-(Notes: Merge Logo and Background + fix visuals)
+(Notes: fix visuals)
     -Start Game
 	(Notes: State previous player action + fix visuals)
         -Place ** 
@@ -7,9 +7,11 @@
 	-Obstacle (Visualized by DARK_GRAY) **
 	-Eliminate (Sets color to WHITE again) **
 	-Protect (Visualized by change in border)
+	(Note: add either a cooldown, or make permanent protected cells a feature)
+
 	-Spread (Visualized by change in border)
 	-Win Condition
-	(Note: add a win condition for a draw)
+	(Note: add a win condition for a draw and include protected cells in the win condition)
 	\Win Popup 
 	    (Notes: fix visuals)
 	    -Return to menu **
@@ -41,4 +43,6 @@
 - Create documentation for the 3-in-1 class version code: 10/10/2024 - s.wu
 - Merged previous commit java files into 1: 10/10/2024 - George Kolios
 - Created additional class for the Start Game Event: 10/10/2024 - George Kolios
-- CustomizeRule: add description for each item (set:function; last time; cd time); set components - s.wu
+- CustomizeRule: add description for each item (set:function; last time; cd time); set components: 11/10/2024 - s.wu
+- MainMenu: merged the logo and the background: 11/10/2024 - George Kolios
+- StartGame: added the protect player action (needs some bugfixing): 11/10/2024 - George Kolios

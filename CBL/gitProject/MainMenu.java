@@ -19,9 +19,8 @@ public class MainMenu {
     JButton gameHistory;
     boolean playerTurn = true; // true for player 1
 
-    // Create a boolean array instead
-    boolean obstacleActive = false;
-    boolean eliminateActive = false;
+    // Initialziation of array that states whether a player action button has been pressed.
+    boolean[] buttonActive = new boolean[6];
 
     // Initialization of instance variables that can be customized
     // Initial values are stored in all of them so the game can run without
@@ -34,6 +33,8 @@ public class MainMenu {
     boolean swapRule = true;
     boolean obstacleRule = true;
     boolean eliminateRule = true;
+    boolean protectRule = true;
+    boolean spreadRule = true;
 
     // buttonGrid[][] stores all of the buttons of the grid
     JButton[][] buttonGrid = new JButton[gridSize][gridSize];
@@ -87,14 +88,19 @@ public class MainMenu {
             }
         });
 
+        JLabel background = new JLabel();
+        background.setBackground(Color.WHITE);
         try {
-            menuFrame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(
-                    new File("CBL/gitProject/ColorBingo.png")))));
+            background = new JLabel(new ImageIcon(ImageIO.read(
+                new File("CBL/gitProject/CBL/gitProject/ColorBingo.png"))));
+            background.setSize(1200, 800);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        menuFrame.setContentPane(background);
 
         // buttonPanel size and location are selected
+        buttonPanel.setBackground(new Color(0, 0, 0, 0));
         buttonPanel.setSize(300, 300);
         buttonPanel.setLocation(435, 450);
 

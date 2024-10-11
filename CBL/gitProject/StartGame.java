@@ -89,6 +89,18 @@ public class StartGame {
             eliminate.setVisible(false);
         }
 
+        protect.setAlignmentX(Component.CENTER_ALIGNMENT);
+        protect.setFont(new Font("Arial", Font.BOLD, 25));
+        if (!mainMenu.protectRule) {
+            protect.setVisible(false);
+        }
+
+        spread.setAlignmentX(Component.CENTER_ALIGNMENT);
+        spread.setFont(new Font("Arial", Font.BOLD, 25));
+        if (!mainMenu.spreadRule) {
+            spread.setVisible(false);
+        }
+
         // Events are assigned to player action buttons
         place.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -96,8 +108,14 @@ public class StartGame {
                 swap.setEnabled(true);
                 obstacle.setEnabled(true);
                 eliminate.setEnabled(true);
-                mainMenu.obstacleActive = false;
-                mainMenu.eliminateActive = false;
+                protect.setEnabled(true);
+                spread.setEnabled(true);
+
+                for (int i = 1; i < mainMenu.buttonActive.length; i++) {
+                    mainMenu.buttonActive[i] = false;
+                }
+                mainMenu.buttonActive[0] = true;
+
                 enableEmpty(mainMenu.buttonGrid, mainMenu);
             }
         });
@@ -108,8 +126,14 @@ public class StartGame {
                 swap.setEnabled(false);
                 obstacle.setEnabled(true);
                 eliminate.setEnabled(true);
-                mainMenu.obstacleActive = false;
-                mainMenu.eliminateActive = false;
+                protect.setEnabled(true);
+                spread.setEnabled(true);
+                
+                for (int i = 0; i < mainMenu.buttonActive.length; i++) {
+                    mainMenu.buttonActive[i] = false;
+                }
+                mainMenu.buttonActive[1] = true;
+
                 enableOpp(mainMenu.buttonGrid, mainMenu);
             }
         });
@@ -120,9 +144,14 @@ public class StartGame {
                 swap.setEnabled(true);
                 obstacle.setEnabled(false);
                 eliminate.setEnabled(true);
+                protect.setEnabled(true);
+                spread.setEnabled(true);
 
-                mainMenu.obstacleActive = true;
-                mainMenu.eliminateActive = false;
+                for (int i = 0; i < mainMenu.buttonActive.length; i++) {
+                    mainMenu.buttonActive[i] = false;
+                }
+                mainMenu.buttonActive[2] = true;
+
                 enableEmpty(mainMenu.buttonGrid, mainMenu);
             }
         });
@@ -133,10 +162,51 @@ public class StartGame {
                 swap.setEnabled(true);
                 obstacle.setEnabled(true);
                 eliminate.setEnabled(false);
+                protect.setEnabled(true);
+                spread.setEnabled(true);
+                
+                for (int i = 0; i < mainMenu.buttonActive.length; i++) {
+                    mainMenu.buttonActive[i] = false;
+                }
+                mainMenu.buttonActive[3] = true;
 
-                mainMenu.obstacleActive = false;
-                mainMenu.eliminateActive = true;
                 enableOpp(mainMenu.buttonGrid, mainMenu);
+            }
+        });
+
+        protect.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                place.setEnabled(true);
+                swap.setEnabled(true);
+                obstacle.setEnabled(true);
+                eliminate.setEnabled(true);
+                protect.setEnabled(false);
+                spread.setEnabled(true);
+
+                for (int i = 0; i < mainMenu.buttonActive.length; i++) {
+                    mainMenu.buttonActive[i] = false;
+                }
+                mainMenu.buttonActive[4] = true;
+
+                enableSame(mainMenu.buttonGrid, mainMenu);
+            }
+        });
+
+        spread.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                place.setEnabled(true);
+                swap.setEnabled(true);
+                obstacle.setEnabled(true);
+                eliminate.setEnabled(true);
+                protect.setEnabled(true);
+                spread.setEnabled(false);
+
+                for (int i = 0; i < mainMenu.buttonActive.length; i++) {
+                    mainMenu.buttonActive[i] = false;
+                }
+                mainMenu.buttonActive[5] = true;
+
+                enableEmpty(mainMenu.buttonGrid, mainMenu);
             }
         });
 
@@ -167,21 +237,20 @@ public class StartGame {
                             turnLabel.setText("Player 2's turn.");
                             turnLabel.setForeground(mainMenu.p2Color);
 
-                            //
-                            // Make buttonActive(s) into an array instead of boolean variables
-                            //
-                            // Therefore, we will add a loop once the above is finished
-                            //
-
-                            if (!mainMenu.obstacleActive && !mainMenu.eliminateActive) {
+                            if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
-                                mainMenu.grid[row][col] = 1;
-                            } else if (mainMenu.obstacleActive && !mainMenu.eliminateActive) {
+                                mainMenu.grid[row][col] = 1; // Value for player 1 occupied cell
+                            } else if (mainMenu.buttonActive[2]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
-                                mainMenu.grid[row][col] = -1;
-                            } else {
+                                mainMenu.grid[row][col] = -1; // Value for obstacle occupied cell
+                            } else if (mainMenu.buttonActive[3]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
-                                mainMenu.grid[row][col] = 0;
+                                mainMenu.grid[row][col] = 0; // Value for empty cell
+                            } else if (mainMenu.buttonActive[4]) {
+                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory.createLineBorder(mainMenu.p2Color, 4));
+                                mainMenu.grid[row][col] = 3; // Value for player 1 protected cell
+                            } else {
+                                // Add spread function
                             }
 
                         } else { // When player 2 presses a button the below code is executed
@@ -189,15 +258,21 @@ public class StartGame {
                             // JLabel states the next player's turn
                             turnLabel.setText("Player 1's turn.");
                             turnLabel.setForeground(mainMenu.p1Color);
-                            if (!mainMenu.obstacleActive && !mainMenu.eliminateActive) {
+
+                            if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
-                                mainMenu.grid[row][col] = 2;
-                            } else if (mainMenu.obstacleActive && !mainMenu.eliminateActive) {
+                                mainMenu.grid[row][col] = 2; // Value for player 2 occupied cell
+                            } else if (mainMenu.buttonActive[2]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
-                                mainMenu.grid[row][col] = -1;
-                            } else {
+                                mainMenu.grid[row][col] = -1; // Value for obstacle cell
+                            } else if (mainMenu.buttonActive[3]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
-                                mainMenu.grid[row][col] = 0;
+                                mainMenu.grid[row][col] = 0; // Value for empty cell
+                            } else if (mainMenu.buttonActive[4]) {
+                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory.createLineBorder(mainMenu.p1Color, 4));
+                                mainMenu.grid[row][col] = 4; // Value for player 2 protected cell
+                            } else {
+                                // Add spread function
                             }
                         }
 
@@ -216,6 +291,8 @@ public class StartGame {
                         swap.setEnabled(true);
                         obstacle.setEnabled(true);
                         eliminate.setEnabled(true);
+                        protect.setEnabled(true);
+                        spread.setEnabled(true);
 
                         // Checks if anyone has won
                         int storeWinNum = checkWin(mainMenu);
@@ -240,6 +317,9 @@ public class StartGame {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(eliminate);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        buttonPanel.add(protect);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        buttonPanel.add(spread);
         buttonPanel.add(historyLabel);
 
         // The two panels are added to the game fram
@@ -265,11 +345,8 @@ public class StartGame {
     public static void enableEmpty(JButton[][] buttonGrid, MainMenu mainMenu) {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
-                buttonGrid[i][j].setEnabled(true);
-                if (buttonGrid[i][j].getBackground() == mainMenu.p1Color
-                        || buttonGrid[i][j].getBackground() == mainMenu.p2Color
-                        || buttonGrid[i][j].getBackground() == Color.DARK_GRAY) {
-                    buttonGrid[i][j].setEnabled(false);
+                if (mainMenu.grid[i][j] == 0) {
+                    buttonGrid[i][j].setEnabled(true);
                 }
             }
         }
@@ -285,10 +362,30 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(false);
-                if (!mainMenu.playerTurn && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
+                if (!mainMenu.playerTurn & mainMenu.grid[i][j] == 1) {
                     buttonGrid[i][j].setEnabled(true);
                 } else if (mainMenu.playerTurn
-                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                        && mainMenu.grid[i][j] == 2) {
+                    buttonGrid[i][j].setEnabled(true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Method that enables all buttons of the color of the same player.
+     * 
+     * @param buttonGrid JButton[][] that stores all of the JButtons in the grid
+     * @param mainMenu   MainMenu object needed to access some instance variables
+     */
+    public static void enableSame(JButton[][] buttonGrid, MainMenu mainMenu) {
+        for (int i = 0; i < mainMenu.gridSize; i++) {
+            for (int j = 0; j < mainMenu.gridSize; j++) {
+                buttonGrid[i][j].setEnabled(false);
+                if (mainMenu.playerTurn && mainMenu.grid[i][j] == 1) {
+                    buttonGrid[i][j].setEnabled(true);
+                } else if (!mainMenu.playerTurn
+                        && mainMenu.grid[i][j] == 2) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }

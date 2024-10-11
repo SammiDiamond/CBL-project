@@ -44,5 +44,6 @@
 - Merged previous commit java files into 1: 10/10/2024 - George Kolios
 - Created additional class for the Start Game Event: 10/10/2024 - George Kolios
 - CustomizeRule: add description for each item (set:function; last time; cd time); set components: 11/10/2024 - s.wu
+- CustomizeRule: layout - s.wu
 - MainMenu: merged the logo and the background: 11/10/2024 - George Kolios
 - StartGame: added the protect player action (needs some bugfixing): 11/10/2024 - George Kolios

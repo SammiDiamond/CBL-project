@@ -5,7 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Class creates an instance of the game when "Start Game" button is pressed in Main Menu.
+ * Class creates an instance of the game when "Start Game" button is pressed in
+ * Main Menu.
  */
 public class StartGame {
 
@@ -15,7 +16,8 @@ public class StartGame {
     /**
      * Constructor responsible for the GUI for the gameplay.
      * 
-     * @param menu Specific MainMenu object whose instance variables are used within StartGame.
+     * @param menu Specific MainMenu object whose instance variables are used within
+     *             StartGame.
      */
     StartGame(MainMenu menu) {
 
@@ -34,10 +36,16 @@ public class StartGame {
         // Creation of JLabel that tells whose player's turn it is (initially player 1)
         JLabel turnLabel = new JLabel("Player 1's turn.");
         turnLabel.setForeground(mainMenu.p1Color);
-
         // JLabel details are assigned
         turnLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         turnLabel.setFont(new Font("Arial", Font.BOLD, 35));
+
+        // Creation of JLabel tells the action made in last round
+        JLabel historyLabel = new JLabel();
+        historyLabel.setForeground(mainMenu.p1Color);
+        // JLabel details are assigned
+        historyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        historyLabel.setFont(new Font("Arial", Font.BOLD, 35));
 
         // JPanel that will hold all of the player action buttons is initialized
         JPanel buttonPanel = new JPanel();
@@ -57,7 +65,7 @@ public class StartGame {
         JPanel gridPanel = new JPanel();
         gridPanel.setSize(800, 800);
         gridPanel.setLocation(350, 10);
-        
+
         // Player action button details are selected
         // Visibility is also assigned based on selected rules
         place.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -105,13 +113,14 @@ public class StartGame {
                 enableOpp(mainMenu.buttonGrid, mainMenu);
             }
         });
-        
+
         obstacle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 place.setEnabled(true);
                 swap.setEnabled(true);
                 obstacle.setEnabled(false);
                 eliminate.setEnabled(true);
+
                 mainMenu.obstacleActive = true;
                 mainMenu.eliminateActive = false;
                 enableEmpty(mainMenu.buttonGrid, mainMenu);
@@ -124,6 +133,7 @@ public class StartGame {
                 swap.setEnabled(true);
                 obstacle.setEnabled(true);
                 eliminate.setEnabled(false);
+
                 mainMenu.obstacleActive = false;
                 mainMenu.eliminateActive = true;
                 enableOpp(mainMenu.buttonGrid, mainMenu);
@@ -136,7 +146,7 @@ public class StartGame {
                 mainMenu.buttonGrid[i][j] = new JButton();
                 mainMenu.buttonGrid[i][j].setBackground(Color.WHITE);
                 mainMenu.buttonGrid[i][j].setBorder(
-                    BorderFactory.createLineBorder(Color.DARK_GRAY));
+                        BorderFactory.createLineBorder(Color.DARK_GRAY));
                 mainMenu.buttonGrid[i][j].setPreferredSize(new Dimension(90, 90));
                 mainMenu.buttonGrid[i][j].setEnabled(false);
 
@@ -146,7 +156,7 @@ public class StartGame {
                 // Row and Column variables are initialized to reach ActionEvent scope
                 final int row = i;
                 final int col = j;
-                
+
                 mainMenu.buttonGrid[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
 
@@ -168,14 +178,14 @@ public class StartGame {
                                 mainMenu.grid[row][col] = 1;
                             } else if (mainMenu.obstacleActive && !mainMenu.eliminateActive) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
-                                mainMenu.grid[row][col] = - 1;
+                                mainMenu.grid[row][col] = -1;
                             } else {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
                                 mainMenu.grid[row][col] = 0;
                             }
-                            
+
                         } else { // When player 2 presses a button the below code is executed
-                            
+
                             // JLabel states the next player's turn
                             turnLabel.setText("Player 1's turn.");
                             turnLabel.setForeground(mainMenu.p1Color);
@@ -184,7 +194,7 @@ public class StartGame {
                                 mainMenu.grid[row][col] = 2;
                             } else if (mainMenu.obstacleActive && !mainMenu.eliminateActive) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
-                                mainMenu.grid[row][col] = - 1;
+                                mainMenu.grid[row][col] = -1;
                             } else {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
                                 mainMenu.grid[row][col] = 0;
@@ -217,7 +227,8 @@ public class StartGame {
             }
         }
 
-        // All player action buttons are added to the buttonPanel with a gap in between each one
+        // All player action buttons are added to the buttonPanel with a gap in between
+        // each one
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(turnLabel);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
@@ -228,6 +239,8 @@ public class StartGame {
         buttonPanel.add(obstacle);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(eliminate);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        buttonPanel.add(historyLabel);
 
         // The two panels are added to the game fram
         game.add(buttonPanel);
@@ -240,22 +253,22 @@ public class StartGame {
         game.setSize(1200, 820);
         game.setLocationRelativeTo(null);
         game.setLayout(null);
-        game.setVisible(true);      
+        game.setVisible(true);
     }
 
     /**
      * Method that enables all buttons that correspond to an empty cell.
      * 
      * @param buttonGrid JButton[][] that stores all of the JButtons in the grid
-     * @param mainMenu MainMenu object needed to access some instance variables
+     * @param mainMenu   MainMenu object needed to access some instance variables
      */
     public static void enableEmpty(JButton[][] buttonGrid, MainMenu mainMenu) {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(true);
                 if (buttonGrid[i][j].getBackground() == mainMenu.p1Color
-                    || buttonGrid[i][j].getBackground() == mainMenu.p2Color
-                    || buttonGrid[i][j].getBackground() == Color.DARK_GRAY) {
+                        || buttonGrid[i][j].getBackground() == mainMenu.p2Color
+                        || buttonGrid[i][j].getBackground() == Color.DARK_GRAY) {
                     buttonGrid[i][j].setEnabled(false);
                 }
             }
@@ -266,7 +279,7 @@ public class StartGame {
      * Method that enables all buttons of the color of the opposite player.
      * 
      * @param buttonGrid JButton[][] that stores all of the JButtons in the grid
-     * @param mainMenu MainMenu object needed to access some instance variables
+     * @param mainMenu   MainMenu object needed to access some instance variables
      */
     public static void enableOpp(JButton[][] buttonGrid, MainMenu mainMenu) {
         for (int i = 0; i < mainMenu.gridSize; i++) {
@@ -275,7 +288,7 @@ public class StartGame {
                 if (!mainMenu.playerTurn && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                     buttonGrid[i][j].setEnabled(true);
                 } else if (mainMenu.playerTurn
-                    && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }
@@ -300,18 +313,20 @@ public class StartGame {
     }
 
     /**
-     * Method that checks if a player has 4 cells in a row of the same color horizontally.
+     * Method that checks if a player has 4 cells in a row of the same color
+     * horizontally.
      * 
      * @param mainMenu MainMenu object needed to access some instance variables
-     * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils condition; else 0;
+     * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils
+     *         condition; else 0;
      */
     public static int horizontalWin(MainMenu mainMenu) {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
-                if (mainMenu.grid[i][j] == mainMenu.grid[i][j + 1] 
-                    && mainMenu.grid[i][j + 1] == mainMenu.grid[i][j + 2]
-                    && mainMenu.grid[i][j + 2] == mainMenu.grid[i][j + 3]
-                    && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != - 1) {
+                if (mainMenu.grid[i][j] == mainMenu.grid[i][j + 1]
+                        && mainMenu.grid[i][j + 1] == mainMenu.grid[i][j + 2]
+                        && mainMenu.grid[i][j + 2] == mainMenu.grid[i][j + 3]
+                        && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != -1) {
                     return mainMenu.grid[i][j];
                 }
             }
@@ -320,30 +335,34 @@ public class StartGame {
     }
 
     /**
-     * Method that checks if a player has 4 cells in a row of the same color vertically.
+     * Method that checks if a player has 4 cells in a row of the same color
+     * vertically.
      * 
      * @param mainMenu MainMenu object needed to access some instance variables
-     * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils condition; else 0;
+     * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils
+     *         condition; else 0;
      */
     public static int verticalWin(MainMenu mainMenu) {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
                 if (mainMenu.grid[i][j] == mainMenu.grid[i + 1][j]
-                    && mainMenu.grid[i + 1][j] == mainMenu.grid[i + 2][j]
-                    && mainMenu.grid[i + 2][j] == mainMenu.grid[i + 3][j]
-                    && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != - 1) {
+                        && mainMenu.grid[i + 1][j] == mainMenu.grid[i + 2][j]
+                        && mainMenu.grid[i + 2][j] == mainMenu.grid[i + 3][j]
+                        && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != -1) {
                     return mainMenu.grid[i][j];
                 }
             }
         }
         return 0;
     }
-    
+
     /**
-     * Method that checks if a player has 4 cells in a row of the same color diagonally.
+     * Method that checks if a player has 4 cells in a row of the same color
+     * diagonally.
      * 
      * @param mainMenu MainMenu object needed to access some instance variables
-     * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils condition; else 0;
+     * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils
+     *         condition; else 0;
      */
     public static int diagonalWin(MainMenu mainMenu) {
         for (int i = 0; i < mainMenu.gridSize - 3; i++) {
@@ -351,16 +370,16 @@ public class StartGame {
 
                 // Condition for an increasing diagonal
                 if (mainMenu.grid[i][j] == mainMenu.grid[i + 1][j + 1]
-                    && mainMenu.grid[i + 1][j + 1] == mainMenu.grid[i + 2][j + 2]
-                    && mainMenu.grid[i + 2][j + 2] == mainMenu.grid[i + 3][j + 3]
-                    && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != - 1) {
+                        && mainMenu.grid[i + 1][j + 1] == mainMenu.grid[i + 2][j + 2]
+                        && mainMenu.grid[i + 2][j + 2] == mainMenu.grid[i + 3][j + 3]
+                        && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != -1) {
                     return mainMenu.grid[i][j];
 
-                // Condition for a decreasing diagonal
+                    // Condition for a decreasing diagonal
                 } else if (mainMenu.grid[i + 3][j] == mainMenu.grid[i + 2][j + 1]
-                    && mainMenu.grid[i + 2][j + 1] == mainMenu.grid[i + 1][j + 2]
-                    && mainMenu.grid[i + 1][j + 2] == mainMenu.grid[i][j + 3]
-                    && mainMenu.grid[i + 3][j] != 0 && mainMenu.grid[i][j] != - 1) {
+                        && mainMenu.grid[i + 2][j + 1] == mainMenu.grid[i + 1][j + 2]
+                        && mainMenu.grid[i + 1][j + 2] == mainMenu.grid[i][j + 3]
+                        && mainMenu.grid[i + 3][j] != 0 && mainMenu.grid[i][j] != -1) {
                     return mainMenu.grid[i + 3][j];
                 }
             }
@@ -371,15 +390,16 @@ public class StartGame {
     /**
      * Method that is ran after a player has won.
      * 
-     * @param winner integer: 1 for player 1; 2 for player 2;
-     * @param game JFrame needed to dispose itself
-     * @param mainMenu MainMenu object needed to access some instance variables and maximize itself
+     * @param winner   integer: 1 for player 1; 2 for player 2;
+     * @param game     JFrame needed to dispose itself
+     * @param mainMenu MainMenu object needed to access some instance variables and
+     *                 maximize itself
      */
     public static void postWin(int winner, JFrame game, MainMenu mainMenu) {
 
         // JFrame is initialized
         JFrame winFrame = new JFrame();
-        
+
         // JLabel is initialize stating the player who won
         JLabel winnerLabel;
         if (winner == 1) {
@@ -395,7 +415,8 @@ public class StartGame {
         JButton exitButton = new JButton("Return to Main Menu");
         exitButton.setFont(new Font("Arial", Font.BOLD, 25));
 
-        // Event is added to JButton to dispose of previous frames and return to Main Menu
+        // Event is added to JButton to dispose of previous frames and return to Main
+        // Menu
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 

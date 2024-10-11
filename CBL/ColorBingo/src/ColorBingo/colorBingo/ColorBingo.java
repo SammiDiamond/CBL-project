@@ -80,6 +80,12 @@ public class ColorBingo extends JFrame implements ActionListener {
         rule.setFont(customFont);
         rule.setIconTextGap(5);
         rule.setBackground(Color.yellow);
+        rule.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.err.println("customizeRules");
+                rule.setVisible(true);
+            }
+        });
 
         frame.setTitle("ColorBingo");
         frame.setBounds(0, 0, 1200, 700);

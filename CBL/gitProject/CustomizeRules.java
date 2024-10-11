@@ -3,6 +3,7 @@ package CBL.gitProject;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.BoxLayout;
 
 /**
  * Class creates an instance of rule customization when "Customize Rule" button
@@ -31,10 +32,9 @@ public class CustomizeRules {
                 mainMenu.gameHistory.setEnabled(false);
 
                 // rule frame is initialized for the rulecustomization
-                JFrame rule = new JFrame();
+                final JFrame rule = new JFrame();
                 // rule panel is initialized for the rulecustomization
                 JPanel rulePanel = new JPanel();
-                rulePanel.setLayout(new GridLayout(5, 1, 10, 10));
 
                 // Creation of boolean values for each rule's button, true/false indicating rule
                 // on/off
@@ -45,7 +45,7 @@ public class CustomizeRules {
                 boolean buttonRightColorOn = false;
 
                 // Creation of size panel and buttons inside
-                JPanel sizes = new JPanel(new GridLayout(2, 1, 10, 10));
+                JPanel sizes = new JPanel(new GridLayout(6, 1, 10, 10));
                 JButton size5X5 = new JButton("5*5");
                 JButton size6X6 = new JButton("6*6");
                 JButton size7X7 = new JButton("7*7");
@@ -60,25 +60,31 @@ public class CustomizeRules {
                 sizes.add(size8X8);
                 sizes.add(size9X9);
                 sizes.add(size10X10);
-                sizes.setLayout(new GridLayout(1, 5, 0, 0));
                 sizes.setVisible(false);
 
                 // Creation of JButton for each rule
-                JButton save = new JButton("Save");
-                save.setBorder(BorderFactory.createRaisedBevelBorder());
+                JButton buttonSave = new JButton("Save");
+                buttonSave.setBorder(BorderFactory.createRaisedBevelBorder());
+
                 JButton buttonSwap = new JButton("ON/OFF");
                 buttonSwap.setBorder(BorderFactory.createRaisedBevelBorder());
+
                 JButton buttonOb = new JButton("ON/OFF");
                 buttonOb.setBorder(BorderFactory.createRaisedBevelBorder());
+
                 JButton buttonElim = new JButton("ON/OFF");
                 buttonElim.setBorder(BorderFactory.createRaisedBevelBorder());
 
                 JButton buttonLeftColor = new JButton("left");
                 buttonLeftColor.setBorder(BorderFactory.createRaisedBevelBorder());
+
                 JButton buttonRightColor = new JButton("right");
                 buttonRightColor.setBorder(BorderFactory.createRaisedBevelBorder());
 
                 JButton ruleSize = new JButton("Size: Change the size of the grid:");
+                ruleSize.setBorder(BorderFactory.createRaisedBevelBorder());
+                ruleSize.setFocusable(false);
+                ruleSize.setBounds(0, 0, 1200, 20);
 
                 // Creation of JLabel for each rule description except for GridSize
                 JLabel ruleSwap = new JLabel(
@@ -104,11 +110,36 @@ public class CustomizeRules {
                 ruleColor.setFont(new Font("Arial", Font.BOLD, 35));
                 // More rules to be added here
 
+                // Creation of elim panel ho hold ruleElim label and buttonRuleElim button
+                JPanel elim = new JPanel(new GridLayout(1, 2, 10, 10));
+                // add mentioned components into the elim panel
+                elim.add(ruleElim);
+                elim.add(buttonElim);
+
+                // Creation of Ob panel ho hold ruleOb label and buttonRuleOb button
+                JPanel ob = new JPanel(new GridLayout(1, 2, 10, 10));
+                // add mentioned components into the elim panel
+                ob.add(ruleOb);
+                ob.add(buttonOb);
+
+                // Creation of Swap panel ho hold ruleSwap label and buttonRuleSwap button
+                JPanel swap = new JPanel(new GridLayout(1, 2, 10, 10));
+                // add mentioned components into the elim panel
+                swap.add(ruleSwap);
+                swap.add(buttonSwap);
+
                 // Creation of color panel to hold leftColor button, rightColor button and
                 // ruleColor label
                 JPanel color = new JPanel();
+                // add mentioned components into the color panel
+                color.add(buttonRightColor);
+                color.add(ruleColor);
+                color.add(buttonLeftColor);
 
-                // Creation of choosingcolor panel for each side
+                JPanel save = new JPanel();
+                save.add(buttonSave);
+
+                // Creation of choosingcolor panel for each side（difficult to achieve!）
                 JPanel leftColorPick = new JPanel();
                 JPanel rightColorPick = new JPanel();
 
@@ -133,22 +164,13 @@ public class CustomizeRules {
                         }
                 });
 
-                // add two buttons in to color label and let text in the middle
-                color.add(buttonRightColor);
-                color.add(buttonLeftColor);
-
                 // add ruleSize button
                 rulePanel.add(ruleSize);
 
-                // tadd description labels for rules
-                rulePanel.add(ruleElim);
-                rulePanel.add(ruleOb);
-                rulePanel.add(ruleSwap);
-
-                // add rule on/ off buttons
-                rulePanel.add(buttonElim);
-                rulePanel.add(buttonOb);
-                rulePanel.add(buttonSwap);
+                // add three rules' panels into the general rulePanel
+                rulePanel.add(elim);
+                rulePanel.add(ob);
+                rulePanel.add(swap);
 
                 // add the color panel for all color components
                 rulePanel.add(color);
@@ -157,12 +179,14 @@ public class CustomizeRules {
                 rulePanel.add(save);
 
                 // rulePanel Layout
-
                 rulePanel.setSize(1200, 820);
                 rulePanel.setVisible(true);
 
                 // add rulePanel into rule frame
                 rule.add(rulePanel);
+
+                // Set layout for rulePaenl panel by using BoxLayout
+                rulePanel.setLayout(new BoxLayout(rulePanel, BoxLayout.Y_AXIS));
 
                 // game frame details are assigned
                 rule.setSize(1200, 820);

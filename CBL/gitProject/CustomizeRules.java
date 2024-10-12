@@ -74,8 +74,20 @@ public class CustomizeRules {
         leftColorPanel.setVisible(false);
         rightColorPanel.setVisible(false);
 
-        // Create button and set up ActionListener for each rule
+        // Creation of buttonSave for saving and passing all parameters in CustomizeRule
+        // class
+        JButton buttonSave = new JButton("Save");
+        buttonSave.setBorder(BorderFactory.createRaisedBevelBorder());
+        buttonSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // saving all the parameters
+                // passing parameters to StartGame class
+                // closing CustomizeRule window
+                // go back to MainMenu window
+            }
+        });
 
+        // Create button and set up ActionListener for each rule
         JButton buttonSwap = new JButton("OFF");
         buttonSwap.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonSwap.setFocusable(false);
@@ -1215,19 +1227,6 @@ public class CustomizeRules {
         color.add(buttonLeftColor);
         color.add(ruleColor);
         color.add(buttonRightColor);
-
-        // Creation of buttonSave for saving and passing all parameters in CustomizeRule
-        // class
-        JButton buttonSave = new JButton("Save");
-        buttonSave.setBorder(BorderFactory.createRaisedBevelBorder());
-        buttonSave.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // saving all the parameters
-                // passing parameters to StartGame class
-                // closing CustomizeRule window
-                // go back to MainMenu window
-            }
-        });
 
         // shape a proper layout for save button, no extra function
         JPanel save = new JPanel();

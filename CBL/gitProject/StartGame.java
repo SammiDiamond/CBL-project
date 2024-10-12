@@ -128,7 +128,7 @@ public class StartGame {
                 eliminate.setEnabled(true);
                 protect.setEnabled(true);
                 spread.setEnabled(true);
-                
+
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -164,7 +164,7 @@ public class StartGame {
                 eliminate.setEnabled(false);
                 protect.setEnabled(true);
                 spread.setEnabled(true);
-                
+
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -247,7 +247,8 @@ public class StartGame {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
                                 mainMenu.grid[row][col] = 0; // Value for empty cell
                             } else if (mainMenu.buttonActive[4]) {
-                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory.createLineBorder(mainMenu.p2Color, 4));
+                                mainMenu.buttonGrid[row][col]
+                                        .setBorder(BorderFactory.createLineBorder(mainMenu.p2Color, 4));
                                 mainMenu.grid[row][col] = 3; // Value for player 1 protected cell
                             } else {
                                 // Add spread function
@@ -269,7 +270,8 @@ public class StartGame {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
                                 mainMenu.grid[row][col] = 0; // Value for empty cell
                             } else if (mainMenu.buttonActive[4]) {
-                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory.createLineBorder(mainMenu.p1Color, 4));
+                                mainMenu.buttonGrid[row][col]
+                                        .setBorder(BorderFactory.createLineBorder(mainMenu.p1Color, 4));
                                 mainMenu.grid[row][col] = 4; // Value for player 2 protected cell
                             } else {
                                 // Add spread function
@@ -304,7 +306,8 @@ public class StartGame {
             }
         }
 
-        // All player action buttons are added to the buttonPanel with a gap in between
+        // region All player action buttons are added to the buttonPanel with a gap in
+        // between
         // each one
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(turnLabel);
@@ -321,6 +324,7 @@ public class StartGame {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(spread);
         buttonPanel.add(historyLabel);
+        // endregion
 
         // The two panels are added to the game fram
         game.add(buttonPanel);

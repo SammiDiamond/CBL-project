@@ -49,3 +49,4 @@
 - StartGame: added the protect player action (needs some bugfixing): 11/10/2024 - George Kolios
 - CustomizeRules: adding subpanels in main panel - s.wu
 - CustomizeRules: visuals for size, leftColorPick and rightColorPick panels - s.wu
+- CustomizeRules: visuals completed - s.wu

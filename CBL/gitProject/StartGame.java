@@ -2,16 +2,21 @@ package CBL.gitProject;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 import javax.swing.*;
 
 /**
- * Class creates an instance of the game when "Start Game" button is pressed in
- * Main Menu.
+ * Class creates an instance of the game when "Start Game" button is pressed in Main Menu.
  */
 public class StartGame {
-
     // Declaration the MainMenu object
     MainMenu mainMenu;
+
+    // Declaration of a random number generator object
+    Random r = new Random();
+
+    // Initialization of a SpreadObj array of size 2 with initial objects being "null"
+    SpreadObj[] spreadArr = new SpreadObj[2];
 
     /**
      * Constructor responsible for the GUI for the gameplay.
@@ -111,6 +116,7 @@ public class StartGame {
                 protect.setEnabled(true);
                 spread.setEnabled(true);
 
+                // Sets Place button to active and sets the rest of the buttons to deactive
                 for (int i = 1; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -129,6 +135,7 @@ public class StartGame {
                 protect.setEnabled(true);
                 spread.setEnabled(true);
 
+                // Sets Swap button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -147,6 +154,7 @@ public class StartGame {
                 protect.setEnabled(true);
                 spread.setEnabled(true);
 
+                // Sets Obstacle button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -165,6 +173,7 @@ public class StartGame {
                 protect.setEnabled(true);
                 spread.setEnabled(true);
 
+                // Sets Eliminate button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -183,6 +192,7 @@ public class StartGame {
                 protect.setEnabled(false);
                 spread.setEnabled(true);
 
+                // Sets Protect button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -201,6 +211,7 @@ public class StartGame {
                 protect.setEnabled(true);
                 spread.setEnabled(false);
 
+                // Sets Spread button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
                 }
@@ -224,8 +235,8 @@ public class StartGame {
                 gridPanel.add(mainMenu.buttonGrid[i][j]);
 
                 // Row and Column variables are initialized to reach ActionEvent scope
-                final int row = i;
-                final int col = j;
+                int row = i;
+                int col = j;
 
                 mainMenu.buttonGrid[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
@@ -239,20 +250,78 @@ public class StartGame {
 
                             if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
-                                mainMenu.grid[row][col] = 1; // Value for player 1 occupied cell
                             } else if (mainMenu.buttonActive[2]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
-                                mainMenu.grid[row][col] = -1; // Value for obstacle occupied cell
                             } else if (mainMenu.buttonActive[3]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
-                                mainMenu.grid[row][col] = 0; // Value for empty cell
                             } else if (mainMenu.buttonActive[4]) {
-                                mainMenu.buttonGrid[row][col]
-                                        .setBorder(BorderFactory.createLineBorder(mainMenu.p2Color, 4));
-                                mainMenu.grid[row][col] = 3; // Value for player 1 protected cell
+                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory
+                                    .createLineBorder(mainMenu.p2Color, 4));
                             } else {
-                                // Add spread function
+                                mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
+                                SpreadObj p1Spread = new SpreadObj(row, col);
+                                spreadArr[0] = p1Spread;
                             }
+
+                            // Check whether Spread was used by player 1
+                            if (spreadArr[0] != null) {
+                                if (spreadArr[0].getDelay() == 0) {
+                                    boolean nearbyEmpty = false;
+                            
+                                    int rowMin = -1;
+                                    int rowMax = 2;
+                                    int colMin = -1;
+                                    int colMax = 2;
+                            
+                                    // Check edges of the grid
+                                    if (spreadArr[0].getRow() == 0) {
+                                        rowMin = 0; // Can't go up
+                                    }
+                                    if (spreadArr[0].getRow() == mainMenu.gridSize - 1) {
+                                        rowMax = 1; // Can't go down
+                                    }
+                                    if (spreadArr[0].getCol() == 0) {
+                                        colMin = 0; // Can't go left
+                                    }
+                                    if (spreadArr[0].getCol() == mainMenu.gridSize - 1) {
+                                        colMax = 1; // Can't go right
+                                    }
+                            
+                                    // Check for empty cells
+                                    for (int i = rowMin; i < rowMax; i++) {
+                                        for (int j = colMin; j < colMax; j++) {
+                                            if (mainMenu.buttonGrid[spreadArr[0].getRow() + i]
+                                                [spreadArr[0].getCol() + j].getBackground()
+                                                == Color.WHITE) {
+                                                nearbyEmpty = true;
+                                            }
+                                        }
+                                    }
+                            
+                                    if (nearbyEmpty) {
+                                        boolean found = false;
+                                        while (!found) {
+                                            int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
+                                            int randomCol = r.nextInt(colMax - colMin) + colMin;
+                            
+                                            if (mainMenu.buttonGrid
+                                                [spreadArr[0].getRow() + randomRow]
+                                                [spreadArr[0].getCol() + randomCol]
+                                                .getBackground() == Color.WHITE) {
+                                                mainMenu.buttonGrid
+                                                    [spreadArr[0].getRow() + randomRow]
+                                                    [spreadArr[0].getCol() + randomCol]
+                                                    .setBackground(mainMenu.p1Color);
+                                                found = true;
+                                            }
+                                        }
+                                    }
+                                    spreadArr[0] = null;
+                                } else {
+                                    spreadArr[0].setDelay(spreadArr[0].getDelay() - 1);
+                                }
+                            }
+                            
 
                         } else { // When player 2 presses a button the below code is executed
 
@@ -262,20 +331,78 @@ public class StartGame {
 
                             if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
-                                mainMenu.grid[row][col] = 2; // Value for player 2 occupied cell
                             } else if (mainMenu.buttonActive[2]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
-                                mainMenu.grid[row][col] = -1; // Value for obstacle cell
                             } else if (mainMenu.buttonActive[3]) {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
-                                mainMenu.grid[row][col] = 0; // Value for empty cell
                             } else if (mainMenu.buttonActive[4]) {
-                                mainMenu.buttonGrid[row][col]
-                                        .setBorder(BorderFactory.createLineBorder(mainMenu.p1Color, 4));
-                                mainMenu.grid[row][col] = 4; // Value for player 2 protected cell
+                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory
+                                    .createLineBorder(mainMenu.p1Color, 4));
                             } else {
-                                // Add spread function
+                                mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
+                                SpreadObj p2Spread = new SpreadObj(row, col);
+                                spreadArr[1] = p2Spread;
                             }
+
+                            // Check whether Spread was used by player 2
+                            if (spreadArr[1] != null) {
+                                if (spreadArr[1].getDelay() == 0) {
+                                    boolean nearbyEmpty = false;
+                            
+                                    int rowMin = -1;
+                                    int rowMax = 2;
+                                    int colMin = -1;
+                                    int colMax = 2;
+                            
+                                    // Check edges of the grid
+                                    if (spreadArr[1].getRow() == 0) {
+                                        rowMin = 0; // Can't go up
+                                    }
+                                    if (spreadArr[1].getRow() == mainMenu.gridSize - 1) {
+                                        rowMax = 1; // Can't go down
+                                    }
+                                    if (spreadArr[1].getCol() == 0) {
+                                        colMin = 0; // Can't go left
+                                    }
+                                    if (spreadArr[1].getCol() == mainMenu.gridSize - 1) {
+                                        colMax = 1; // Can't go right
+                                    }
+                            
+                                    // Check for empty cells
+                                    for (int i = rowMin; i < rowMax; i++) {
+                                        for (int j = colMin; j < colMax; j++) {
+                                            if (mainMenu.buttonGrid[spreadArr[1].getRow() + i]
+                                                [spreadArr[1].getCol() + j].getBackground()
+                                                == Color.WHITE) {
+                                                nearbyEmpty = true;
+                                            }
+                                        }
+                                    }
+                            
+                                    if (nearbyEmpty) {
+                                        boolean found = false;
+                                        while (!found) {
+                                            int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
+                                            int randomCol = r.nextInt(colMax - colMin) + colMin;
+                            
+                                            if (mainMenu.buttonGrid
+                                                [spreadArr[1].getRow() + randomRow]
+                                                [spreadArr[1].getCol() + randomCol]
+                                                .getBackground() == Color.WHITE) {
+                                                mainMenu.buttonGrid
+                                                    [spreadArr[1].getRow() + randomRow]
+                                                    [spreadArr[1].getCol() + randomCol]
+                                                    .setBackground(mainMenu.p2Color);
+                                                found = true;
+                                            }
+                                        }
+                                    }
+                                    spreadArr[1] = null;
+                                } else {
+                                    spreadArr[1].setDelay(spreadArr[1].getDelay() - 1);
+                                }
+                            }
+                            
                         }
 
                         // playerTurn changes for the next player's turn
@@ -297,7 +424,7 @@ public class StartGame {
                         spread.setEnabled(true);
 
                         // Checks if anyone has won
-                        int storeWinNum = checkWin(mainMenu);
+                        int storeWinNum = checkWin(mainMenu, mainMenu.buttonGrid);
                         if (storeWinNum != 0) {
                             postWin(storeWinNum, game, mainMenu);
                         }
@@ -306,9 +433,7 @@ public class StartGame {
             }
         }
 
-        // region All player action buttons are added to the buttonPanel with a gap in
-        // between
-        // each one
+        // All player action buttons are added to the buttonPanel with a gap between them
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(turnLabel);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
@@ -324,9 +449,8 @@ public class StartGame {
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(spread);
         buttonPanel.add(historyLabel);
-        // endregion
 
-        // The two panels are added to the game fram
+        // The two panels are added to the game frame
         game.add(buttonPanel);
         game.add(gridPanel);
 
@@ -349,7 +473,7 @@ public class StartGame {
     public static void enableEmpty(JButton[][] buttonGrid, MainMenu mainMenu) {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
-                if (mainMenu.grid[i][j] == 0) {
+                if (buttonGrid[i][j].getBackground() == Color.WHITE) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }
@@ -366,10 +490,10 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(false);
-                if (!mainMenu.playerTurn & mainMenu.grid[i][j] == 1) {
+                if (!mainMenu.playerTurn & buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                     buttonGrid[i][j].setEnabled(true);
                 } else if (mainMenu.playerTurn
-                        && mainMenu.grid[i][j] == 2) {
+                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }
@@ -386,10 +510,10 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(false);
-                if (mainMenu.playerTurn && mainMenu.grid[i][j] == 1) {
+                if (mainMenu.playerTurn && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                     buttonGrid[i][j].setEnabled(true);
                 } else if (!mainMenu.playerTurn
-                        && mainMenu.grid[i][j] == 2) {
+                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }
@@ -402,13 +526,13 @@ public class StartGame {
      * @param mainMenu MainMenu object needed to access some instance variables
      * @return integer: 1 if player 1 wins; 2 if player 2 wins; else 0;
      */
-    public static int checkWin(MainMenu mainMenu) {
-        if (horizontalWin(mainMenu) != 0) {
-            return horizontalWin(mainMenu);
-        } else if (verticalWin(mainMenu) != 0) {
-            return verticalWin(mainMenu);
-        } else if (diagonalWin(mainMenu) != 0) {
-            return diagonalWin(mainMenu);
+    public static int checkWin(MainMenu mainMenu, JButton[][] buttonGrid) {
+        if (horizontalWin(mainMenu, buttonGrid) != 0) {
+            return horizontalWin(mainMenu, buttonGrid);
+        } else if (verticalWin(mainMenu, buttonGrid) != 0) {
+            return verticalWin(mainMenu, buttonGrid);
+        } else if (diagonalWin(mainMenu, buttonGrid) != 0) {
+            return diagonalWin(mainMenu, buttonGrid);
         }
         return 0;
     }
@@ -421,14 +545,19 @@ public class StartGame {
      * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils
      *         condition; else 0;
      */
-    public static int horizontalWin(MainMenu mainMenu) {
+    public static int horizontalWin(MainMenu mainMenu, JButton[][] buttonGrid) {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
-                if (mainMenu.grid[i][j] == mainMenu.grid[i][j + 1]
-                        && mainMenu.grid[i][j + 1] == mainMenu.grid[i][j + 2]
-                        && mainMenu.grid[i][j + 2] == mainMenu.grid[i][j + 3]
-                        && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != -1) {
-                    return mainMenu.grid[i][j];
+                if (buttonGrid[i][j].getBackground() == buttonGrid[i][j + 1].getBackground()
+                    && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
+                    && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
+                        return 1;
+                    } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                        return 2;
+                    }
                 }
             }
         }
@@ -443,14 +572,19 @@ public class StartGame {
      * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils
      *         condition; else 0;
      */
-    public static int verticalWin(MainMenu mainMenu) {
+    public static int verticalWin(MainMenu mainMenu, JButton[][] buttonGrid) {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
-                if (mainMenu.grid[i][j] == mainMenu.grid[i + 1][j]
-                        && mainMenu.grid[i + 1][j] == mainMenu.grid[i + 2][j]
-                        && mainMenu.grid[i + 2][j] == mainMenu.grid[i + 3][j]
-                        && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != -1) {
-                    return mainMenu.grid[i][j];
+                if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j].getBackground()
+                    && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
+                    && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                        return 1;
+                    } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                        return 2;
+                    }
                 }
             }
         }
@@ -465,23 +599,37 @@ public class StartGame {
      * @return integer: 1 if player 1 fulfils condition; 2 if player 2 fulfils
      *         condition; else 0;
      */
-    public static int diagonalWin(MainMenu mainMenu) {
+    public static int diagonalWin(MainMenu mainMenu, JButton[][] buttonGrid) {
         for (int i = 0; i < mainMenu.gridSize - 3; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
 
                 // Condition for an increasing diagonal
-                if (mainMenu.grid[i][j] == mainMenu.grid[i + 1][j + 1]
-                        && mainMenu.grid[i + 1][j + 1] == mainMenu.grid[i + 2][j + 2]
-                        && mainMenu.grid[i + 2][j + 2] == mainMenu.grid[i + 3][j + 3]
-                        && mainMenu.grid[i][j] != 0 && mainMenu.grid[i][j] != -1) {
-                    return mainMenu.grid[i][j];
-
+                if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
+                    && buttonGrid[i + 1][j + 1].getBackground()
+                    == buttonGrid[i + 2][j + 2].getBackground()
+                    && buttonGrid[i + 2][j + 2].getBackground()
+                    == buttonGrid[i + 3][j + 3].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
+                        return 1;
+                    } else if (buttonGrid[i][j + 3].getBackground() == mainMenu.p2Color) {
+                        return 2;
+                    }
                     // Condition for a decreasing diagonal
-                } else if (mainMenu.grid[i + 3][j] == mainMenu.grid[i + 2][j + 1]
-                        && mainMenu.grid[i + 2][j + 1] == mainMenu.grid[i + 1][j + 2]
-                        && mainMenu.grid[i + 1][j + 2] == mainMenu.grid[i][j + 3]
-                        && mainMenu.grid[i + 3][j] != 0 && mainMenu.grid[i][j] != -1) {
-                    return mainMenu.grid[i + 3][j];
+                } else if (buttonGrid[i + 3][j].getBackground()
+                    == buttonGrid[i + 2][j + 1].getBackground()
+                    && buttonGrid[i + 2][j + 1].getBackground()
+                    == buttonGrid[i + 1][j + 2].getBackground()
+                    && buttonGrid[i + 1][j + 2].getBackground()
+                    == buttonGrid[i][j + 3].getBackground()
+                    && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
+                    if (buttonGrid[i + 3][j].getBackground() == mainMenu.p1Color) {
+                        return 1;
+                    } else if (buttonGrid[i + 3][j].getBackground() == mainMenu.p2Color) {
+                        return 2;
+                    }
                 }
             }
         }
@@ -516,8 +664,7 @@ public class StartGame {
         JButton exitButton = new JButton("Return to Main Menu");
         exitButton.setFont(new Font("Arial", Font.BOLD, 25));
 
-        // Event is added to JButton to dispose of previous frames and return to Main
-        // Menu
+        // Event is added to JButton to dispose of previous frames and return to Main Menu
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -550,5 +697,52 @@ public class StartGame {
         winFrame.setLocationRelativeTo(null);
         winFrame.setLayout(null);
         winFrame.setVisible(true);
+    }
+}
+
+/**
+ * Class used to create SpreadObj objects when the spread player action is used.
+ */
+class SpreadObj {
+    // Initialization of all SpreadObj instance variables
+    private int delay = 1;
+    private int row = - 1;
+    private int col = - 1;
+
+    /**
+     * SpreadObj constructor that initializes the object's instance variables excluding the delay.
+     * 
+     * @param row integer: Passes the row number of the spread cell to the spreadObj
+     * @param col integer: Passes the col number of the spread cell to the spreadObj
+     */
+    SpreadObj(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
+    // Initalization of all Setters of the SpreadObj class
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    // Initialization of all Getters of the SpreadObj class
+    public int getDelay() {
+        return delay;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 }

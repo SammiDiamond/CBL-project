@@ -39,10 +39,6 @@ public class MainMenu {
     // buttonGrid[][] stores all of the buttons of the grid
     JButton[][] buttonGrid = new JButton[gridSize][gridSize];
 
-    // grid[][] is a parallel array to buttonGrid[][] whose values depend on the
-    // button background
-    int[][] grid = new int[gridSize][gridSize];
-
     // Declaration of class objects to call their constructors from within an
     // ActionListener
     StartGame game;
@@ -73,15 +69,14 @@ public class MainMenu {
         gameHistory.setPreferredSize(new Dimension(270, 60));
         gameHistory.setFont(new Font("Arial", Font.BOLD, 25));
 
-        // Add events for when the buttons are pressed
-
-        // Add events for startGame button
+        // Add event for startGame button
         startGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 createStartGame();
             }
         });
-        // Add events for customizeRules button
+        
+        // Add event for customizeRules button
         customizeRules.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 createCustomizeRules();
@@ -92,7 +87,7 @@ public class MainMenu {
         background.setBackground(Color.WHITE);
         try {
             background = new JLabel(new ImageIcon(ImageIO.read(
-                new File("CBL/gitProject/CBL/gitProject/ColorBingo.png"))));
+                new File("CBL\\gitProject\\ColorBingo.png"))));
             background.setSize(1200, 800);
         } catch (IOException e) {
             e.printStackTrace();

@@ -4,35 +4,35 @@
 	(Notes: State previous player action + fix visuals)
         -Place ** 
         -Swap **
-	-Obstacle (Visualized by DARK_GRAY) **
-	-Eliminate (Sets color to WHITE again) **
-	-Protect (Visualized by change in border)
-	(Note: add either a cooldown, or make permanent protected cells a feature)
+		-Obstacle (Visualized by DARK_GRAY) **
+		-Eliminate (Sets color to WHITE again) **
+		-Protect (Visualized by change in border) **
+		-Spread **
+		(Note: add a cooldown to every player action excluding Place)
 
-	-Spread (Visualized by change in border)
-	-Win Condition
-	(Note: add a win condition for a draw and include protected cells in the win condition)
-	\Win Popup 
-	    (Notes: fix visuals)
-	    -Return to menu **
+		-Win Condition
+		(Note: add a win condition for a draw and include protected cells in the win condition)
+		\Win Popup 
+	    	(Notes: fix visuals)
+	    	-Return to menu **
 
     -Customize Rules
-	-Customize Grid Size (7x7, 8x8, 9x9, 10x10, 11x11, 12x12 -> changes button sizes in Start Game)
-	    \Small selection menu
+		-Customize Grid Size (7x7, 8x8, 9x9, 10x10, 11x11, 12x12 -> changes button sizes in Start Game)
+	    	\Small selection menu
 
-	-Customize Player Colors (Basic set of colors *Exceptions: WHITE, DARK_GRAY*)
-	    \Small selection menu
+		-Customize Player Colors (Basic set of colors *Exceptions: WHITE, DARK_GRAY*)
+	    	\Small selection menu
 
-	-Activate/Deactivate Swap
-	-Activate/Deactivate Obstacle
-	-Activate/Deactivate Eliminate
-	-Activate/Deactivate Protect
-	-Activate/Deactivate Spread
+		-Activate/Deactivate Swap
+		-Activate/Deactivate Obstacle
+		-Activate/Deactivate Eliminate
+		-Activate/Deactivate Protect
+		-Activate/Deactivate Spread
 
     -Game History
-	(Notes: Data saved in a .txt file)
-        -Brief showcase of information of a match and winner (Colors, Date, Number of Moves)
-	    \Final Grid for each game when pressed.
+		(Notes: Data saved in a .txt file)
+        	-Brief showcase of information of a match and winner (Colors, Date, Number of Moves)
+	    	\Final Grid for each game when pressed.
 
 //
 // ** means that something is completed
@@ -52,6 +52,12 @@
 - CustomizeRules: visuals completed 13/10/2024 - s.wu
 - CustomizeRules: ready to pass parameters 13/10/2024 - s.wu
 - CustomizeRules: adding protect and spread rule 13/10/2024 - s.wu
+- CustomizeRules: changed "left" variable names to player 1 and "right" variable names to player 2: 13/10/2024 - George Kolios
+- MainMenu + StartGame: removed the grid[][] because it increases complexity and takes up resources,
+JButton background can be used in the same was as the grid[][] would work: 13/10/2024 - George Kolios
+- StartGame: bugfixing (line 497: [i] -> [i + 3]): 13/10/2024 - George Kolios
+- StartGame: created a SpreadObj class for the spread player action: 13/10/2024 - George Kolios
+- StartGame: finished the spread player action: 13/10/2024 - George Kolios
     // a to do list for CustomizeRules class:
 
     // clicking on save button, close CustomizeRules window and go back to mainmenu(done)

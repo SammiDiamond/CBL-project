@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainMenu",
+            "request": "launch",
+            "mainClass": "CBL.gitProject.MainMenu",
+            "projectName": "gitProject_9f52cc57"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

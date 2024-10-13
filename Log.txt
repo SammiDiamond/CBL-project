@@ -50,5 +50,15 @@
 - CustomizeRules: adding subpanels in main panel 12/10/2024 - s.wu
 - CustomizeRules: visuals for size, leftColorPick and rightColorPick panels 13/10/2024 - s.wu
 - CustomizeRules: visuals completed 13/10/2024 - s.wu
-- CustomizeRules: ready to pass parameters;
-    (calculations for deciding detailed lasting time and cd time for each rule will be added later) 13/10/2024 - s.wu
+- CustomizeRules: ready to pass parameters 13/10/2024 - s.wu
+- CustomizeRules: adding protect and spread rule 13/10/2024 - s.wu
+    // a to do list for CustomizeRules class:
+
+    // clicking on save button, close CustomizeRules window and go back to mainmenu(done)
+    // adding protect and spred rules into CustomizeRule class(done)
+    // complete the description of spread rules
+    // calculation for each rule to decide specific lasting time and cooldown time data
+    // passing size data to StartGame
+    // passing rules' on/off condition to StartGame
+    // passing rules' lasting time and cooldown time datas to StartGame and show
+    // passing colors datas to StartGame

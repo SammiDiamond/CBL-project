@@ -48,7 +48,10 @@ public class CustomizeRules {
         boolean buttonElimOn = false;
         boolean buttonLeftColorOn = false;
         boolean buttonRightColorOn = false;
-        boolean[] buttonOnOff = { buttonSwapOn, buttonObOn, buttonElimOn, buttonLeftColorOn, buttonRightColorOn };
+        boolean buttonProtectOn = false;
+        boolean buttonSpreadOn = false;
+        boolean[] buttonOnOff = { buttonSwapOn, buttonObOn, buttonElimOn, buttonProtectOn,
+                buttonSpreadOn, buttonLeftColorOn, buttonRightColorOn };
 
         // Creation of size to store grid size
         // using array to avoid "local variable defined in an enclosing scope" error
@@ -77,13 +80,16 @@ public class CustomizeRules {
         // Creation of buttonSave for saving and passing all parameters in CustomizeRule
         // class
         JButton buttonSave = new JButton("Save");
-        buttonSave.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // saving all the parameters
-                // passing parameters to StartGame class
-                // closing CustomizeRule window
-                // go back to MainMenu window
+
+                // Main Menu buttons are enabled again
+                mainMenu.startGame.setEnabled(true);
+                mainMenu.customizeRules.setEnabled(true);
+                mainMenu.gameHistory.setEnabled(true);
+
+                rule.dispose();
+                mainMenu.menuFrame.setState(Frame.NORMAL);
             }
         });
 
@@ -126,6 +132,34 @@ public class CustomizeRules {
                     buttonElim.setText("ON");
                 } else {
                     buttonElim.setText("OFF");
+                }
+            }
+        });
+
+        JButton buttonProtect = new JButton("OFF");
+        buttonProtect.setBorder(BorderFactory.createRaisedBevelBorder());
+        buttonProtect.setFocusable(false);
+        buttonProtect.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonOnOff[3] = !buttonOnOff[3];
+                if (buttonOnOff[3]) {
+                    buttonProtect.setText("ON");
+                } else {
+                    buttonProtect.setText("OFF");
+                }
+            }
+        });
+
+        JButton buttonSpread = new JButton("OFF");
+        buttonSpread.setBorder(BorderFactory.createRaisedBevelBorder());
+        buttonSpread.setFocusable(false);
+        buttonSpread.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonOnOff[4] = !buttonOnOff[4];
+                if (buttonOnOff[4]) {
+                    buttonSpread.setText("ON");
+                } else {
+                    buttonSpread.setText("OFF");
                 }
             }
         });
@@ -183,6 +217,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
             }
@@ -203,6 +239,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
             }
@@ -223,6 +261,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
             }
@@ -243,6 +283,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
             }
@@ -263,6 +305,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
             }
@@ -283,6 +327,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
             }
@@ -365,6 +411,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -408,6 +456,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -450,6 +500,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -492,6 +544,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -534,6 +588,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -576,6 +632,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -618,6 +676,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -660,6 +720,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -702,6 +764,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -748,6 +812,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -791,6 +857,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -834,6 +902,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -877,6 +947,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -920,6 +992,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -963,6 +1037,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -1006,6 +1082,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -1049,6 +1127,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -1092,6 +1172,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(true);
                 buttonSwap.setEnabled(true);
                 buttonSave.setEnabled(true);
+                buttonSpread.setEnabled(true);
+                buttonProtect.setEnabled(true);
                 buttonLeftColor.setEnabled(true);
                 buttonRightColor.setEnabled(true);
                 // initializing other color buttons
@@ -1137,6 +1219,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(false);
                 buttonSwap.setEnabled(false);
                 buttonSave.setEnabled(false);
+                buttonSpread.setEnabled(false);
+                buttonProtect.setEnabled(false);
                 buttonLeftColor.setEnabled(false);
                 buttonRightColor.setEnabled(false);
             }
@@ -1154,6 +1238,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(false);
                 buttonSwap.setEnabled(false);
                 buttonSave.setEnabled(false);
+                buttonSpread.setEnabled(false);
+                buttonProtect.setEnabled(false);
                 buttonRightColor.setEnabled(false);
                 buttonLeftColor.setEnabled(false);
             }
@@ -1181,6 +1267,17 @@ public class CustomizeRules {
         ruleElim.setFont(new Font("Arial", Font.BOLD, 15));
         ruleElim.setBounds(50, 50, 200, 200);
 
+        JLabel ruleProtect = new JLabel("Protect: protect a square, "
+                + "the square can't be chosen as an object for any other rules in next round");
+        ruleProtect.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ruleProtect.setFont(new Font("Arial", Font.BOLD, 15));
+        ruleProtect.setBounds(50, 50, 200, 200);
+
+        JLabel ruleSpread = new JLabel("Spread: ");
+        ruleSpread.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ruleSpread.setFont(new Font("Arial", Font.BOLD, 15));
+        ruleSpread.setBounds(50, 50, 200, 200);
+
         JLabel ruleColor = new JLabel("Choose your colors!");
         ruleColor.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleColor.setFont(new Font("Arial", Font.BOLD, 15));
@@ -1205,6 +1302,21 @@ public class CustomizeRules {
         swap.add(ruleSwap);
         swap.add(buttonSwap);
 
+        JPanel protect = new JPanel(new GridLayout(1, 2, 10, 10));
+        // add mentioned components into the protect panel
+        protect.add(ruleProtect);
+        protect.add(buttonProtect);
+
+        JPanel spread = new JPanel(new GridLayout(1, 2, 10, 10));
+        // add mentioned components into the protect panel
+        spread.add(ruleSpread);
+        spread.add(buttonSpread);
+
+        // shape a proper layout for save button, no extra function
+        JPanel save = new JPanel();
+        save.add(buttonSave);
+        save.setLayout(new GridLayout(1, 3, 0, 10));
+
         // set up rulesize(button)
         buttonSize.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonSize.setFont(new Font("Arial", Font.BOLD, 35));
@@ -1217,6 +1329,8 @@ public class CustomizeRules {
                 buttonOb.setEnabled(false);
                 buttonSwap.setEnabled(false);
                 buttonSave.setEnabled(false);
+                buttonSpread.setEnabled(false);
+                buttonProtect.setEnabled(false);
                 buttonLeftColor.setEnabled(false);
                 buttonRightColor.setEnabled(false);
 
@@ -1227,11 +1341,6 @@ public class CustomizeRules {
         color.add(buttonLeftColor);
         color.add(ruleColor);
         color.add(buttonRightColor);
-
-        // shape a proper layout for save button, no extra function
-        JPanel save = new JPanel();
-        save.add(buttonSave);
-        save.setLayout(new GridLayout(1, 3, 0, 10));
 
         // set up pane and add components into pane
         JLayeredPane layeredPane = new JLayeredPane();
@@ -1250,6 +1359,8 @@ public class CustomizeRules {
         rulePanel.add(elim);
         rulePanel.add(ob);
         rulePanel.add(swap);
+        rulePanel.add(protect);
+        rulePanel.add(spread);
         rulePanel.add(color);
         rulePanel.add(save);
 
@@ -1264,4 +1375,17 @@ public class CustomizeRules {
         rule.setLayout(null);
         rule.setVisible(true);
     }
+
+    // remained to establish:
+
+    // clicking on save button, close CustomizeRules window and go back to
+    // mainmenu(done)
+    // adding protect and spred rules into CustomizeRule class(done)
+    // complete the description of spread rules
+    // calculation for each rule to decide specific lasting time and cooldown time
+    // data
+    // passing size data to StartGame
+    // passing rules' on/off condition to StartGame
+    // passing rules' lasting time and cooldown time datas to StartGame and show
+    // passing colors datas to StartGame
 }

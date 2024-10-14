@@ -38,7 +38,7 @@ public class CustomizeRules {
         JPanel rulePanel = new JPanel();
         rulePanel.setLayout(new FlowLayout());
 
-        // region: Creation of parameters to be passed on to StartGame class later
+        // Creation of parameters to be passed on to StartGame class later
 
         // Creation of boolean values for each rule's button, true/false indicating rule
         // on/off
@@ -58,38 +58,57 @@ public class CustomizeRules {
         int[] size = { 0 };
 
         // Creation of final colors for each player, index 0 for player 1 color and
-        // index 1
-        // for player 2 color
+        // index 1 for player 2 color
         Color[] finalColor = new Color[2];
 
         // Creation of datas for each rules, used for calculation
         // 3 for the numbers of the total rules(become 5 if spread and protect rules are
-        // added);
+        // added)
         // 2 for the properties of each rules(lasting time and cooldown time
         // for instance, datas[1][0] representing the lasting time for obstacle rule
-        int[][] datas = new int[3][2];
-        // endRegion
+        int[][] datas = new int[5][2];
+
+        // Creation of two labels showing p1Color and p2Color
+        JLabel p1Color = new JLabel();
+        p1Color.setSize(5, 5);
+        p1Color.setVisible(true);
+        p1Color.setBorder(BorderFactory.createRaisedBevelBorder());
+
+        JLabel p2Color = new JLabel();
+        p2Color.setSize(50, 50);
+        p2Color.setVisible(true);
+        p2Color.setBorder(BorderFactory.createRaisedBevelBorder());
 
         // Creation of subpanels in pane(set up later)
         JPanel sizes = new JPanel(new GridLayout(6, 1, 10, 10));
         JPanel p1ColorPanel = new JPanel(new GridLayout(3, 3, 10, 10));
         p1ColorPanel.setVisible(false);
+        p1Color.setOpaque(true);
         JPanel p2ColorPanel = new JPanel(new GridLayout(3, 3, 10, 10));
         p1ColorPanel.setVisible(false);
         p2ColorPanel.setVisible(false);
+        p2Color.setOpaque(true);
 
         // Creation of buttonSave for saving and passing all parameters in CustomizeRule
         // class
         JButton buttonSave = new JButton("Save");
         buttonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // passing parameters to MainMenu
 
+                // mainMenu.gridSize = size[0];
+                // mainMenu.swapRule = buttonOnOff[0];
+                // mainMenu.obstacleRule = buttonOnOff[1];
+                // mainMenu.eliminateRule = buttonOnOff[2];
+                // mainMenu.protectRule = buttonOnOff[3];
+                // mainMenu.spreadRule = buttonOnOff[4];
+                mainMenu.p1Color = finalColor[0];
+                mainMenu.p2Color = finalColor[1];
                 // Main Menu buttons are enabled again
+                rule.dispose();
                 mainMenu.startGame.setEnabled(true);
                 mainMenu.customizeRules.setEnabled(true);
                 mainMenu.gameHistory.setEnabled(true);
-
-                rule.dispose();
                 mainMenu.menuFrame.setState(Frame.NORMAL);
             }
         });
@@ -185,7 +204,7 @@ public class CustomizeRules {
         size9X9.setBackground(null);
         JButton size10X10 = new JButton("10*10");
         size10X10.setBackground(null);
-        // endRegion
+        // endregion
 
         // region: Initialize sizes panel and add size buttons into sizes panel
         sizes.setBounds(325, 50, 550, 400);
@@ -197,9 +216,10 @@ public class CustomizeRules {
         sizes.add(size8X8);
         sizes.add(size9X9);
         sizes.add(size10X10);
+        // endregion
+
         // sizes panel initially invisible, only visible when setting grid size
         sizes.setVisible(false);
-        // endRegion
 
         // region: Set ActionListener for each size button in sizes pane
         size5X5.addActionListener(new ActionListener() {
@@ -334,7 +354,7 @@ public class CustomizeRules {
                 buttonP2Color.setEnabled(true);
             }
         });
-        // endRegion
+        // endregion
 
         // Creation of color panel to hold P1Color button, P2Color button and
         // ruleColor label
@@ -351,7 +371,7 @@ public class CustomizeRules {
         JButton p1Purple = new JButton(new ImageIcon("CBL\\icons\\purple.png"));
         JButton p1Pink = new JButton(new ImageIcon("CBL\\icons\\pink.png"));
         JButton p1Brown = new JButton(new ImageIcon("CBL\\icons\\brown.png"));
-        // endRegion
+        // endregion
 
         // region: Adding color icons into p1ColorPick panel
         p1ColorPanel.add(p1Red);
@@ -363,7 +383,7 @@ public class CustomizeRules {
         p1ColorPanel.add(p1Purple);
         p1ColorPanel.add(p1Pink);
         p1ColorPanel.add(p1Brown);
-        // endRegion
+        // endregion
 
         // set up p1ColorPanel
         p1ColorPanel.setBounds(100, 300, 200, 200);
@@ -380,7 +400,7 @@ public class CustomizeRules {
         JButton p2Purple = new JButton(new ImageIcon("CBL\\icons\\purple.png"));
         JButton p2Pink = new JButton(new ImageIcon("CBL\\icons\\pink.png"));
         JButton p2Brown = new JButton(new ImageIcon("CBL\\icons\\brown.png"));
-        // endRegion
+        // endregion
 
         // region: Adding color icons into p2ColorPick panel
         p2ColorPanel.add(p2RedRed);
@@ -392,17 +412,18 @@ public class CustomizeRules {
         p2ColorPanel.add(p2Purple);
         p2ColorPanel.add(p2Pink);
         p2ColorPanel.add(p2Brown);
-        // endRegion
+        // endregion
 
         // set up p2ColorPanel
         p2ColorPanel.setBounds(900, 300, 200, 200);
         p2ColorPanel.setBackground(Color.WHITE);
         p2ColorPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
-        // region: Set ActionListener for each color button in p1ColorPanel
+        // region Set ActionListener for each color button in p1ColorPanel
         p1Red.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(255, 0, 0, 1);
+                finalColor[0] = new Color(255, 0, 0, 255);
+                p1Color.setBackground(new Color(255, 0, 0, 255));
                 p1Red.setIcon(new ImageIcon("CBL\\icons\\red_chosen.png"));
                 p2RedRed.setIcon(new ImageIcon("CBL\\icons\\red_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -448,7 +469,8 @@ public class CustomizeRules {
         });
         p1Orange.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(237, 141, 0, 1);
+                finalColor[0] = new Color(237, 141, 0, 255);
+                p1Color.setBackground(new Color(237, 141, 0, 255));
                 p1Orange.setIcon(new ImageIcon("CBL\\icons\\orange_chosen.png"));
                 p2Orange.setIcon(new ImageIcon("CBL\\icons\\orange_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -492,7 +514,8 @@ public class CustomizeRules {
         });
         p1Yellow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(255, 239, 40, 1);
+                finalColor[0] = new Color(255, 239, 40, 255);
+                p1Color.setBackground(new Color(255, 239, 40, 255));
                 p1Yellow.setIcon(new ImageIcon("CBL\\icons\\yellow_chosen.png"));
                 p2Yellow.setIcon(new ImageIcon("CBL\\icons\\yellow_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -536,7 +559,8 @@ public class CustomizeRules {
         });
         p1Green.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(131, 201, 55, 1);
+                finalColor[0] = new Color(131, 201, 55, 255);
+                p1Color.setBackground(new Color(131, 201, 55, 255));
                 p1Green.setIcon(new ImageIcon("CBL\\icons\\green_chosen.png"));
                 p2Green.setIcon(new ImageIcon("CBL\\icons\\green_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -580,7 +604,8 @@ public class CustomizeRules {
         });
         p1Cyan.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(50, 204, 204, 1);
+                finalColor[0] = new Color(50, 204, 204, 255);
+                p1Color.setBackground(new Color(50, 204, 204, 255));
                 p1Cyan.setIcon(new ImageIcon("CBL\\icons\\cyan_chosen.png"));
                 p2Cyan.setIcon(new ImageIcon("CBL\\icons\\cyan_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -624,7 +649,8 @@ public class CustomizeRules {
         });
         p1Blue.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(0, 111, 192, 1);
+                finalColor[0] = new Color(0, 111, 192, 255);
+                p1Color.setBackground(new Color(0, 111, 192, 255));
                 p1Blue.setIcon(new ImageIcon("CBL\\icons\\blue_chosen.png"));
                 p2Blue.setIcon(new ImageIcon("CBL\\icons\\blue_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -668,7 +694,8 @@ public class CustomizeRules {
         });
         p1Purple.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(112, 48, 160, 1);
+                finalColor[0] = new Color(112, 48, 160, 255);
+                p1Color.setBackground(new Color(112, 48, 160, 255));
                 p1Purple.setIcon(new ImageIcon("CBL\\icons\\purple_chosen.png"));
                 p2Purple.setIcon(new ImageIcon("CBL\\icons\\purple_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -712,7 +739,8 @@ public class CustomizeRules {
         });
         p1Pink.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(255, 155, 188, 1);
+                finalColor[0] = new Color(255, 155, 188, 255);
+                p1Color.setBackground(new Color(255, 155, 188, 255));
                 p1Pink.setIcon(new ImageIcon("CBL\\icons\\pink_chosen.png"));
                 p2Pink.setIcon(new ImageIcon("CBL\\icons\\pink_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -756,7 +784,8 @@ public class CustomizeRules {
         });
         p1Brown.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[0] = new Color(107, 70, 35, 1);
+                finalColor[0] = new Color(107, 70, 35, 255);
+                p1Color.setBackground(new Color(107, 70, 35, 255));
                 p1Brown.setIcon(new ImageIcon("CBL\\icons\\brown_chosen.png"));
                 p2Brown.setIcon(new ImageIcon("CBL\\icons\\brown_occupied.png"));
                 p1ColorPanel.setVisible(false);
@@ -798,12 +827,13 @@ public class CustomizeRules {
                 p2Brown.setEnabled(false);
             }
         });
-        // endRegion
+        // endregion
 
         // region: Set ActionListener for each color button in p2ColorPanel
         p2RedRed.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(255, 0, 0, 1);
+                finalColor[1] = new Color(255, 0, 0, 255);
+                p2Color.setBackground(new Color(255, 0, 0, 255));
                 p2RedRed.setIcon(new ImageIcon("CBL\\icons\\red_chosen.png"));
                 p1Red.setIcon(new ImageIcon("CBL\\icons\\red_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -848,7 +878,8 @@ public class CustomizeRules {
         });
         p2Orange.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(237, 141, 0, 1);
+                finalColor[1] = new Color(237, 141, 0, 255);
+                p2Color.setBackground(new Color(237, 141, 0, 255));
                 p2Orange.setIcon(new ImageIcon("CBL\\icons\\orange_chosen.png"));
                 p1Orange.setIcon(new ImageIcon("CBL\\icons\\orange_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -893,7 +924,8 @@ public class CustomizeRules {
         });
         p2Yellow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(255, 239, 40, 1);
+                finalColor[1] = new Color(255, 239, 40, 255);
+                p2Color.setBackground(new Color(255, 239, 40, 255));
                 p2Yellow.setIcon(new ImageIcon("CBL\\icons\\yellow_chosen.png"));
                 p1Yellow.setIcon(new ImageIcon("CBL\\icons\\yellow_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -938,7 +970,8 @@ public class CustomizeRules {
         });
         p2Green.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(131, 201, 55, 1);
+                finalColor[1] = new Color(131, 201, 55, 255);
+                p2Color.setBackground(new Color(131, 201, 55, 255));
                 p2Green.setIcon(new ImageIcon("CBL\\icons\\green_chosen.png"));
                 p1Green.setIcon(new ImageIcon("CBL\\icons\\green_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -983,7 +1016,8 @@ public class CustomizeRules {
         });
         p2Cyan.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(50, 204, 204, 1);
+                finalColor[1] = new Color(50, 204, 204, 255);
+                p2Color.setBackground(new Color(50, 204, 204, 255));
                 p2Cyan.setIcon(new ImageIcon("CBL\\icons\\cyan_chosen.png"));
                 p1Cyan.setIcon(new ImageIcon("CBL\\icons\\cyan_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -1028,7 +1062,8 @@ public class CustomizeRules {
         });
         p2Blue.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(0, 111, 192, 1);
+                finalColor[1] = new Color(0, 111, 192, 255);
+                p2Color.setBackground(new Color(0, 111, 192, 255));
                 p2Blue.setIcon(new ImageIcon("CBL\\icons\\blue_chosen.png"));
                 p1Blue.setIcon(new ImageIcon("CBL\\icons\\blue_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -1073,7 +1108,8 @@ public class CustomizeRules {
         });
         p2Purple.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(112, 48, 160, 1);
+                finalColor[1] = new Color(112, 48, 160, 255);
+                p2Color.setBackground(new Color(112, 48, 160, 255));
                 p2Purple.setIcon(new ImageIcon("CBL\\icons\\purple_chosen.png"));
                 p1Purple.setIcon(new ImageIcon("CBL\\icons\\purple_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -1118,7 +1154,8 @@ public class CustomizeRules {
         });
         p2Pink.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(255, 155, 188, 1);
+                finalColor[1] = new Color(255, 155, 188, 255);
+                p2Color.setBackground(new Color(255, 155, 188, 255));
                 p2Pink.setIcon(new ImageIcon("CBL\\icons\\pink_chosen.png"));
                 p1Pink.setIcon(new ImageIcon("CBL\\icons\\pink_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -1163,7 +1200,8 @@ public class CustomizeRules {
         });
         p2Brown.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                finalColor[1] = new Color(107, 70, 35, 1);
+                finalColor[1] = new Color(107, 70, 35, 255);
+                p2Color.setBackground(new Color(107, 70, 35, 255));
                 p2Brown.setIcon(new ImageIcon("CBL\\icons\\brown_chosen.png"));
                 p1Brown.setIcon(new ImageIcon("CBL\\icons\\brown_occupied.png"));
                 // "back" to CustomizeRule panel
@@ -1206,7 +1244,7 @@ public class CustomizeRules {
                 p1Brown.setEnabled(false);
             }
         });
-        // endRegion
+        // endregion
 
         buttonP1Color.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonP1Color.setSize(700, 200);
@@ -1340,7 +1378,9 @@ public class CustomizeRules {
 
         // add mentioned components into the color panel
         color.add(buttonP1Color);
+        color.add(p1Color);
         color.add(ruleColor);
+        color.add(p2Color);
         color.add(buttonP2Color);
 
         // set up pane and add components into pane

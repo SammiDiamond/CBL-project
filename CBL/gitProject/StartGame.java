@@ -31,17 +31,6 @@ public class StartGame {
         // Contents of menu are stored into the mainMenu instance variable
         this.mainMenu = menu;
 
-        // Creation of int[][] to store the action history, which will be passed onto
-        // History class
-        // fr each array element in actionHistory:
-        // array[0] using number from 0, 1, 2, 3, 4, 5 to indicate actionhistory
-        // array[1] adn array[2] indicating the coordinates of the square where the rule
-        // is used
-        // odd array indicating actionhistoiry of player1 and even array for player2
-        // the length of th e int[] may be longer than size*size so we dont initialize
-        // its length
-        int[][] actionHistory = {};
-
         // Buttons in the previous window are disabled and window is minimized
         mainMenu.menuFrame.setState(JFrame.ICONIFIED);
         mainMenu.startGame.setEnabled(false);

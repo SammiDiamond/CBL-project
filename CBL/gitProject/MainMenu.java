@@ -27,8 +27,8 @@ public class MainMenu {
     // Initial values are stored in all of them so the game can run without
     // requiring any customization
     int gridSize = 8;
-    Color p1Color = Color.RED;
-    Color p2Color = Color.YELLOW;
+    Color p1Color;
+    Color p2Color;
 
     // obtain value from CustomizaRlues class
     boolean swapRule = true;
@@ -39,6 +39,17 @@ public class MainMenu {
 
     // buttonGrid[][] stores all of the buttons of the grid
     JButton[][] buttonGrid = new JButton[gridSize][gridSize];
+
+    // Creation of int[][] to store the action history, which will be passed onto
+    // History class
+    // for each element in actionHistory:
+    // array[0] using number from 0, 1, 2, 3, 4, 5 to indicate actionhistory
+    // array[1] adn array[2] indicating the coordinates of the square where the rule
+    // is used
+    // odd array indicating actionhistoiry of player1 and even array for player2
+    // the length of th e int[] may be longer than size*size so we dont initialize
+    // its length
+    int[][] actionHistory = {};
 
     // Declaration of class objects to call their constructors from within an
     // ActionListener

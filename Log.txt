@@ -61,7 +61,7 @@ JButton background can be used in the same was as the grid[][] would work: 13/10
 - StratGame: change the JPanel "historyPanel" to "actionHistoryPanel" (in case possible conflict in History class later) 14/10/2024 - s.wu
 - StartGame: created an int[][] to store actions history 14/10/2024 - s.wu
 - Creating GameHistory class 14/10/2024 -s.wu
-- CustomizeRules: passing color parameters to StartGame class sucessfully 14/10/2024 - s.wu
+- CustomizeRules: passing color and rules on/off parameters to StartGame class sucessfully 14/10/2024 - s.wu
     // To-do list for CustomizeRules class:
 
     // clicking on save button, close CustomizeRules window and go back to mainmenu(done)

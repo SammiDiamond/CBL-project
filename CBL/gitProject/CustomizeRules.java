@@ -97,11 +97,11 @@ public class CustomizeRules {
                 // passing parameters to MainMenu
 
                 // mainMenu.gridSize = size[0];
-                // mainMenu.swapRule = buttonOnOff[0];
-                // mainMenu.obstacleRule = buttonOnOff[1];
-                // mainMenu.eliminateRule = buttonOnOff[2];
-                // mainMenu.protectRule = buttonOnOff[3];
-                // mainMenu.spreadRule = buttonOnOff[4];
+                mainMenu.swapRule = buttonOnOff[0];
+                mainMenu.obstacleRule = buttonOnOff[1];
+                mainMenu.eliminateRule = buttonOnOff[2];
+                mainMenu.protectRule = buttonOnOff[3];
+                mainMenu.spreadRule = buttonOnOff[4];
                 mainMenu.p1Color = finalColor[0];
                 mainMenu.p2Color = finalColor[1];
                 // Main Menu buttons are enabled again
@@ -1426,7 +1426,7 @@ public class CustomizeRules {
     // calculation for each rule to decide specific lasting time and cooldown time
     // data
     // passing size data to StartGame
-    // passing rules' on/off condition to StartGame
+    // passing rules' on/off condition to StartGame(done)
     // passing rules' lasting time and cooldown time datas to StartGame and show
-    // passing colors datas to StartGame
+    // passing colors datas to StartGame(done)
 }

@@ -19,7 +19,8 @@ public class MainMenu {
     JButton gameHistory;
     boolean playerTurn = true; // true for player 1
 
-    // Initialziation of array that states whether a player action button has been pressed.
+    // Initialziation of array that states whether a player action button has been
+    // pressed.
     boolean[] buttonActive = new boolean[6];
 
     // Initialization of instance variables that can be customized
@@ -43,6 +44,7 @@ public class MainMenu {
     // ActionListener
     StartGame game;
     CustomizeRules rule;
+    GameHistory history;
 
     /**
      * MainMenu() is the constructor of the MainMenu class. It is ran once an
@@ -75,7 +77,7 @@ public class MainMenu {
                 createStartGame();
             }
         });
-        
+
         // Add event for customizeRules button
         customizeRules.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -83,11 +85,18 @@ public class MainMenu {
             }
         });
 
+        // Add ecent for gameHistory button
+        gameHistory.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                createGameHistory();
+            }
+        });
+
         JLabel background = new JLabel();
         background.setBackground(Color.WHITE);
         try {
             background = new JLabel(new ImageIcon(ImageIO.read(
-                new File("CBL\\gitProject\\ColorBingo.png"))));
+                    new File("CBL\\gitProject\\ColorBingo.png"))));
             background.setSize(1200, 800);
         } catch (IOException e) {
             e.printStackTrace();
@@ -133,6 +142,17 @@ public class MainMenu {
      */
     public void createCustomizeRules() {
         this.rule = new CustomizeRules(this);
+    }
+
+    /**
+     * createGameHistory() calls the costructor of the GameHistory class
+     * //from the same class instance.
+     * 
+     * The keyword "this" refers to the Main Menu containing this exact
+     * //GameHistory rule variable.
+     */
+    public void createGameHistory() {
+        this.history = new GameHistory(this);
     }
 
     public static void main(String[] args) {

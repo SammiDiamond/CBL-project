@@ -6,7 +6,8 @@ import java.util.Random;
 import javax.swing.*;
 
 /**
- * Class creates an instance of the game when "Start Game" button is pressed in Main Menu.
+ * Class creates an instance of the game when "Start Game" button is pressed in
+ * Main Menu.
  */
 public class StartGame {
     // Declaration the MainMenu object
@@ -15,7 +16,8 @@ public class StartGame {
     // Declaration of a random number generator object
     Random r = new Random();
 
-    // Initialization of a SpreadObj array of size 2 with initial objects being "null"
+    // Initialization of a SpreadObj array of size 2 with initial objects being
+    // "null"
     SpreadObj[] spreadArr = new SpreadObj[2];
 
     /**
@@ -28,6 +30,17 @@ public class StartGame {
 
         // Contents of menu are stored into the mainMenu instance variable
         this.mainMenu = menu;
+
+        // Creation of int[][] to store the action history, which will be passed onto
+        // History class
+        // fr each array element in actionHistory:
+        // array[0] using number from 0, 1, 2, 3, 4, 5 to indicate actionhistory
+        // array[1] adn array[2] indicating the coordinates of the square where the rule
+        // is used
+        // odd array indicating actionhistoiry of player1 and even array for player2
+        // the length of th e int[] may be longer than size*size so we dont initialize
+        // its length
+        int[][] actionHistory = {};
 
         // Buttons in the previous window are disabled and window is minimized
         mainMenu.menuFrame.setState(JFrame.ICONIFIED);
@@ -46,11 +59,11 @@ public class StartGame {
         turnLabel.setFont(new Font("Arial", Font.BOLD, 35));
 
         // Creation of JLabel tells the action made in last round
-        JLabel historyLabel = new JLabel();
-        historyLabel.setForeground(mainMenu.p1Color);
+        JLabel actionHistoryLabel = new JLabel("No action yet");
+        actionHistoryLabel.setForeground(mainMenu.p1Color);
         // JLabel details are assigned
-        historyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        historyLabel.setFont(new Font("Arial", Font.BOLD, 35));
+        actionHistoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        actionHistoryLabel.setFont(new Font("Arial", Font.BOLD, 35));
 
         // JPanel that will hold all of the player action buttons is initialized
         JPanel buttonPanel = new JPanel();
@@ -256,7 +269,7 @@ public class StartGame {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
                             } else if (mainMenu.buttonActive[4]) {
                                 mainMenu.buttonGrid[row][col].setBorder(BorderFactory
-                                    .createLineBorder(mainMenu.p2Color, 4));
+                                        .createLineBorder(mainMenu.p2Color, 4));
                             } else {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
                                 SpreadObj p1Spread = new SpreadObj(row, col);
@@ -267,12 +280,12 @@ public class StartGame {
                             if (spreadArr[0] != null) {
                                 if (spreadArr[0].getDelay() == 0) {
                                     boolean nearbyEmpty = false;
-                            
+
                                     int rowMin = -1;
                                     int rowMax = 2;
                                     int colMin = -1;
                                     int colMax = 2;
-                            
+
                                     // Check edges of the grid
                                     if (spreadArr[0].getRow() == 0) {
                                         rowMin = 0; // Can't go up
@@ -286,32 +299,29 @@ public class StartGame {
                                     if (spreadArr[0].getCol() == mainMenu.gridSize - 1) {
                                         colMax = 1; // Can't go right
                                     }
-                            
+
                                     // Check for empty cells
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
-                                            if (mainMenu.buttonGrid[spreadArr[0].getRow() + i]
-                                                [spreadArr[0].getCol() + j].getBackground()
-                                                == Color.WHITE) {
+                                            if (mainMenu.buttonGrid[spreadArr[0].getRow() + i][spreadArr[0].getCol()
+                                                    + j].getBackground() == Color.WHITE) {
                                                 nearbyEmpty = true;
                                             }
                                         }
                                     }
-                            
+
                                     if (nearbyEmpty) {
                                         boolean found = false;
                                         while (!found) {
                                             int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
-                            
-                                            if (mainMenu.buttonGrid
-                                                [spreadArr[0].getRow() + randomRow]
-                                                [spreadArr[0].getCol() + randomCol]
-                                                .getBackground() == Color.WHITE) {
-                                                mainMenu.buttonGrid
-                                                    [spreadArr[0].getRow() + randomRow]
-                                                    [spreadArr[0].getCol() + randomCol]
-                                                    .setBackground(mainMenu.p1Color);
+
+                                            if (mainMenu.buttonGrid[spreadArr[0].getRow() + randomRow][spreadArr[0]
+                                                    .getCol() + randomCol]
+                                                    .getBackground() == Color.WHITE) {
+                                                mainMenu.buttonGrid[spreadArr[0].getRow() + randomRow][spreadArr[0]
+                                                        .getCol() + randomCol]
+                                                        .setBackground(mainMenu.p1Color);
                                                 found = true;
                                             }
                                         }
@@ -321,7 +331,6 @@ public class StartGame {
                                     spreadArr[0].setDelay(spreadArr[0].getDelay() - 1);
                                 }
                             }
-                            
 
                         } else { // When player 2 presses a button the below code is executed
 
@@ -337,7 +346,7 @@ public class StartGame {
                                 mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
                             } else if (mainMenu.buttonActive[4]) {
                                 mainMenu.buttonGrid[row][col].setBorder(BorderFactory
-                                    .createLineBorder(mainMenu.p1Color, 4));
+                                        .createLineBorder(mainMenu.p1Color, 4));
                             } else {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
                                 SpreadObj p2Spread = new SpreadObj(row, col);
@@ -348,12 +357,12 @@ public class StartGame {
                             if (spreadArr[1] != null) {
                                 if (spreadArr[1].getDelay() == 0) {
                                     boolean nearbyEmpty = false;
-                            
+
                                     int rowMin = -1;
                                     int rowMax = 2;
                                     int colMin = -1;
                                     int colMax = 2;
-                            
+
                                     // Check edges of the grid
                                     if (spreadArr[1].getRow() == 0) {
                                         rowMin = 0; // Can't go up
@@ -367,32 +376,29 @@ public class StartGame {
                                     if (spreadArr[1].getCol() == mainMenu.gridSize - 1) {
                                         colMax = 1; // Can't go right
                                     }
-                            
+
                                     // Check for empty cells
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
-                                            if (mainMenu.buttonGrid[spreadArr[1].getRow() + i]
-                                                [spreadArr[1].getCol() + j].getBackground()
-                                                == Color.WHITE) {
+                                            if (mainMenu.buttonGrid[spreadArr[1].getRow() + i][spreadArr[1].getCol()
+                                                    + j].getBackground() == Color.WHITE) {
                                                 nearbyEmpty = true;
                                             }
                                         }
                                     }
-                            
+
                                     if (nearbyEmpty) {
                                         boolean found = false;
                                         while (!found) {
                                             int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
-                            
-                                            if (mainMenu.buttonGrid
-                                                [spreadArr[1].getRow() + randomRow]
-                                                [spreadArr[1].getCol() + randomCol]
-                                                .getBackground() == Color.WHITE) {
-                                                mainMenu.buttonGrid
-                                                    [spreadArr[1].getRow() + randomRow]
-                                                    [spreadArr[1].getCol() + randomCol]
-                                                    .setBackground(mainMenu.p2Color);
+
+                                            if (mainMenu.buttonGrid[spreadArr[1].getRow() + randomRow][spreadArr[1]
+                                                    .getCol() + randomCol]
+                                                    .getBackground() == Color.WHITE) {
+                                                mainMenu.buttonGrid[spreadArr[1].getRow() + randomRow][spreadArr[1]
+                                                        .getCol() + randomCol]
+                                                        .setBackground(mainMenu.p2Color);
                                                 found = true;
                                             }
                                         }
@@ -402,7 +408,7 @@ public class StartGame {
                                     spreadArr[1].setDelay(spreadArr[1].getDelay() - 1);
                                 }
                             }
-                            
+
                         }
 
                         // playerTurn changes for the next player's turn
@@ -433,7 +439,8 @@ public class StartGame {
             }
         }
 
-        // All player action buttons are added to the buttonPanel with a gap between them
+        // All player action buttons are added to the buttonPanel with a gap between
+        // them
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(turnLabel);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
@@ -448,7 +455,7 @@ public class StartGame {
         buttonPanel.add(protect);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(spread);
-        buttonPanel.add(historyLabel);
+        buttonPanel.add(actionHistoryLabel);
 
         // The two panels are added to the game frame
         game.add(buttonPanel);
@@ -549,10 +556,10 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i][j + 1].getBackground()
-                    && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
-                    && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
-                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                        && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
+                        && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
+                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
@@ -576,10 +583,10 @@ public class StartGame {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j].getBackground()
-                    && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
-                    && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
-                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                        && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
+                        && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
+                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                         return 1;
                     } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
@@ -605,26 +612,21 @@ public class StartGame {
 
                 // Condition for an increasing diagonal
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
-                    && buttonGrid[i + 1][j + 1].getBackground()
-                    == buttonGrid[i + 2][j + 2].getBackground()
-                    && buttonGrid[i + 2][j + 2].getBackground()
-                    == buttonGrid[i + 3][j + 3].getBackground()
-                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                        && buttonGrid[i + 1][j + 1].getBackground() == buttonGrid[i + 2][j + 2].getBackground()
+                        && buttonGrid[i + 2][j + 2].getBackground() == buttonGrid[i + 3][j + 3].getBackground()
+                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j + 3].getBackground() == mainMenu.p2Color) {
                         return 2;
                     }
                     // Condition for a decreasing diagonal
-                } else if (buttonGrid[i + 3][j].getBackground()
-                    == buttonGrid[i + 2][j + 1].getBackground()
-                    && buttonGrid[i + 2][j + 1].getBackground()
-                    == buttonGrid[i + 1][j + 2].getBackground()
-                    && buttonGrid[i + 1][j + 2].getBackground()
-                    == buttonGrid[i][j + 3].getBackground()
-                    && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
-                    && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
+                } else if (buttonGrid[i + 3][j].getBackground() == buttonGrid[i + 2][j + 1].getBackground()
+                        && buttonGrid[i + 2][j + 1].getBackground() == buttonGrid[i + 1][j + 2].getBackground()
+                        && buttonGrid[i + 1][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
+                        && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
+                        && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i + 3][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i + 3][j].getBackground() == mainMenu.p2Color) {
@@ -664,7 +666,8 @@ public class StartGame {
         JButton exitButton = new JButton("Return to Main Menu");
         exitButton.setFont(new Font("Arial", Font.BOLD, 25));
 
-        // Event is added to JButton to dispose of previous frames and return to Main Menu
+        // Event is added to JButton to dispose of previous frames and return to Main
+        // Menu
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -706,11 +709,12 @@ public class StartGame {
 class SpreadObj {
     // Initialization of all SpreadObj instance variables
     private int delay = 1;
-    private int row = - 1;
-    private int col = - 1;
+    private int row = -1;
+    private int col = -1;
 
     /**
-     * SpreadObj constructor that initializes the object's instance variables excluding the delay.
+     * SpreadObj constructor that initializes the object's instance variables
+     * excluding the delay.
      * 
      * @param row integer: Passes the row number of the spread cell to the spreadObj
      * @param col integer: Passes the col number of the spread cell to the spreadObj

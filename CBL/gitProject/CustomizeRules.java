@@ -51,13 +51,14 @@ public class CustomizeRules {
         boolean buttonProtectOn = false;
         boolean buttonSpreadOn = false;
         boolean[] buttonOnOff = { buttonSwapOn, buttonObOn, buttonElimOn, buttonProtectOn,
-            buttonSpreadOn, buttonPlayer1ColorOn, buttonP2ColorOn };
+                buttonSpreadOn, buttonPlayer1ColorOn, buttonP2ColorOn };
 
         // Creation of size to store grid size
         // using array to avoid "local variable defined in an enclosing scope" error
-        int[] size = {0};
+        int[] size = { 0 };
 
-        // Creation of final colors for each player, index 0 for player 1 color and index 1
+        // Creation of final colors for each player, index 0 for player 1 color and
+        // index 1
         // for player 2 color
         Color[] finalColor = new Color[2];
 

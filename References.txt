@@ -1,2 +1,3 @@
 Create file & writer to file: https://www.w3schools.com/java/java_files_create.asp
 Read from file: https://www.w3schools.com/java/java_files_read.asp
+ArrayList usage: https://www.w3schools.com/java/java_arraylist.asp

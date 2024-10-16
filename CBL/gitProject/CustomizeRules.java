@@ -43,23 +43,25 @@ public class CustomizeRules {
         // Creation of boolean values for each rule's button, true/false indicating rule
         // on/off
         // using array to avoid "local variable defined in an enclosing scope" error
-        boolean buttonSwapOn = false;
-        boolean buttonObOn = false;
-        boolean buttonElimOn = false;
-        boolean buttonPlayer1ColorOn = false;
-        boolean buttonP2ColorOn = false;
-        boolean buttonProtectOn = false;
-        boolean buttonSpreadOn = false;
-        boolean[] buttonOnOff = { buttonSwapOn, buttonObOn, buttonElimOn, buttonProtectOn,
-                buttonSpreadOn, buttonPlayer1ColorOn, buttonP2ColorOn };
+        boolean buttonSwapOn = true;
+        boolean buttonObOn = true;
+        boolean buttonElimOn = true;
+        boolean buttonPlayer1ColorOn = true;
+        boolean buttonP2ColorOn = true;
+        boolean buttonProtectOn = true;
+        boolean buttonSpreadOn = true;
+        boolean[] buttonOnOff = {
+            buttonSwapOn, buttonObOn, buttonElimOn, buttonProtectOn,
+            buttonSpreadOn, buttonPlayer1ColorOn, buttonP2ColorOn
+            };
 
         // Creation of size to store grid size
         // using array to avoid "local variable defined in an enclosing scope" error
-        int[] size = { 0 };
+        int[] size = {0};
 
         // Creation of final colors for each player, index 0 for player 1 color and
         // index 1 for player 2 color
-        Color[] finalColor = new Color[2];
+        Color[] finalColor = {mainMenu.p1Color, mainMenu.p2Color};
 
         // Creation of datas for each rules, used for calculation
         // 3 for the numbers of the total rules(become 5 if spread and protect rules are
@@ -71,11 +73,13 @@ public class CustomizeRules {
         // Creation of two labels showing p1Color and p2Color
         JLabel p1Color = new JLabel();
         p1Color.setSize(5, 5);
+        p1Color.setBackground(mainMenu.p1Color);
         p1Color.setVisible(true);
         p1Color.setBorder(BorderFactory.createRaisedBevelBorder());
 
         JLabel p2Color = new JLabel();
         p2Color.setSize(50, 50);
+        p2Color.setBackground(mainMenu.p2Color);
         p2Color.setVisible(true);
         p2Color.setBorder(BorderFactory.createRaisedBevelBorder());
 
@@ -114,7 +118,7 @@ public class CustomizeRules {
         });
 
         // Create button and set up ActionListener for each rule
-        JButton buttonSwap = new JButton("OFF");
+        JButton buttonSwap = new JButton("ON");
         buttonSwap.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonSwap.setFocusable(false);
         buttonSwap.addActionListener(new ActionListener() {
@@ -128,7 +132,7 @@ public class CustomizeRules {
             }
         });
 
-        JButton buttonOb = new JButton("OFF");
+        JButton buttonOb = new JButton("ON");
         buttonOb.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonOb.setFocusable(false);
         buttonOb.addActionListener(new ActionListener() {
@@ -142,7 +146,7 @@ public class CustomizeRules {
             }
         });
 
-        JButton buttonElim = new JButton("OFF");
+        JButton buttonElim = new JButton("ON");
         buttonElim.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonElim.setFocusable(false);
         buttonElim.addActionListener(new ActionListener() {
@@ -156,7 +160,7 @@ public class CustomizeRules {
             }
         });
 
-        JButton buttonProtect = new JButton("OFF");
+        JButton buttonProtect = new JButton("ON");
         buttonProtect.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonProtect.setFocusable(false);
         buttonProtect.addActionListener(new ActionListener() {
@@ -170,7 +174,7 @@ public class CustomizeRules {
             }
         });
 
-        JButton buttonSpread = new JButton("OFF");
+        JButton buttonSpread = new JButton("ON");
         buttonSpread.setBorder(BorderFactory.createRaisedBevelBorder());
         buttonSpread.setFocusable(false);
         buttonSpread.addActionListener(new ActionListener() {
@@ -199,7 +203,7 @@ public class CustomizeRules {
         JButton size7X7 = new JButton("7*7");
         size7X7.setBackground(null);
         JButton size8X8 = new JButton("8*8");
-        size8X8.setBackground(null);
+        size8X8.setBackground(Color.LIGHT_GRAY);
         JButton size9X9 = new JButton("9*9");
         size9X9.setBackground(null);
         JButton size10X10 = new JButton("10*10");
@@ -362,9 +366,9 @@ public class CustomizeRules {
         color.setLayout(new GridLayout(1, 3, 10, 0));
 
         // region: Create various color buttons for player 1
-        JButton p1Red = new JButton(new ImageIcon("CBL\\icons\\red.png"));
+        JButton p1Red = new JButton(new ImageIcon("CBL\\icons\\red_chosen.png"));
         JButton p1Orange = new JButton(new ImageIcon("CBL\\icons\\orange.png"));
-        JButton p1Yellow = new JButton(new ImageIcon("CBL\\icons\\yellow.png"));
+        JButton p1Yellow = new JButton(new ImageIcon("CBL\\icons\\yellow_occupied.png"));
         JButton p1Green = new JButton(new ImageIcon("CBL\\icons\\green.png"));
         JButton p1Cyan = new JButton(new ImageIcon("CBL\\icons\\cyan.png"));
         JButton p1Blue = new JButton(new ImageIcon("CBL\\icons\\blue.png"));
@@ -391,9 +395,9 @@ public class CustomizeRules {
         p1ColorPanel.setBorder(BorderFactory.createRaisedBevelBorder());
 
         // region: Creation of choosing-color panel for player 2
-        JButton p2RedRed = new JButton(new ImageIcon("CBL\\icons\\red.png"));
+        JButton p2RedRed = new JButton(new ImageIcon("CBL\\icons\\red_occupied.png"));
         JButton p2Orange = new JButton(new ImageIcon("CBL\\icons\\orange.png"));
-        JButton p2Yellow = new JButton(new ImageIcon("CBL\\icons\\yellow.png"));
+        JButton p2Yellow = new JButton(new ImageIcon("CBL\\icons\\yellow_chosen.png"));
         JButton p2Green = new JButton(new ImageIcon("CBL\\icons\\green.png"));
         JButton p2Cyan = new JButton(new ImageIcon("CBL\\icons\\cyan.png"));
         JButton p2Blue = new JButton(new ImageIcon("CBL\\icons\\blue.png"));

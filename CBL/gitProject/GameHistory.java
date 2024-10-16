@@ -1,13 +1,20 @@
 package CBL.gitProject;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class GameHistory {
 
     // Declaration the MainMenu object
     MainMenu mainMenu;
+    ArrayList<String> totalGames = new ArrayList<String>();
 
     /**
      * Constructor responsible for the GUI for the gameplay.
@@ -37,6 +44,7 @@ public class GameHistory {
 
         // Creating details panel for each game history
         JPanel history1 = new JPanel();
+        readFromFile();
 
         /*
          * To-do list for GameHistory class:
@@ -49,19 +57,39 @@ public class GameHistory {
          ** buttons for shown panel going up and down
          */
     }
+
+    /**
+     * 
+     */
+    void readFromFile() {
+        try {
+            File txtFile = new File("CBL\\gitProject\\gameHistory.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(txtFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String data = line;
+                totalGames.add(data);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
-
+/**
+ * GameDetails class stores all details of a game.
+ */
 class GameDetails {
 
     MainMenu mainMenu;
     
     // Declare instance variables
-    private LocalDate date;
-    private boolean[] rules;
-    private int gridSize;
-    private int rounds;
     private int winner;
+    private boolean[] rules;
+    private int rounds;
+    private int gridSize;
+    private LocalDate date;
     private Color p1Color;
     private Color p2Color;
 
@@ -73,24 +101,33 @@ class GameDetails {
      * @param rounds integer: the total number of rounds played in a match
      * @param winner integer: 1 if player 1 won, 2 if player 2 won, 0 if it was a draw
      */
-    GameDetails(MainMenu mainMenu, boolean[] rules, int gridSize, int rounds, int winner) {
+    GameDetails(MainMenu mainMenu, int winner, boolean[] rules, int gridSize, int rounds) {
 
         this.mainMenu = mainMenu;
-        this.date = LocalDate.now();
+        this.winner = winner;
         this.rules = rules;
-        this.gridSize = gridSize;
         this.rounds = rounds;
+        this.gridSize = gridSize;
+        this.date = LocalDate.now();
         this.p1Color = mainMenu.p1Color;
         this.p2Color = mainMenu.p2Color;
     }
 
-    // Initialize Getters for all instance variables
-    public String getDate() {
-        return date.toString();
+    // Initialize getters that return the variable values in String
+    public String getWinner() {
+        return Integer.toString(winner);
     }
 
     public String getRules() {
-        return rules.toString();
+        String str = "";
+        for (int i = 0; i < rules.length; i++) {
+            if (rules[i]) {
+                str = str + " true";
+            } else {
+                str = str + " false";
+            }
+        }
+        return str;
     }
 
     public String getGridSize() {
@@ -101,8 +138,8 @@ class GameDetails {
         return Integer.toString(rounds);
     }
 
-    public String getWinner() {
-        return Integer.toString(winner);
+    public String getDate() {
+        return date.toString();
     }
 
     public String getP1Color() {
@@ -111,5 +148,25 @@ class GameDetails {
 
     public String getP2Color() {
         return p2Color.toString();
+    }
+
+    /**
+     * 
+     */
+    public void writeToFile() {
+        try {
+            File txtFile = new File("CBL\\gitProject\\gameHistory.txt");
+            FileWriter writer = new FileWriter("CBL\\gitProject\\gameHistory.txt");
+            writer.write(getWinner()
+                + " " + getRules()
+                + " " + getRounds()
+                + " " + getGridSize()
+                + " " + getDate()
+                + " " + getP1Color()
+                + " " + getP2Color() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

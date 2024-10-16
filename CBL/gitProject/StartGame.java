@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  * Class creates an instance of the game when "Start Game" button is pressed in
@@ -19,6 +20,9 @@ public class StartGame {
 
     // Initialization of a SpreadObj array of size 2 with initial objects being "null"
     SpreadObj[] spreadArr = new SpreadObj[2];
+
+    // Initialization of variables storing game details
+    static int rounds = 0;
 
     /**
      * Constructor responsible for the GUI for the gameplay.
@@ -242,6 +246,8 @@ public class StartGame {
 
                 mainMenu.buttonGrid[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        // Round is incremented
+                        rounds++;
 
                         // When player 1 presses a button the below code is executed
                         if (mainMenu.playerTurn) {
@@ -442,15 +448,25 @@ public class StartGame {
         buttonPanel.add(place);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(swap);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        if (mainMenu.swapRule) {
+            buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        }
         buttonPanel.add(obstacle);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        if (mainMenu.obstacleRule) {
+            buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        }
         buttonPanel.add(eliminate);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        if (mainMenu.eliminateRule) {
+            buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        }
         buttonPanel.add(protect);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        if (mainMenu.protectRule) {
+            buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        }
         buttonPanel.add(spread);
-        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        if (mainMenu.spreadRule) {
+            buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
+        }
         buttonPanel.add(actionHistoryLabel);
 
         // The two panels are added to the game frame
@@ -484,7 +500,7 @@ public class StartGame {
     }
 
     /**
-     * Method that enables all buttons of the color of the opposite player.
+     * Method that enables all non-protected buttons of the color of the opposite player.
      * 
      * @param buttonGrid JButton[][] that stores all of the JButtons in the grid
      * @param mainMenu   MainMenu object needed to access some instance variables
@@ -493,8 +509,6 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(false);
-                Border p1Protected = BorderFactory.createLineBorder(mainMenu.p1Color, 4);
-                Border p2Protected = BorderFactory.createLineBorder(mainMenu.p2Color, 4);
     
                 // Check for player 1's turn
                 if (!mainMenu.playerTurn 
@@ -508,22 +522,22 @@ public class StartGame {
                             buttonGrid[i][j].setEnabled(true);
                         }
                     } else {
-                        buttonGrid[i][j].setEnabled(true); // If the border is not a LineBorder
+                        buttonGrid[i][j].setEnabled(true); // If the border is not colored black
                     }
-                } 
+                
                 // Check for player 2's turn
-                else if (mainMenu.playerTurn 
+                } else if (mainMenu.playerTurn 
                     && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                     
                     Border border = buttonGrid[i][j].getBorder();
                     if (border instanceof LineBorder) {
                         LineBorder lineBorder = (LineBorder) border;
-                        if (!lineBorder.getLineColor()
+                        if (lineBorder.getLineColor()
                             .equals(Color.BLACK)) {
                             buttonGrid[i][j].setEnabled(true);
                         }
                     } else {
-                        buttonGrid[i][j].setEnabled(true); // If the border is not a LineBorder
+                        buttonGrid[i][j].setEnabled(true); // If the border is not colored black
                     }
                 }
             }
@@ -684,6 +698,10 @@ public class StartGame {
         // JFrame is initialized
         JFrame winFrame = new JFrame();
 
+        GameDetails details = new GameDetails(mainMenu, winner, mainMenu.buttonActive,
+            mainMenu.gridSize, rounds);
+
+        details.writeToFile();
         // JLabel is initialize stating the player who won
         JLabel winnerLabel;
         if (winner == 1) {

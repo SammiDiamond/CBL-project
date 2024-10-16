@@ -27,8 +27,8 @@ public class MainMenu {
     // Initial values are stored in all of them so the game can run without
     // requiring any customization
     int gridSize = 8;
-    Color p1Color;
-    Color p2Color;
+    Color p1Color = Color.RED;
+    Color p2Color = Color.YELLOW;
 
     // obtain value from CustomizaRlues class
     boolean swapRule = true;
@@ -47,9 +47,9 @@ public class MainMenu {
     // array[1] adn array[2] indicating the coordinates of the square where the rule
     // is used
     // odd array indicating actionhistoiry of player1 and even array for player2
-    // the length of th e int[] may be longer than size*size so we dont initialize
+    // the length of the int[] may be longer than size*size so we dont initialize
     // its length
-    int[][] actionHistory = {};
+    int[][] actionHistory;
 
     // Declaration of class objects to call their constructors from within an
     // ActionListener

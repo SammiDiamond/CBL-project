@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  * Class creates an instance of the game when "Start Game" button is pressed in
@@ -16,8 +17,7 @@ public class StartGame {
     // Declaration of a random number generator object
     Random r = new Random();
 
-    // Initialization of a SpreadObj array of size 2 with initial objects being
-    // "null"
+    // Initialization of a SpreadObj array of size 2 with initial objects being "null"
     SpreadObj[] spreadArr = new SpreadObj[2];
 
     /**
@@ -229,7 +229,7 @@ public class StartGame {
                 mainMenu.buttonGrid[i][j] = new JButton();
                 mainMenu.buttonGrid[i][j].setBackground(Color.WHITE);
                 mainMenu.buttonGrid[i][j].setBorder(
-                        BorderFactory.createLineBorder(Color.DARK_GRAY));
+                    BorderFactory.createLineBorder(Color.DARK_GRAY));
                 mainMenu.buttonGrid[i][j].setPreferredSize(new Dimension(90, 90));
                 mainMenu.buttonGrid[i][j].setEnabled(false);
 
@@ -292,7 +292,8 @@ public class StartGame {
                                     // Check for empty cells
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
-                                            if (mainMenu.buttonGrid[spreadArr[0].getRow() + i][spreadArr[0].getCol()
+                                            if (mainMenu.buttonGrid[spreadArr[0]
+                                                .getRow() + i][spreadArr[0].getCol()
                                                     + j].getBackground() == Color.WHITE) {
                                                 nearbyEmpty = true;
                                             }
@@ -305,10 +306,12 @@ public class StartGame {
                                             int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
 
-                                            if (mainMenu.buttonGrid[spreadArr[0].getRow() + randomRow][spreadArr[0]
+                                            if (mainMenu.buttonGrid[spreadArr[0]
+                                                .getRow() + randomRow][spreadArr[0]
                                                     .getCol() + randomCol]
                                                     .getBackground() == Color.WHITE) {
-                                                mainMenu.buttonGrid[spreadArr[0].getRow() + randomRow][spreadArr[0]
+                                                mainMenu.buttonGrid[spreadArr[0]
+                                                    .getRow() + randomRow][spreadArr[0]
                                                         .getCol() + randomCol]
                                                         .setBackground(mainMenu.p1Color);
                                                 found = true;
@@ -369,7 +372,8 @@ public class StartGame {
                                     // Check for empty cells
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
-                                            if (mainMenu.buttonGrid[spreadArr[1].getRow() + i][spreadArr[1].getCol()
+                                            if (mainMenu.buttonGrid[spreadArr[1]
+                                                .getRow() + i][spreadArr[1].getCol()
                                                     + j].getBackground() == Color.WHITE) {
                                                 nearbyEmpty = true;
                                             }
@@ -382,10 +386,12 @@ public class StartGame {
                                             int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
 
-                                            if (mainMenu.buttonGrid[spreadArr[1].getRow() + randomRow][spreadArr[1]
+                                            if (mainMenu.buttonGrid[spreadArr[1].getRow()
+                                                + randomRow][spreadArr[1]
                                                     .getCol() + randomCol]
                                                     .getBackground() == Color.WHITE) {
-                                                mainMenu.buttonGrid[spreadArr[1].getRow() + randomRow][spreadArr[1]
+                                                mainMenu.buttonGrid[spreadArr[1]
+                                                    .getRow() + randomRow][spreadArr[1]
                                                         .getCol() + randomCol]
                                                         .setBackground(mainMenu.p2Color);
                                                 found = true;
@@ -444,6 +450,7 @@ public class StartGame {
         buttonPanel.add(protect);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(spread);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(actionHistoryLabel);
 
         // The two panels are added to the game frame
@@ -486,15 +493,43 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(false);
-                if (!mainMenu.playerTurn & buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
-                    buttonGrid[i][j].setEnabled(true);
-                } else if (mainMenu.playerTurn
-                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
-                    buttonGrid[i][j].setEnabled(true);
+                Border p1Protected = BorderFactory.createLineBorder(mainMenu.p1Color, 4);
+                Border p2Protected = BorderFactory.createLineBorder(mainMenu.p2Color, 4);
+    
+                // Check for player 1's turn
+                if (!mainMenu.playerTurn 
+                    && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
+                    
+                    Border border = buttonGrid[i][j].getBorder();
+                    if (border instanceof LineBorder) {
+                        LineBorder lineBorder = (LineBorder) border;
+                        if (lineBorder.getLineColor()
+                            .equals(Color.BLACK)) {
+                            buttonGrid[i][j].setEnabled(true);
+                        }
+                    } else {
+                        buttonGrid[i][j].setEnabled(true); // If the border is not a LineBorder
+                    }
+                } 
+                // Check for player 2's turn
+                else if (mainMenu.playerTurn 
+                    && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                    
+                    Border border = buttonGrid[i][j].getBorder();
+                    if (border instanceof LineBorder) {
+                        LineBorder lineBorder = (LineBorder) border;
+                        if (!lineBorder.getLineColor()
+                            .equals(Color.BLACK)) {
+                            buttonGrid[i][j].setEnabled(true);
+                        }
+                    } else {
+                        buttonGrid[i][j].setEnabled(true); // If the border is not a LineBorder
+                    }
                 }
             }
         }
     }
+    
 
     /**
      * Method that enables all buttons of the color of the same player.
@@ -509,7 +544,7 @@ public class StartGame {
                 if (mainMenu.playerTurn && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                     buttonGrid[i][j].setEnabled(true);
                 } else if (!mainMenu.playerTurn
-                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                    && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }
@@ -545,8 +580,10 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i][j + 1].getBackground()
-                        && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
-                        && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
+                        && buttonGrid[i][j + 1].getBackground()
+                        == buttonGrid[i][j + 2].getBackground()
+                        && buttonGrid[i][j + 2].getBackground()
+                        == buttonGrid[i][j + 3].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
@@ -572,11 +609,13 @@ public class StartGame {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j].getBackground()
-                        && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
-                        && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
+                        && buttonGrid[i + 1][j].getBackground()
+                        == buttonGrid[i + 2][j].getBackground()
+                        && buttonGrid[i + 2][j].getBackground()
+                        == buttonGrid[i + 3][j].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
-                    if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                    if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                         return 2;
@@ -601,8 +640,10 @@ public class StartGame {
 
                 // Condition for an increasing diagonal
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
-                        && buttonGrid[i + 1][j + 1].getBackground() == buttonGrid[i + 2][j + 2].getBackground()
-                        && buttonGrid[i + 2][j + 2].getBackground() == buttonGrid[i + 3][j + 3].getBackground()
+                        && buttonGrid[i + 1][j + 1].getBackground()
+                        == buttonGrid[i + 2][j + 2].getBackground()
+                        && buttonGrid[i + 2][j + 2].getBackground()
+                        == buttonGrid[i + 3][j + 3].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
@@ -611,9 +652,12 @@ public class StartGame {
                         return 2;
                     }
                     // Condition for a decreasing diagonal
-                } else if (buttonGrid[i + 3][j].getBackground() == buttonGrid[i + 2][j + 1].getBackground()
-                        && buttonGrid[i + 2][j + 1].getBackground() == buttonGrid[i + 1][j + 2].getBackground()
-                        && buttonGrid[i + 1][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
+                } else if (buttonGrid[i + 3][j].getBackground()
+                    == buttonGrid[i + 2][j + 1].getBackground()
+                        && buttonGrid[i + 2][j + 1].getBackground()
+                        == buttonGrid[i + 1][j + 2].getBackground()
+                        && buttonGrid[i + 1][j + 2].getBackground()
+                        == buttonGrid[i][j + 3].getBackground()
                         && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i + 3][j].getBackground() == mainMenu.p1Color) {

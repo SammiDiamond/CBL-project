@@ -2,10 +2,12 @@ package CBL.gitProject;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
 
 /**
  * Class creates an instance of the game when "Start Game" button is pressed in
@@ -35,16 +37,15 @@ public class StartGame {
     // odd array indicating actionhistoiry of player1 and even array for player2
     // the length of the int[] may be longer than size*size so we dont initialize
     // its length
-    int[][] actionHistory = {};
+    ArrayList<int[]> actionHistory = new ArrayList<int[]>();
     String action = "";
     // Creation of String[] to store the names of the rules, used later in
     // actionHistoryLabel
-    String[] rulesName = { "\"Place\"", "\"Swap\"",
-            "\"Obstacle\"", "\"Eliminate\"", "\"Protect\"", "\"Spread\"" };
+    String[] rulesName = { "Place", "Swap",
+        "Obstacle", "Eliminate", "Protect", "Spread" };
 
     // Initialization of variables storing game details
     static int rounds = 0;
-    static int roundNum = 0;
 
     /**
      * Constructor responsible for the GUI for the gameplay.
@@ -78,7 +79,7 @@ public class StartGame {
         actionHistoryLabel.setForeground(mainMenu.p1Color);
         // JLabel details are assigned
         actionHistoryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        actionHistoryLabel.setFont(new Font("Arial", Font.BOLD, 35));
+        actionHistoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // JPanel that will hold all of the player action buttons is initialized
         JPanel buttonPanel = new JPanel();
@@ -93,6 +94,7 @@ public class StartGame {
         JButton eliminate = new JButton("Eliminate");
         JButton protect = new JButton("Protect");
         JButton spread = new JButton("Spread");
+        JButton giveUp = new JButton("Give Up");
 
         // JPanel that will hold all of the grid buttons in the game is initialized
         JPanel gridPanel = new JPanel();
@@ -106,33 +108,36 @@ public class StartGame {
 
         swap.setAlignmentX(Component.CENTER_ALIGNMENT);
         swap.setFont(new Font("Arial", Font.BOLD, 25));
-        if (!mainMenu.swapRule) {
+        if (!mainMenu.rules[0]) {
             swap.setVisible(false);
         }
 
         obstacle.setAlignmentX(Component.CENTER_ALIGNMENT);
         obstacle.setFont(new Font("Arial", Font.BOLD, 25));
-        if (!mainMenu.obstacleRule) {
+        if (!mainMenu.rules[1]) {
             obstacle.setVisible(false);
         }
 
         eliminate.setAlignmentX(Component.CENTER_ALIGNMENT);
         eliminate.setFont(new Font("Arial", Font.BOLD, 25));
-        if (!mainMenu.eliminateRule) {
+        if (!mainMenu.rules[2]) {
             eliminate.setVisible(false);
         }
 
         protect.setAlignmentX(Component.CENTER_ALIGNMENT);
         protect.setFont(new Font("Arial", Font.BOLD, 25));
-        if (!mainMenu.protectRule) {
+        if (!mainMenu.rules[3]) {
             protect.setVisible(false);
         }
 
         spread.setAlignmentX(Component.CENTER_ALIGNMENT);
         spread.setFont(new Font("Arial", Font.BOLD, 25));
-        if (!mainMenu.spreadRule) {
+        if (!mainMenu.rules[4]) {
             spread.setVisible(false);
         }
+
+        giveUp.setAlignmentX(Component.CENTER_ALIGNMENT);
+        giveUp.setFont(new Font("Arial", Font.BOLD, 25));
 
         // Events are assigned to player action buttons
         place.addActionListener(new ActionListener() {
@@ -249,6 +254,12 @@ public class StartGame {
             }
         });
 
+        giveUp.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                giveUp(game, mainMenu);
+            }
+        });
+
         // Initialization of all all JButtons in the grid
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
@@ -269,9 +280,8 @@ public class StartGame {
                 mainMenu.buttonGrid[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         // Round is incremented
-                        actionHistory[roundNum][1] = row;
-                        actionHistory[roundNum][2] = col;
-                        roundNum++;
+                        int[] actionCoords = {row, col};
+                        actionHistory.add(actionCoords);
                         rounds++;
 
                         // When player 1 presses a button the below code is executed
@@ -281,9 +291,10 @@ public class StartGame {
                             turnLabel.setForeground(mainMenu.p2Color);
 
                             // change actionhistory
-                            actionHistoryLabel.setText("Player1 used" + action + "on("
-                                    + Integer.toString(actionHistory[roundNum][1]) + ", "
-                                    + Integer.toString(actionHistory[roundNum][2]) + ")");
+                            actionHistoryLabel.setText("Player 1 used: " + action + " on ("
+                                    + actionHistory.get(actionHistory.size() - 1)[0] + ", "
+                                    + actionHistory.get(actionHistory.size() - 1)[1] + ")");
+                            actionHistoryLabel.setForeground(mainMenu.p1Color);
 
                             if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
@@ -366,9 +377,10 @@ public class StartGame {
                             turnLabel.setText("Player 1's turn.");
                             turnLabel.setForeground(mainMenu.p1Color);
                             // change actionhistory
-                            actionHistoryLabel.setText("Player2 used" + action + "on("
-                                    + Integer.toString(actionHistory[roundNum][1]) + ", "
-                                    + Integer.toString(actionHistory[roundNum][2]) + ")");
+                            actionHistoryLabel.setText("Player 2 used: " + action + " on ("
+                                    + actionHistory.get(actionHistory.size() - 1)[0] + ", "
+                                    + actionHistory.get(actionHistory.size() - 1)[1] + ")");
+                            actionHistoryLabel.setForeground(mainMenu.p2Color);
 
                             if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
@@ -469,7 +481,6 @@ public class StartGame {
                         if (storeWinNum != 0) {
                             postWin(storeWinNum, game, mainMenu);
                         }
-                        System.out.println(roundNum);
                     }
                 });
             }
@@ -483,25 +494,27 @@ public class StartGame {
         buttonPanel.add(place);
         buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(swap);
-        if (mainMenu.swapRule) {
+        if (mainMenu.rules[0]) {
             buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         }
         buttonPanel.add(obstacle);
-        if (mainMenu.obstacleRule) {
+        if (mainMenu.rules[1]) {
             buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         }
         buttonPanel.add(eliminate);
-        if (mainMenu.eliminateRule) {
+        if (mainMenu.rules[2]) {
             buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         }
         buttonPanel.add(protect);
-        if (mainMenu.protectRule) {
+        if (mainMenu.rules[3]) {
             buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         }
         buttonPanel.add(spread);
-        if (mainMenu.spreadRule) {
+        if (mainMenu.rules[4]) {
             buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         }
+        buttonPanel.add(giveUp);
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 25)));
         buttonPanel.add(actionHistoryLabel);
 
         // The two panels are added to the game frame
@@ -554,7 +567,7 @@ public class StartGame {
                     if (border instanceof LineBorder) {
                         LineBorder lineBorder = (LineBorder) border;
                         if (lineBorder.getLineColor()
-                                .equals(Color.BLACK)) {
+                                .equals(Color.DARK_GRAY)) {
                             buttonGrid[i][j].setEnabled(true);
                         }
                     } else {
@@ -569,7 +582,7 @@ public class StartGame {
                     if (border instanceof LineBorder) {
                         LineBorder lineBorder = (LineBorder) border;
                         if (lineBorder.getLineColor()
-                                .equals(Color.BLACK)) {
+                                .equals(Color.DARK_GRAY)) {
                             buttonGrid[i][j].setEnabled(true);
                         }
                     } else {
@@ -629,10 +642,12 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i][j + 1].getBackground()
-                        && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
-                        && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
-                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    && buttonGrid[i][j + 1].getBackground()
+                    == buttonGrid[i][j + 2].getBackground()
+                    && buttonGrid[i][j + 2].getBackground()
+                    == buttonGrid[i][j + 3].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
@@ -656,10 +671,11 @@ public class StartGame {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j].getBackground()
-                        && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
-                        && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
-                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    && buttonGrid[i + 1][j].getBackground()
+                    == buttonGrid[i + 2][j].getBackground()
+                    && buttonGrid[i + 2][j].getBackground()== buttonGrid[i + 3][j].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
@@ -685,21 +701,26 @@ public class StartGame {
 
                 // Condition for an increasing diagonal
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
-                        && buttonGrid[i + 1][j + 1].getBackground() == buttonGrid[i + 2][j + 2].getBackground()
-                        && buttonGrid[i + 2][j + 2].getBackground() == buttonGrid[i + 3][j + 3].getBackground()
-                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    && buttonGrid[i + 1][j + 1].getBackground()
+                    == buttonGrid[i + 2][j + 2].getBackground()
+                    && buttonGrid[i + 2][j + 2].getBackground()
+                    == buttonGrid[i + 3][j + 3].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j + 3].getBackground() == mainMenu.p2Color) {
                         return 2;
                     }
                     // Condition for a decreasing diagonal
-                } else if (buttonGrid[i + 3][j].getBackground() == buttonGrid[i + 2][j + 1].getBackground()
-                        && buttonGrid[i + 2][j + 1].getBackground() == buttonGrid[i + 1][j + 2].getBackground()
-                        && buttonGrid[i + 1][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
-                        && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
+                } else if (buttonGrid[i + 3][j].getBackground()
+                    == buttonGrid[i + 2][j + 1].getBackground()
+                    && buttonGrid[i + 2][j + 1].getBackground()
+                    == buttonGrid[i + 1][j + 2].getBackground()
+                    && buttonGrid[i + 1][j + 2].getBackground()
+                    == buttonGrid[i][j + 3].getBackground()
+                    && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i + 3][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i + 3][j].getBackground() == mainMenu.p2Color) {
@@ -724,10 +745,11 @@ public class StartGame {
         // JFrame is initialized
         JFrame winFrame = new JFrame();
 
-        GameDetails details = new GameDetails(mainMenu, winner, mainMenu.buttonActive,
-                mainMenu.gridSize, rounds);
+        GameDetails details = new GameDetails(mainMenu, winner, mainMenu.rules,
+            rounds, mainMenu.gridSize);
 
         details.writeToFile();
+
         // JLabel is initialize stating the player who won
         JLabel winnerLabel;
         if (winner == 1) {
@@ -743,8 +765,7 @@ public class StartGame {
         JButton exitButton = new JButton("Return to Main Menu");
         exitButton.setFont(new Font("Arial", Font.BOLD, 25));
 
-        // Event is added to JButton to dispose of previous frames and return to Main
-        // Menu
+        // Event is added to JButton to dispose of previous frames and return to Main Menu
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -777,6 +798,52 @@ public class StartGame {
         winFrame.setLocationRelativeTo(null);
         winFrame.setLayout(null);
         winFrame.setVisible(true);
+    }
+
+    public void giveUp(JFrame game, MainMenu mainMenu) {
+
+        // JFrame is initialized
+        JFrame giveUpNotice = new JFrame();
+
+        // JLabel is initialized
+        JLabel discontinueLabel = new JLabel("The game is discontinued.");
+        discontinueLabel.setFont(new Font("Arial", Font.BOLD, 25));
+
+        // JButton is initialzied
+        JButton exitButton = new JButton("Return to Main Menu");
+        exitButton.setFont(new Font("Arial", Font.BOLD, 25));
+
+        // Event is added to JButton to dispose of previous frames and return to Main Menu
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                // Main Menu buttons are enabled again
+                mainMenu.startGame.setEnabled(true);
+                mainMenu.customizeRules.setEnabled(true);
+                mainMenu.gameHistory.setEnabled(true);
+
+                giveUpNotice.dispose();
+                game.dispose();
+                mainMenu.menuFrame.setState(Frame.NORMAL);
+            }
+        });
+        JPanel panel = new JPanel();
+        panel.setSize(300, 250);
+        panel.setLocation(100, 50);
+
+        // JLabel and JButton are added to the panel
+        panel.add(discontinueLabel);
+        panel.add(Box.createRigidArea(new Dimension(0, 140)));
+        panel.add(exitButton);
+
+        // JPanel is added to the frame
+        giveUpNotice.add(panel);
+
+        // JFrame details are assigned
+        giveUpNotice.setSize(500, 250);
+        giveUpNotice.setLocationRelativeTo(null);
+        giveUpNotice.setLayout(null);
+        giveUpNotice.setVisible(true);
     }
 }
 

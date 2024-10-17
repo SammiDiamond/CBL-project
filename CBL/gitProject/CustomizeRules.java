@@ -40,21 +40,6 @@ public class CustomizeRules {
 
         // Creation of parameters to be passed on to StartGame class later
 
-        // Creation of boolean values for each rule's button, true/false indicating rule
-        // on/off
-        // using array to avoid "local variable defined in an enclosing scope" error
-        boolean buttonSwapOn = true;
-        boolean buttonObOn = true;
-        boolean buttonElimOn = true;
-        boolean buttonPlayer1ColorOn = true;
-        boolean buttonP2ColorOn = true;
-        boolean buttonProtectOn = true;
-        boolean buttonSpreadOn = true;
-        boolean[] buttonOnOff = {
-            buttonSwapOn, buttonObOn, buttonElimOn, buttonProtectOn,
-            buttonSpreadOn, buttonPlayer1ColorOn, buttonP2ColorOn
-            };
-
         // Creation of size to store grid size
         // using array to avoid "local variable defined in an enclosing scope" error
         int[] size = {0};
@@ -100,12 +85,6 @@ public class CustomizeRules {
             public void actionPerformed(ActionEvent e) {
                 // passing parameters to MainMenu
 
-                // mainMenu.gridSize = size[0];
-                mainMenu.swapRule = buttonOnOff[0];
-                mainMenu.obstacleRule = buttonOnOff[1];
-                mainMenu.eliminateRule = buttonOnOff[2];
-                mainMenu.protectRule = buttonOnOff[3];
-                mainMenu.spreadRule = buttonOnOff[4];
                 mainMenu.p1Color = finalColor[0];
                 mainMenu.p2Color = finalColor[1];
                 // Main Menu buttons are enabled again
@@ -123,8 +102,8 @@ public class CustomizeRules {
         buttonSwap.setFocusable(false);
         buttonSwap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                buttonOnOff[0] = !buttonOnOff[0];
-                if (buttonOnOff[0]) {
+                mainMenu.rules[0] = !mainMenu.rules[0];
+                if (mainMenu.rules[0]) {
                     buttonSwap.setText("ON");
                 } else {
                     buttonSwap.setText("OFF");
@@ -137,8 +116,8 @@ public class CustomizeRules {
         buttonOb.setFocusable(false);
         buttonOb.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                buttonOnOff[1] = !buttonOnOff[1];
-                if (buttonOnOff[1]) {
+                mainMenu.rules[1] = !mainMenu.rules[1];
+                if (mainMenu.rules[1]) {
                     buttonOb.setText("ON");
                 } else {
                     buttonOb.setText("OFF");
@@ -151,8 +130,8 @@ public class CustomizeRules {
         buttonElim.setFocusable(false);
         buttonElim.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                buttonOnOff[2] = !buttonOnOff[2];
-                if (buttonOnOff[2]) {
+                mainMenu.rules[2] = !mainMenu.rules[2];
+                if (mainMenu.rules[2]) {
                     buttonElim.setText("ON");
                 } else {
                     buttonElim.setText("OFF");
@@ -165,8 +144,8 @@ public class CustomizeRules {
         buttonProtect.setFocusable(false);
         buttonProtect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                buttonOnOff[3] = !buttonOnOff[3];
-                if (buttonOnOff[3]) {
+                mainMenu.rules[3] = !mainMenu.rules[3];
+                if (mainMenu.rules[3]) {
                     buttonProtect.setText("ON");
                 } else {
                     buttonProtect.setText("OFF");
@@ -179,8 +158,8 @@ public class CustomizeRules {
         buttonSpread.setFocusable(false);
         buttonSpread.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                buttonOnOff[4] = !buttonOnOff[4];
-                if (buttonOnOff[4]) {
+                mainMenu.rules[4] = !mainMenu.rules[4];
+                if (mainMenu.rules[4]) {
                     buttonSpread.setText("ON");
                 } else {
                     buttonSpread.setText("OFF");

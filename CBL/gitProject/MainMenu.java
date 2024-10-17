@@ -30,12 +30,8 @@ public class MainMenu {
     Color p1Color = Color.RED;
     Color p2Color = Color.YELLOW;
 
-    // obtain value from CustomizaRlues class
-    boolean swapRule = true;
-    boolean obstacleRule = true;
-    boolean eliminateRule = true;
-    boolean protectRule = true;
-    boolean spreadRule = true;
+    // Obtains value from CustomizeRlues class
+    boolean[] rules = {true, true, true, true, true};
 
     // buttonGrid[][] stores all of the buttons of the grid
     JButton[][] buttonGrid = new JButton[gridSize][gridSize];
@@ -134,18 +130,18 @@ public class MainMenu {
     }
 
     /**
-     * createCustomizeRules() calls the costructor of the CustomizeRules class
-     * //from the same class instance.
+     * createCustomizeRules() calls the constructor of the CustomizeRules class
+     * from the same class instance.
      * 
      * The keyword "this" refers to the Main Menu containing this exact
-     * //CustomizaRules rule variable.
+     * CustomizaRules rule variable.
      */
     public void createCustomizeRules() {
         this.rule = new CustomizeRules(this);
     }
 
     /**
-     * createGameHistory() calls the costructor of the GameHistory class
+     * createGameHistory() calls the constructor of the GameHistory class
      * //from the same class instance.
      * 
      * The keyword "this" refers to the Main Menu containing this exact

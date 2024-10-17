@@ -18,11 +18,33 @@ public class StartGame {
     // Declaration of a random number generator object
     Random r = new Random();
 
-    // Initialization of a SpreadObj array of size 2 with initial objects being "null"
+    // Initialization of a SpreadObj array of size 2 with initial objects being
+    // "null"
     SpreadObj[] spreadArr = new SpreadObj[2];
+
+    // Creation of counter to count round number
+
+    // Creation of int[][] to store the action history, which will be passed onto
+    // History class
+    // for each element in actionHistory:
+    // array[0] using number from 0, 1, 2, 3, 4, 5 to indicate applied rules (0 for
+    // place, 1 for swap, 2 for Obstacle, 3 for eliminate, 4 for protect, 5 for
+    // spread)
+    // array[1] and array[2] indicating the coordinates of the square where the rule
+    // is used
+    // odd array indicating actionhistoiry of player1 and even array for player2
+    // the length of the int[] may be longer than size*size so we dont initialize
+    // its length
+    int[][] actionHistory = {};
+    String action = "";
+    // Creation of String[] to store the names of the rules, used later in
+    // actionHistoryLabel
+    String[] rulesName = { "\"Place\"", "\"Swap\"",
+            "\"Obstacle\"", "\"Eliminate\"", "\"Protect\"", "\"Spread\"" };
 
     // Initialization of variables storing game details
     static int rounds = 0;
+    static int roundNum = 0;
 
     /**
      * Constructor responsible for the GUI for the gameplay.
@@ -121,7 +143,7 @@ public class StartGame {
                 eliminate.setEnabled(true);
                 protect.setEnabled(true);
                 spread.setEnabled(true);
-
+                action = rulesName[0];
                 // Sets Place button to active and sets the rest of the buttons to deactive
                 for (int i = 1; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
@@ -140,7 +162,7 @@ public class StartGame {
                 eliminate.setEnabled(true);
                 protect.setEnabled(true);
                 spread.setEnabled(true);
-
+                action = rulesName[1];
                 // Sets Swap button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
@@ -159,7 +181,7 @@ public class StartGame {
                 eliminate.setEnabled(true);
                 protect.setEnabled(true);
                 spread.setEnabled(true);
-
+                action = rulesName[2];
                 // Sets Obstacle button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
@@ -178,7 +200,7 @@ public class StartGame {
                 eliminate.setEnabled(false);
                 protect.setEnabled(true);
                 spread.setEnabled(true);
-
+                action = rulesName[3];
                 // Sets Eliminate button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
@@ -197,7 +219,7 @@ public class StartGame {
                 eliminate.setEnabled(true);
                 protect.setEnabled(false);
                 spread.setEnabled(true);
-
+                action = rulesName[4];
                 // Sets Protect button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
@@ -216,7 +238,7 @@ public class StartGame {
                 eliminate.setEnabled(true);
                 protect.setEnabled(true);
                 spread.setEnabled(false);
-
+                action = rulesName[5];
                 // Sets Spread button to active and sets the rest of the buttons to deactive
                 for (int i = 0; i < mainMenu.buttonActive.length; i++) {
                     mainMenu.buttonActive[i] = false;
@@ -233,7 +255,7 @@ public class StartGame {
                 mainMenu.buttonGrid[i][j] = new JButton();
                 mainMenu.buttonGrid[i][j].setBackground(Color.WHITE);
                 mainMenu.buttonGrid[i][j].setBorder(
-                    BorderFactory.createLineBorder(Color.DARK_GRAY));
+                        BorderFactory.createLineBorder(Color.DARK_GRAY));
                 mainMenu.buttonGrid[i][j].setPreferredSize(new Dimension(90, 90));
                 mainMenu.buttonGrid[i][j].setEnabled(false);
 
@@ -247,14 +269,21 @@ public class StartGame {
                 mainMenu.buttonGrid[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         // Round is incremented
+                        actionHistory[roundNum][1] = row;
+                        actionHistory[roundNum][2] = col;
+                        roundNum++;
                         rounds++;
 
                         // When player 1 presses a button the below code is executed
                         if (mainMenu.playerTurn) {
-
                             // JLabel states the next player's turn
                             turnLabel.setText("Player 2's turn.");
                             turnLabel.setForeground(mainMenu.p2Color);
+
+                            // change actionhistory
+                            actionHistoryLabel.setText("Player1 used" + action + "on("
+                                    + Integer.toString(actionHistory[roundNum][1]) + ", "
+                                    + Integer.toString(actionHistory[roundNum][2]) + ")");
 
                             if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
@@ -299,8 +328,9 @@ public class StartGame {
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
                                             if (mainMenu.buttonGrid[spreadArr[0]
-                                                .getRow() + i][spreadArr[0].getCol()
-                                                    + j].getBackground() == Color.WHITE) {
+                                                    .getRow() + i][spreadArr[0].getCol()
+                                                            + j]
+                                                    .getBackground() == Color.WHITE) {
                                                 nearbyEmpty = true;
                                             }
                                         }
@@ -313,12 +343,12 @@ public class StartGame {
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
 
                                             if (mainMenu.buttonGrid[spreadArr[0]
-                                                .getRow() + randomRow][spreadArr[0]
-                                                    .getCol() + randomCol]
+                                                    .getRow() + randomRow][spreadArr[0]
+                                                            .getCol() + randomCol]
                                                     .getBackground() == Color.WHITE) {
                                                 mainMenu.buttonGrid[spreadArr[0]
-                                                    .getRow() + randomRow][spreadArr[0]
-                                                        .getCol() + randomCol]
+                                                        .getRow() + randomRow][spreadArr[0]
+                                                                .getCol() + randomCol]
                                                         .setBackground(mainMenu.p1Color);
                                                 found = true;
                                             }
@@ -335,6 +365,10 @@ public class StartGame {
                             // JLabel states the next player's turn
                             turnLabel.setText("Player 1's turn.");
                             turnLabel.setForeground(mainMenu.p1Color);
+                            // change actionhistory
+                            actionHistoryLabel.setText("Player2 used" + action + "on("
+                                    + Integer.toString(actionHistory[roundNum][1]) + ", "
+                                    + Integer.toString(actionHistory[roundNum][2]) + ")");
 
                             if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
                                 mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
@@ -379,8 +413,9 @@ public class StartGame {
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
                                             if (mainMenu.buttonGrid[spreadArr[1]
-                                                .getRow() + i][spreadArr[1].getCol()
-                                                    + j].getBackground() == Color.WHITE) {
+                                                    .getRow() + i][spreadArr[1].getCol()
+                                                            + j]
+                                                    .getBackground() == Color.WHITE) {
                                                 nearbyEmpty = true;
                                             }
                                         }
@@ -393,12 +428,12 @@ public class StartGame {
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
 
                                             if (mainMenu.buttonGrid[spreadArr[1].getRow()
-                                                + randomRow][spreadArr[1]
-                                                    .getCol() + randomCol]
+                                                    + randomRow][spreadArr[1]
+                                                            .getCol() + randomCol]
                                                     .getBackground() == Color.WHITE) {
                                                 mainMenu.buttonGrid[spreadArr[1]
-                                                    .getRow() + randomRow][spreadArr[1]
-                                                        .getCol() + randomCol]
+                                                        .getRow() + randomRow][spreadArr[1]
+                                                                .getCol() + randomCol]
                                                         .setBackground(mainMenu.p2Color);
                                                 found = true;
                                             }
@@ -429,12 +464,12 @@ public class StartGame {
                         eliminate.setEnabled(true);
                         protect.setEnabled(true);
                         spread.setEnabled(true);
-
                         // Checks if anyone has won
                         int storeWinNum = checkWin(mainMenu, mainMenu.buttonGrid);
                         if (storeWinNum != 0) {
                             postWin(storeWinNum, game, mainMenu);
                         }
+                        System.out.println(roundNum);
                     }
                 });
             }
@@ -500,7 +535,8 @@ public class StartGame {
     }
 
     /**
-     * Method that enables all non-protected buttons of the color of the opposite player.
+     * Method that enables all non-protected buttons of the color of the opposite
+     * player.
      * 
      * @param buttonGrid JButton[][] that stores all of the JButtons in the grid
      * @param mainMenu   MainMenu object needed to access some instance variables
@@ -509,31 +545,31 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
                 buttonGrid[i][j].setEnabled(false);
-    
+
                 // Check for player 1's turn
-                if (!mainMenu.playerTurn 
-                    && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
-                    
+                if (!mainMenu.playerTurn
+                        && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
+
                     Border border = buttonGrid[i][j].getBorder();
                     if (border instanceof LineBorder) {
                         LineBorder lineBorder = (LineBorder) border;
                         if (lineBorder.getLineColor()
-                            .equals(Color.BLACK)) {
+                                .equals(Color.BLACK)) {
                             buttonGrid[i][j].setEnabled(true);
                         }
                     } else {
                         buttonGrid[i][j].setEnabled(true); // If the border is not colored black
                     }
-                
-                // Check for player 2's turn
-                } else if (mainMenu.playerTurn 
-                    && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
-                    
+
+                    // Check for player 2's turn
+                } else if (mainMenu.playerTurn
+                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+
                     Border border = buttonGrid[i][j].getBorder();
                     if (border instanceof LineBorder) {
                         LineBorder lineBorder = (LineBorder) border;
                         if (lineBorder.getLineColor()
-                            .equals(Color.BLACK)) {
+                                .equals(Color.BLACK)) {
                             buttonGrid[i][j].setEnabled(true);
                         }
                     } else {
@@ -543,7 +579,6 @@ public class StartGame {
             }
         }
     }
-    
 
     /**
      * Method that enables all buttons of the color of the same player.
@@ -558,7 +593,7 @@ public class StartGame {
                 if (mainMenu.playerTurn && buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                     buttonGrid[i][j].setEnabled(true);
                 } else if (!mainMenu.playerTurn
-                    && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
+                        && buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                     buttonGrid[i][j].setEnabled(true);
                 }
             }
@@ -594,10 +629,8 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i][j + 1].getBackground()
-                        && buttonGrid[i][j + 1].getBackground()
-                        == buttonGrid[i][j + 2].getBackground()
-                        && buttonGrid[i][j + 2].getBackground()
-                        == buttonGrid[i][j + 3].getBackground()
+                        && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
+                        && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
@@ -623,10 +656,8 @@ public class StartGame {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j].getBackground()
-                        && buttonGrid[i + 1][j].getBackground()
-                        == buttonGrid[i + 2][j].getBackground()
-                        && buttonGrid[i + 2][j].getBackground()
-                        == buttonGrid[i + 3][j].getBackground()
+                        && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
+                        && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
@@ -654,10 +685,8 @@ public class StartGame {
 
                 // Condition for an increasing diagonal
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
-                        && buttonGrid[i + 1][j + 1].getBackground()
-                        == buttonGrid[i + 2][j + 2].getBackground()
-                        && buttonGrid[i + 2][j + 2].getBackground()
-                        == buttonGrid[i + 3][j + 3].getBackground()
+                        && buttonGrid[i + 1][j + 1].getBackground() == buttonGrid[i + 2][j + 2].getBackground()
+                        && buttonGrid[i + 2][j + 2].getBackground() == buttonGrid[i + 3][j + 3].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
@@ -666,12 +695,9 @@ public class StartGame {
                         return 2;
                     }
                     // Condition for a decreasing diagonal
-                } else if (buttonGrid[i + 3][j].getBackground()
-                    == buttonGrid[i + 2][j + 1].getBackground()
-                        && buttonGrid[i + 2][j + 1].getBackground()
-                        == buttonGrid[i + 1][j + 2].getBackground()
-                        && buttonGrid[i + 1][j + 2].getBackground()
-                        == buttonGrid[i][j + 3].getBackground()
+                } else if (buttonGrid[i + 3][j].getBackground() == buttonGrid[i + 2][j + 1].getBackground()
+                        && buttonGrid[i + 2][j + 1].getBackground() == buttonGrid[i + 1][j + 2].getBackground()
+                        && buttonGrid[i + 1][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
                         && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i + 3][j].getBackground() == mainMenu.p1Color) {
@@ -699,7 +725,7 @@ public class StartGame {
         JFrame winFrame = new JFrame();
 
         GameDetails details = new GameDetails(mainMenu, winner, mainMenu.buttonActive,
-            mainMenu.gridSize, rounds);
+                mainMenu.gridSize, rounds);
 
         details.writeToFile();
         // JLabel is initialize stating the player who won

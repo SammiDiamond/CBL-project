@@ -68,13 +68,10 @@ JButton background can be used in the same was as the grid[][] would work: 13/10
 - CustomizeRules: made it so that the game can be played without having to customize rules from the start: 16/10/2024 - George Kolios
 - GameHistory: created a file reader method (BufferedReader) to read text from a txt file. all text is stored in an ArrayList object: 16/10/2024 - George Kolios
 - StartGame: made it so that the buttons are spaced out correctly when removing some of them through rule customization: 16/10/2024 - George Kolios
-    // To-do list for CustomizeRules class:
+bug spotted: after p1 placing a color, p2 can not do anything except for placing - s.wu
+bug spotted: after customizing rules the corresponding button are not invisible - s.wu
+help: StartGame: mistakes on line 272-274, 283-287, 368-371: recording coordinates and try to resetText of actionHistoryLabel (FAILED)
+      what i also decide:(adding new variable "roundNum" for not creating possible conflict with variable "rounds")
+	  (storing action in every rule actionListener)
 
-    // clicking on save button, close CustomizeRules window and go back to mainmenu(done)
-    // adding protect and spred rules into CustomizeRule class(done)
-    // complete the description of spread rules
-    // calculation for each rule to decide specific lasting time and cooldown time data
-    // passing size data to StartGame
-    // passing rules' on/off condition to StartGame
-    // passing rules' lasting time and cooldown time datas to StartGame and show
-    // passing colors datas to StartGame
+             

@@ -20,23 +20,14 @@ public class StartGame {
     // Declaration of a random number generator object
     Random r = new Random();
 
+    // Initialization of an integer array for unique player actions cooldown
+    int[] cooldownArr = {0, 0};
+
     // Initialization of a SpreadObj array of size 2 with initial objects being
     // "null"
     SpreadObj[] spreadArr = new SpreadObj[2];
 
-    // Creation of counter to count round number
-
-    // Creation of int[][] to store the action history, which will be passed onto
-    // History class
-    // for each element in actionHistory:
-    // array[0] using number from 0, 1, 2, 3, 4, 5 to indicate applied rules (0 for
-    // place, 1 for swap, 2 for Obstacle, 3 for eliminate, 4 for protect, 5 for
-    // spread)
-    // array[1] and array[2] indicating the coordinates of the square where the rule
-    // is used
-    // odd array indicating actionhistoiry of player1 and even array for player2
-    // the length of the int[] may be longer than size*size so we dont initialize
-    // its length
+    // ArrayList object holds the action history of the game
     ArrayList<int[]> actionHistory = new ArrayList<int[]>();
     String action = "";
     // Creation of String[] to store the names of the rules, used later in
@@ -57,6 +48,10 @@ public class StartGame {
 
         // Contents of menu are stored into the mainMenu instance variable
         this.mainMenu = menu;
+
+        
+        // buttonGrid[][] stores all of the buttons of the grid
+        JButton[][] buttonGrid = new JButton[mainMenu.gridSize][mainMenu.gridSize];
 
         // Buttons in the previous window are disabled and window is minimized
         mainMenu.menuFrame.setState(JFrame.ICONIFIED);
@@ -98,8 +93,10 @@ public class StartGame {
 
         // JPanel that will hold all of the grid buttons in the game is initialized
         JPanel gridPanel = new JPanel();
-        gridPanel.setSize(800, 800);
-        gridPanel.setLocation(350, 10);
+        gridPanel.setSize(720, 720);
+        gridPanel.setLayout(new GridLayout(mainMenu.gridSize, mainMenu.gridSize));
+        gridPanel.setLocation(350, 25);
+        gridPanel.setVisible(true);
 
         // Player action button details are selected
         // Visibility is also assigned based on selected rules
@@ -143,11 +140,20 @@ public class StartGame {
         place.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 place.setEnabled(false);
-                swap.setEnabled(true);
-                obstacle.setEnabled(true);
-                eliminate.setEnabled(true);
-                protect.setEnabled(true);
-                spread.setEnabled(true);
+
+                if (mainMenu.playerTurn && cooldownArr[0] == 0) {
+                    swap.setEnabled(true);
+                    obstacle.setEnabled(true);
+                    eliminate.setEnabled(true);
+                    protect.setEnabled(true);
+                    spread.setEnabled(true);
+                } else if (!mainMenu.playerTurn && cooldownArr[1] == 0) {
+                    swap.setEnabled(true);
+                    obstacle.setEnabled(true);
+                    eliminate.setEnabled(true);
+                    protect.setEnabled(true);
+                    spread.setEnabled(true);
+                }
                 action = rulesName[0];
                 // Sets Place button to active and sets the rest of the buttons to deactive
                 for (int i = 1; i < mainMenu.buttonActive.length; i++) {
@@ -155,7 +161,7 @@ public class StartGame {
                 }
                 mainMenu.buttonActive[0] = true;
 
-                enableEmpty(mainMenu.buttonGrid, mainMenu);
+                enableEmpty(buttonGrid, mainMenu);
             }
         });
 
@@ -174,7 +180,7 @@ public class StartGame {
                 }
                 mainMenu.buttonActive[1] = true;
 
-                enableOpp(mainMenu.buttonGrid, mainMenu);
+                enableOpp(buttonGrid, mainMenu);
             }
         });
 
@@ -193,7 +199,7 @@ public class StartGame {
                 }
                 mainMenu.buttonActive[2] = true;
 
-                enableEmpty(mainMenu.buttonGrid, mainMenu);
+                enableEmpty(buttonGrid, mainMenu);
             }
         });
 
@@ -212,7 +218,7 @@ public class StartGame {
                 }
                 mainMenu.buttonActive[3] = true;
 
-                enableOpp(mainMenu.buttonGrid, mainMenu);
+                enableOpp(buttonGrid, mainMenu);
             }
         });
 
@@ -231,7 +237,7 @@ public class StartGame {
                 }
                 mainMenu.buttonActive[4] = true;
 
-                enableSame(mainMenu.buttonGrid, mainMenu);
+                enableSame(buttonGrid, mainMenu);
             }
         });
 
@@ -250,7 +256,7 @@ public class StartGame {
                 }
                 mainMenu.buttonActive[5] = true;
 
-                enableEmpty(mainMenu.buttonGrid, mainMenu);
+                enableEmpty(buttonGrid, mainMenu);
             }
         });
 
@@ -263,21 +269,32 @@ public class StartGame {
         // Initialization of all all JButtons in the grid
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize; j++) {
-                mainMenu.buttonGrid[i][j] = new JButton();
-                mainMenu.buttonGrid[i][j].setBackground(Color.WHITE);
-                mainMenu.buttonGrid[i][j].setBorder(
-                        BorderFactory.createLineBorder(Color.DARK_GRAY));
-                mainMenu.buttonGrid[i][j].setPreferredSize(new Dimension(90, 90));
-                mainMenu.buttonGrid[i][j].setEnabled(false);
+                buttonGrid[i][j] = new JButton();
+                buttonGrid[i][j].setBackground(Color.WHITE);
+                buttonGrid[i][j].setBorder(
+                    BorderFactory.createLineBorder(Color.DARK_GRAY));
+                // buttonGrid[i][j].setPreferredSize(new Dimension(800 / mainMenu.gridSize,
+                //     800 / mainMenu.gridSize));
+
+                // buttonGrid[i][j].setLocation(150 + i * (800 / mainMenu.gridSize),
+                // j * (800 / mainMenu.gridSize));
+                // buttonGrid[i][j].setBounds(350 + i * (800 / mainMenu.gridSize),
+                //     800 + j * (800 / mainMenu.gridSize),
+                //     800 / mainMenu.gridSize, 800 / mainMenu.gridSize);
+                // i * (800 / mainMenu.gridSize),
+                // j * (800 / mainMenu.gridSize),
+
+
+                buttonGrid[i][j].setEnabled(false);
 
                 // All grid buttons are added to the panel
-                gridPanel.add(mainMenu.buttonGrid[i][j]);
+                gridPanel.add(buttonGrid[i][j]);
 
                 // Row and Column variables are initialized to reach ActionEvent scope
                 int row = i;
                 int col = j;
 
-                mainMenu.buttonGrid[i][j].addActionListener(new ActionListener() {
+                buttonGrid[i][j].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         // Round is incremented
                         int[] actionCoords = {row, col};
@@ -296,19 +313,26 @@ public class StartGame {
                                     + actionHistory.get(actionHistory.size() - 1)[1] + ")");
                             actionHistoryLabel.setForeground(mainMenu.p1Color);
 
-                            if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
-                                mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
+                            if (mainMenu.buttonActive[0]) {
+                                buttonGrid[row][col].setBackground(mainMenu.p1Color);
+                            } else if (mainMenu.buttonActive[1]) {
+                                buttonGrid[row][col].setBackground(mainMenu.p1Color);
+                                cooldownArr[0] = 2;
                             } else if (mainMenu.buttonActive[2]) {
-                                mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
+                                buttonGrid[row][col].setBackground(Color.DARK_GRAY);
+                                cooldownArr[0] = 2;
                             } else if (mainMenu.buttonActive[3]) {
-                                mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
+                                buttonGrid[row][col].setBackground(Color.WHITE);
+                                cooldownArr[0] = 2;
                             } else if (mainMenu.buttonActive[4]) {
-                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory
-                                        .createLineBorder(mainMenu.p2Color, 4));
+                                buttonGrid[row][col].setBorder(BorderFactory
+                                    .createLineBorder(mainMenu.p2Color, 4));
+                                cooldownArr[0] = 2;
                             } else {
-                                mainMenu.buttonGrid[row][col].setBackground(mainMenu.p1Color);
+                                buttonGrid[row][col].setBackground(mainMenu.p1Color);
                                 SpreadObj p1Spread = new SpreadObj(row, col);
                                 spreadArr[0] = p1Spread;
+                                cooldownArr[0] = 2;
                             }
 
                             // Check whether Spread was used by player 1
@@ -338,7 +362,7 @@ public class StartGame {
                                     // Check for empty cells
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
-                                            if (mainMenu.buttonGrid[spreadArr[0]
+                                            if (buttonGrid[spreadArr[0]
                                                     .getRow() + i][spreadArr[0].getCol()
                                                             + j]
                                                     .getBackground() == Color.WHITE) {
@@ -353,11 +377,11 @@ public class StartGame {
                                             int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
 
-                                            if (mainMenu.buttonGrid[spreadArr[0]
+                                            if (buttonGrid[spreadArr[0]
                                                     .getRow() + randomRow][spreadArr[0]
                                                             .getCol() + randomCol]
                                                     .getBackground() == Color.WHITE) {
-                                                mainMenu.buttonGrid[spreadArr[0]
+                                                buttonGrid[spreadArr[0]
                                                         .getRow() + randomRow][spreadArr[0]
                                                                 .getCol() + randomCol]
                                                         .setBackground(mainMenu.p1Color);
@@ -369,6 +393,10 @@ public class StartGame {
                                 } else {
                                     spreadArr[0].setDelay(spreadArr[0].getDelay() - 1);
                                 }
+                            }
+                            // Reduce the opponent cooldown of unique player actions by 1
+                            if (cooldownArr[1] > 0) {
+                                cooldownArr[1]--;
                             }
 
                         } else { // When player 2 presses a button the below code is executed
@@ -382,19 +410,26 @@ public class StartGame {
                                     + actionHistory.get(actionHistory.size() - 1)[1] + ")");
                             actionHistoryLabel.setForeground(mainMenu.p2Color);
 
-                            if (mainMenu.buttonActive[0] || mainMenu.buttonActive[1]) {
-                                mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
+                            if (mainMenu.buttonActive[0]) {
+                                buttonGrid[row][col].setBackground(mainMenu.p2Color);
+                            } else if (mainMenu.buttonActive[1]) {
+                                buttonGrid[row][col].setBackground(mainMenu.p2Color);
+                                cooldownArr[1] = 2;
                             } else if (mainMenu.buttonActive[2]) {
-                                mainMenu.buttonGrid[row][col].setBackground(Color.DARK_GRAY);
+                                buttonGrid[row][col].setBackground(Color.DARK_GRAY);
+                                cooldownArr[1] = 2;
                             } else if (mainMenu.buttonActive[3]) {
-                                mainMenu.buttonGrid[row][col].setBackground(Color.WHITE);
+                                buttonGrid[row][col].setBackground(Color.WHITE);
+                                cooldownArr[1] = 2;
                             } else if (mainMenu.buttonActive[4]) {
-                                mainMenu.buttonGrid[row][col].setBorder(BorderFactory
-                                        .createLineBorder(mainMenu.p1Color, 4));
+                                buttonGrid[row][col].setBorder(BorderFactory
+                                    .createLineBorder(mainMenu.p1Color, 4));
+                                cooldownArr[1] = 2;
                             } else {
-                                mainMenu.buttonGrid[row][col].setBackground(mainMenu.p2Color);
+                                buttonGrid[row][col].setBackground(mainMenu.p2Color);
                                 SpreadObj p2Spread = new SpreadObj(row, col);
                                 spreadArr[1] = p2Spread;
+                                cooldownArr[1] = 2;
                             }
 
                             // Check whether Spread was used by player 2
@@ -424,7 +459,7 @@ public class StartGame {
                                     // Check for empty cells
                                     for (int i = rowMin; i < rowMax; i++) {
                                         for (int j = colMin; j < colMax; j++) {
-                                            if (mainMenu.buttonGrid[spreadArr[1]
+                                            if (buttonGrid[spreadArr[1]
                                                     .getRow() + i][spreadArr[1].getCol()
                                                             + j]
                                                     .getBackground() == Color.WHITE) {
@@ -439,11 +474,11 @@ public class StartGame {
                                             int randomRow = r.nextInt(rowMax - rowMin) + rowMin;
                                             int randomCol = r.nextInt(colMax - colMin) + colMin;
 
-                                            if (mainMenu.buttonGrid[spreadArr[1].getRow()
+                                            if (buttonGrid[spreadArr[1].getRow()
                                                     + randomRow][spreadArr[1]
                                                             .getCol() + randomCol]
                                                     .getBackground() == Color.WHITE) {
-                                                mainMenu.buttonGrid[spreadArr[1]
+                                                buttonGrid[spreadArr[1]
                                                         .getRow() + randomRow][spreadArr[1]
                                                                 .getCol() + randomCol]
                                                         .setBackground(mainMenu.p2Color);
@@ -456,7 +491,10 @@ public class StartGame {
                                     spreadArr[1].setDelay(spreadArr[1].getDelay() - 1);
                                 }
                             }
-
+                            // Reduce the opponent cooldown of unique player actions by 1
+                            if (cooldownArr[0] > 0) {
+                                cooldownArr[0]--;
+                            }
                         }
 
                         // playerTurn changes for the next player's turn
@@ -465,19 +503,33 @@ public class StartGame {
                         // All buttons become disabled until a player action button is pressed
                         for (int i = 0; i < mainMenu.gridSize; i++) {
                             for (int j = 0; j < mainMenu.gridSize; j++) {
-                                mainMenu.buttonGrid[i][j].setEnabled(false);
+                                buttonGrid[i][j].setEnabled(false);
                             }
                         }
 
-                        // Player action buttons are enabled again
+                        // Player action buttons are enabled again if permitted by cooldowns
                         place.setEnabled(true);
-                        swap.setEnabled(true);
-                        obstacle.setEnabled(true);
-                        eliminate.setEnabled(true);
-                        protect.setEnabled(true);
-                        spread.setEnabled(true);
+                        if (mainMenu.playerTurn && cooldownArr[0] == 0) {
+                            swap.setEnabled(true);
+                            obstacle.setEnabled(true);
+                            eliminate.setEnabled(true);
+                            protect.setEnabled(true);
+                            spread.setEnabled(true);
+                        } else if (!mainMenu.playerTurn && cooldownArr[1] == 0) {
+                            swap.setEnabled(true);
+                            obstacle.setEnabled(true);
+                            eliminate.setEnabled(true);
+                            protect.setEnabled(true);
+                            spread.setEnabled(true);
+                        } else {
+                            swap.setEnabled(false);
+                            obstacle.setEnabled(false);
+                            eliminate.setEnabled(false);
+                            protect.setEnabled(false);
+                            spread.setEnabled(false);
+                        }
                         // Checks if anyone has won
-                        int storeWinNum = checkWin(mainMenu, mainMenu.buttonGrid);
+                        int storeWinNum = checkWin(mainMenu, buttonGrid);
                         if (storeWinNum != 0) {
                             postWin(storeWinNum, game, mainMenu);
                         }

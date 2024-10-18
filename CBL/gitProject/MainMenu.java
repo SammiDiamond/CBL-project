@@ -33,9 +33,6 @@ public class MainMenu {
     // Obtains value from CustomizeRlues class
     boolean[] rules = {true, true, true, true, true};
 
-    // buttonGrid[][] stores all of the buttons of the grid
-    JButton[][] buttonGrid = new JButton[gridSize][gridSize];
-
     // Declaration of class objects to call their constructors from within an
     // ActionListener
     StartGame game;

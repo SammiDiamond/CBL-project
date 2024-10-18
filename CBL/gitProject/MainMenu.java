@@ -26,12 +26,12 @@ public class MainMenu {
     // Initialization of instance variables that can be customized
     // Initial values are stored in all of them so the game can run without
     // requiring any customization
-    int gridSize = 8;
+    int gridSize = 10;
     Color p1Color = Color.RED;
     Color p2Color = Color.YELLOW;
 
     // Obtains value from CustomizeRlues class
-    boolean[] rules = {true, true, true, true, true};
+    boolean[] rules = { true, true, true, true, true };
 
     // buttonGrid[][] stores all of the buttons of the grid
     JButton[][] buttonGrid = new JButton[gridSize][gridSize];

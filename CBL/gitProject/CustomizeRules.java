@@ -42,11 +42,11 @@ public class CustomizeRules {
 
         // Creation of size to store grid size
         // using array to avoid "local variable defined in an enclosing scope" error
-        int[] size = {0};
+        int size = mainMenu.gridSize;
 
         // Creation of final colors for each player, index 0 for player 1 color and
         // index 1 for player 2 color
-        Color[] finalColor = {mainMenu.p1Color, mainMenu.p2Color};
+        Color[] finalColor = { mainMenu.p1Color, mainMenu.p2Color };
 
         // Creation of datas for each rules, used for calculation
         // 3 for the numbers of the total rules(become 5 if spread and protect rules are
@@ -84,7 +84,6 @@ public class CustomizeRules {
         buttonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // passing parameters to MainMenu
-
                 mainMenu.p1Color = finalColor[0];
                 mainMenu.p2Color = finalColor[1];
                 // Main Menu buttons are enabled again
@@ -207,7 +206,7 @@ public class CustomizeRules {
         // region: Set ActionListener for each size button in sizes pane
         size5X5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                size[0] = 5;
+                mainMenu.gridSize = 5;
                 size5X5.setBackground(Color.LIGHT_GRAY);
                 size6X6.setBackground(null);
                 size7X7.setBackground(null);
@@ -229,7 +228,7 @@ public class CustomizeRules {
         });
         size6X6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                size[0] = 6;
+                mainMenu.gridSize = 6;
                 size6X6.setBackground(Color.LIGHT_GRAY);
                 size5X5.setBackground(null);
                 size7X7.setBackground(null);
@@ -251,7 +250,7 @@ public class CustomizeRules {
         });
         size7X7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                size[0] = 7;
+                mainMenu.gridSize = 7;
                 size7X7.setBackground(Color.LIGHT_GRAY);
                 size5X5.setBackground(null);
                 size6X6.setBackground(null);
@@ -273,7 +272,7 @@ public class CustomizeRules {
         });
         size8X8.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                size[0] = 8;
+                mainMenu.gridSize = 8;
                 size8X8.setBackground(Color.LIGHT_GRAY);
                 size5X5.setBackground(null);
                 size6X6.setBackground(null);
@@ -295,7 +294,7 @@ public class CustomizeRules {
         });
         size9X9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                size[0] = 9;
+                mainMenu.gridSize = 9;
                 size9X9.setBackground(Color.LIGHT_GRAY);
                 size5X5.setBackground(null);
                 size6X6.setBackground(null);
@@ -317,7 +316,7 @@ public class CustomizeRules {
         });
         size10X10.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                size[0] = 10;
+                mainMenu.gridSize = 10;
                 size10X10.setBackground(Color.LIGHT_GRAY);
                 size5X5.setBackground(null);
                 size6X6.setBackground(null);

@@ -2,3 +2,4 @@ Create file & writer to file: https://www.w3schools.com/java/java_files_create.a
 Read from file: https://www.w3schools.com/java/java_files_read.asp
 ArrayList usage: https://www.w3schools.com/java/java_arraylist.asp
 Regex usage: https://www.w3schools.com/js/js_regexp.asp
+Learn to use JScrollPane: https://www.geeksforgeeks.org/java-jscrollpane/

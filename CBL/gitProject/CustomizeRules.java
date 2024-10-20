@@ -42,7 +42,7 @@ public class CustomizeRules {
 
         // Creation of final colors for each player, index 0 for player 1 color and
         // index 1 for player 2 color
-        Color[] finalColor = {mainMenu.p1Color, mainMenu.p2Color};
+        Color[] finalColor = { mainMenu.p1Color, mainMenu.p2Color };
 
         // Creation of datas for each rules, used for calculation
         // 3 for the numbers of the total rules(become 5 if spread and protect rules are
@@ -80,7 +80,6 @@ public class CustomizeRules {
         buttonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // passing parameters to MainMenu
-
                 mainMenu.p1Color = finalColor[0];
                 mainMenu.p2Color = finalColor[1];
                 // Main Menu buttons are enabled again

@@ -1,6 +1,6 @@
 -Main Menu
 (Notes: fix visuals)
-    -Start Game
+    -Start Game **
 	(Notes: State previous player action + fix visuals)
         -Place ** 
         -Swap **
@@ -8,31 +8,31 @@
 		-Eliminate (Sets color to WHITE again) **
 		-Protect (Visualized by change in border) **
 		-Spread **
-		(Note: add a cooldown to every player action excluding Place)
+		(Note: add a cooldown to every player action excluding Place) **
 
-		-Win Condition
-		(Note: add a win condition for a draw and include protected cells in the win condition)
+		-Win Condition **
+		(Note: add a win condition for a draw and include protected cells in the win condition) **
 		\Win Popup 
 	    	(Notes: fix visuals)
 	    	-Return to menu **
 
-    -Customize Rules
-		-Customize Grid Size (7x7, 8x8, 9x9, 10x10, 11x11, 12x12 -> changes button sizes in Start Game)
-	    	\Small selection menu
+    -Customize Rules **
+		-Customize Grid Size (7x7, 8x8, 9x9, 10x10, 11x11, 12x12 -> changes button sizes in Start Game) **
+	    	\Small selection menu **
 
-		-Customize Player Colors (Basic set of colors *Exceptions: WHITE, DARK_GRAY*)
-	    	\Small selection menu
+		-Customize Player Colors (Basic set of colors *Exceptions: WHITE, DARK_GRAY*) **
+	    	\Small selection menu **
 
-		-Activate/Deactivate Swap
-		-Activate/Deactivate Obstacle
-		-Activate/Deactivate Eliminate
-		-Activate/Deactivate Protect
-		-Activate/Deactivate Spread
+		-Activate/Deactivate Swap **
+		-Activate/Deactivate Obstacle **
+		-Activate/Deactivate Eliminate **
+		-Activate/Deactivate Protect **
+		-Activate/Deactivate Spread **
 
-    -Game History
+    -Game History **
 		(Notes: Data saved in a .txt file)
-        	-Brief showcase of information of a match and winner (Colors, Date, Number of Moves)
-	    	\Final Grid for each game when pressed.
+        	-Brief showcase of information of a match and winner (Colors, Date, Number of Moves) **
+	    	\Final Grid for each game when pressed. **
 
 //
 // ** means that something is completed

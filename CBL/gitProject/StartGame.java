@@ -89,13 +89,7 @@ public class StartGame {
         JButton protect = new JButton("Protect");
         JButton spread = new JButton("Spread");
         JButton giveUp = new JButton("Give Up");
-        
-        place.setBackground(mainMenu.p1Color);
-        swap.setBackground(mainMenu.p1Color);
-        obstacle.setBackground(mainMenu.p1Color);
-        eliminate.setBackground(mainMenu.p1Color);
-        protect.setBackground(mainMenu.p1Color);
-        spread.setBackground(mainMenu.p1Color);
+
 
         // JPanel that will hold all of the grid buttons in the game is initialized
         JPanel gridPanel = new JPanel();

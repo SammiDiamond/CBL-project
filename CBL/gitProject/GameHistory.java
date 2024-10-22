@@ -104,16 +104,24 @@ public class GameHistory {
             gameCount.setFont(new Font("Lucida Console", Font.PLAIN, 30));
             JLabel datePlayed = new JLabel(" " + totalGames.get(i).getDate() + " ");
             datePlayed.setFont(new Font("Lucida Console", Font.PLAIN, 20));
-            JLabel rounds = new JLabel(String.format("%-" + 2 + "s", totalGames.get(i).getRounds()));
+            JLabel rounds = new JLabel(String.format("%-" + 2 + "s",
+                totalGames.get(i).getRounds()));
             rounds.setFont(new Font("Lucida Console", Font.PLAIN, 20));
-            JLabel gridSize = new JLabel(String.format("%-" + 3 + "s", totalGames.get(i).getGridSize()));
+            JLabel gridSize = new JLabel(String.format("%-" + 3 + "s",
+                totalGames.get(i).getGridSize()));
             gridSize.setFont(new Font("Lucida Console", Font.PLAIN, 20));
             Color p1Color = totalGames.get(i).getP1ColorCode();
             p1Panel.setBackground(p1Color);
             Color p2Color = totalGames.get(i).getP2ColorCode();
             p2Panel.setBackground(p2Color);
             winner = totalGames.get(i).getWinner();
-            winLabel.setText(winner + "  Won");
+            if (winner.equals("1") || winner.equals("2")) {
+                winLabel.setText(winner + "  Won");
+            } else if (winner.equals("-1")) {
+                winLabel.setText("1 Gave Up");
+            } else if (winner.equals("-2")) {
+                winLabel.setText("2 Gave Up");
+            }
             winLabel.setFont(new Font("Lucida Console", Font.PLAIN, 20));
             vs.setText("V.S.");
             vs.setFont(new Font("Lucida Console", Font.PLAIN, 30));

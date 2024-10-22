@@ -90,7 +90,6 @@ public class StartGame {
         JButton spread = new JButton("Spread");
         JButton giveUp = new JButton("Give Up");
 
-
         // JPanel that will hold all of the grid buttons in the game is initialized
         JPanel gridPanel = new JPanel();
         gridPanel.setSize(720, 720);
@@ -262,7 +261,7 @@ public class StartGame {
 
         giveUp.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                giveUp(game, mainMenu);
+                giveUp(game);
             }
         });
 
@@ -694,8 +693,10 @@ public class StartGame {
         for (int i = 0; i < mainMenu.gridSize; i++) {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i][j + 1].getBackground()
-                        && buttonGrid[i][j + 1].getBackground() == buttonGrid[i][j + 2].getBackground()
-                        && buttonGrid[i][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
+                        && buttonGrid[i][j + 1].getBackground()
+                        == buttonGrid[i][j + 2].getBackground()
+                        && buttonGrid[i][j + 2].getBackground()
+                        == buttonGrid[i][j + 3].getBackground()
                         && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
                         && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
@@ -721,10 +722,12 @@ public class StartGame {
         for (int j = 0; j < mainMenu.gridSize; j++) {
             for (int i = 0; i < mainMenu.gridSize - 3; i++) {
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j].getBackground()
-                        && buttonGrid[i + 1][j].getBackground() == buttonGrid[i + 2][j].getBackground()
-                        && buttonGrid[i + 2][j].getBackground() == buttonGrid[i + 3][j].getBackground()
-                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    && buttonGrid[i + 1][j].getBackground()
+                    == buttonGrid[i + 2][j].getBackground()
+                    && buttonGrid[i + 2][j].getBackground()
+                    == buttonGrid[i + 3][j].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
@@ -750,21 +753,26 @@ public class StartGame {
 
                 // Condition for an increasing diagonal
                 if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
-                        && buttonGrid[i + 1][j + 1].getBackground() == buttonGrid[i + 2][j + 2].getBackground()
-                        && buttonGrid[i + 2][j + 2].getBackground() == buttonGrid[i + 3][j + 3].getBackground()
-                        && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i][j].getBackground() != Color.WHITE) {
+                    && buttonGrid[i + 1][j + 1].getBackground()
+                    == buttonGrid[i + 2][j + 2].getBackground()
+                    && buttonGrid[i + 2][j + 2].getBackground()
+                    == buttonGrid[i + 3][j + 3].getBackground()
+                    && buttonGrid[i][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i][j + 3].getBackground() == mainMenu.p2Color) {
                         return 2;
                     }
                     // Condition for a decreasing diagonal
-                } else if (buttonGrid[i + 3][j].getBackground() == buttonGrid[i + 2][j + 1].getBackground()
-                        && buttonGrid[i + 2][j + 1].getBackground() == buttonGrid[i + 1][j + 2].getBackground()
-                        && buttonGrid[i + 1][j + 2].getBackground() == buttonGrid[i][j + 3].getBackground()
-                        && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
-                        && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
+                } else if (buttonGrid[i + 3][j].getBackground()
+                    == buttonGrid[i + 2][j + 1].getBackground()
+                    && buttonGrid[i + 2][j + 1].getBackground()
+                    == buttonGrid[i + 1][j + 2].getBackground()
+                    && buttonGrid[i + 1][j + 2].getBackground()
+                    == buttonGrid[i][j + 3].getBackground()
+                    && buttonGrid[i + 3][j].getBackground() != Color.DARK_GRAY
+                    && buttonGrid[i + 3][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i + 3][j].getBackground() == mainMenu.p1Color) {
                         return 1;
                     } else if (buttonGrid[i + 3][j].getBackground() == mainMenu.p2Color) {
@@ -790,7 +798,7 @@ public class StartGame {
         JFrame winFrame = new JFrame();
 
         GameDetails details = new GameDetails(mainMenu, winner, mainMenu.rules,
-                rounds, mainMenu.gridSize);
+            rounds, mainMenu.gridSize);
 
         details.writeToFile();
 
@@ -845,7 +853,14 @@ public class StartGame {
         winFrame.setVisible(true);
     }
 
-    public void giveUp(JFrame game, MainMenu mainMenu) {
+    /**
+     * Void method that is ran after clicking on the give up button.
+     * It opens up a new frame that states the game is discontinued with a button that takes the
+     * user to the Main Menu.
+     * 
+     * @param game  JFrame used to dispose of the previous frame
+     */
+    public void giveUp(JFrame game) {
 
         // JFrame is initialized
         JFrame giveUpNotice = new JFrame();
@@ -853,6 +868,18 @@ public class StartGame {
         // JLabel is initialized
         JLabel discontinueLabel = new JLabel("The game is discontinued.");
         discontinueLabel.setFont(new Font("Arial", Font.BOLD, 25));
+
+        int winner;
+        if (mainMenu.playerTurn) {
+            winner = -1;
+        } else {
+            winner = -2;
+        }
+
+        GameDetails details = new GameDetails(mainMenu, winner, mainMenu.rules,
+            rounds, mainMenu.gridSize);
+
+        details.writeToFile();
 
         // JButton is initialzied
         JButton exitButton = new JButton("Return to Main Menu");

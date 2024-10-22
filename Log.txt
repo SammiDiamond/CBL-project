@@ -73,6 +73,8 @@ JButton background can be used in the same was as the grid[][] would work: 13/10
 - GameHistory: file reader now creates GameDetails objects and stores them in the arrayList for easier access: 17/10/2024 - George Kolios
 - StartGame, CustomizeRules: made the gridSize customizable from the CustmoizeRules class: 18/10/2024 - George Kolios
 - StartGame: added a universal cooldown for all unique player actions for each player: 18/10/2024 - George Kolios
+- StartGame: removed player action button colors: 22/10/2024 - George Kolios
+- GameHistory, StartGame: made sure that GameHistory states whether a game was discontinued and by who: 22/10/2024 - George Kolios
 bug spotted: after p1 placing a color, p2 can not do anything except for placing - s.wu
 bug fixed: changed color condition from Color.BLACK to Color.DARK_GRAY: 17/10/2024 - George Kolios
 bug spotted: after customizing rules the corresponding button are not invisible - s.wu

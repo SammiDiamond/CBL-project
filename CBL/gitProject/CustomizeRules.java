@@ -1264,33 +1264,35 @@ public class CustomizeRules {
 
         // Creation of JLabel for each rule description except for GridSize
         JLabel ruleSwap = new JLabel(
-                "Swap: Cover a given square in the opponent's color previously with your color."
-                        + "(last: permanent; cd: 1 round)");
+                "<html>Swap: Cover a given square in the opponent's color previously with your color."
+                        + "(last: permanent; cd: 1 round)<html>");
         ruleSwap.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleSwap.setFont(new Font("Arial", Font.BOLD, 15));
         ruleSwap.setBounds(50, 50, 200, 200);
 
         JLabel ruleOb = new JLabel(
-                "Obstacle: Set an obstacle in a given square."
+                "<html>Obstacle: Set an obstacle in a given square."
                         + "The square with obstacle in can't be the object of any other items."
-                        + "(last: 4 rounds; cd: 1 round)");
+                        + "(last: 4 rounds; cd: 1 round)<html>");
         ruleOb.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleOb.setFont(new Font("Arial", Font.BOLD, 15));
         ruleOb.setBounds(50, 50, 200, 200);
 
         JLabel ruleElim = new JLabel(
-                "Eliminate: Eliminate the color in a given square. (last: permanent; cd: 1 round)");
+                "<html>Eliminate: Eliminate the color in a given"
+                        + "square. (last: permanent; cd: 1 round)<html>");
         ruleElim.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleElim.setFont(new Font("Arial", Font.BOLD, 15));
         ruleElim.setBounds(50, 50, 200, 200);
 
-        JLabel ruleProtect = new JLabel("Protect: protect a square, "
-                + "the square can't be chosen as an object for any other rules in next round");
+        JLabel ruleProtect = new JLabel("<html>Protect: protect a square, "
+                + "the square can't be \nchosen as an object for any other rules in next round<html>");
         ruleProtect.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleProtect.setFont(new Font("Arial", Font.BOLD, 15));
         ruleProtect.setBounds(50, 50, 200, 200);
 
-        JLabel ruleSpread = new JLabel("Spread: ");
+        JLabel ruleSpread = new JLabel("<html>Spread: a suqare in 8 arounded squares of"
+                + "the selected square will be colored after 2 rounds<html>");
         ruleSpread.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleSpread.setFont(new Font("Arial", Font.BOLD, 15));
         ruleSpread.setBounds(50, 50, 200, 200);

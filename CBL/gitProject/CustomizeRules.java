@@ -1291,7 +1291,7 @@ public class CustomizeRules {
         ruleProtect.setFont(new Font("Arial", Font.BOLD, 15));
         ruleProtect.setBounds(50, 50, 200, 200);
 
-        JLabel ruleSpread = new JLabel("<html>Spread: a suqare in 8 arounded squares of"
+        JLabel ruleSpread = new JLabel("<html>Spread: a square in 8 arounded squares of"
                 + "the selected square will be colored after 2 rounds<html>");
         ruleSpread.setAlignmentX(Component.CENTER_ALIGNMENT);
         ruleSpread.setFont(new Font("Arial", Font.BOLD, 15));

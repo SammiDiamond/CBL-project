@@ -110,6 +110,7 @@ public class MainMenu {
         menuFrame.add(buttonPanel, BorderLayout.CENTER);
 
         // menuFrame details are selected
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
         menuFrame.setSize(1200, 800);
         menuFrame.setLocationRelativeTo(null);
         menuFrame.setLayout(null);

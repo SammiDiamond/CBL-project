@@ -1,4 +1,4 @@
-package CBL.gitProject;
+package CBL.resources;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -33,7 +33,7 @@ public class CustomizeRules {
         // Create variables to pass arguements to StartGame class;
 
         // rule frame is initialized for the rulecustomization
-        JFrame rule = new JFrame();
+        JFrame rule = new JFrame("Customize Rules");
         // rule panel is initialized for the rulecustomization
         JPanel rulePanel = new JPanel();
         rulePanel.setLayout(new FlowLayout());

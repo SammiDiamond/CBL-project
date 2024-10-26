@@ -1,8 +1,8 @@
-package CBL.gitProject;
+package CBL.resources;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.InputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -48,7 +48,7 @@ public class MainMenu {
     MainMenu() {
 
         // Initialization of all components in the menuFrame
-        menuFrame = new JFrame();
+        menuFrame = new JFrame("Main Menu");
         startGame = new JButton("Start Game");
         customizeRules = new JButton("Customize Rules");
         gameHistory = new JButton("Game History");
@@ -88,8 +88,12 @@ public class MainMenu {
         JLabel background = new JLabel();
         background.setBackground(Color.WHITE);
         try {
-            background = new JLabel(new ImageIcon(ImageIO.read(
-                    new File("CBL\\gitProject\\ColorBingo.png"))));
+            InputStream imgStream = getClass().getClassLoader().getResourceAsStream("CBL/resources/ColorBingo.png");
+            if (imgStream == null) {
+                throw new IOException("Image not found");
+            }
+            background = new JLabel(new ImageIcon(ImageIO.read(imgStream)));
+            background.setSize(1200, 800);
             background.setSize(1200, 800);
         } catch (IOException e) {
             e.printStackTrace();

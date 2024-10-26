@@ -1,4 +1,4 @@
-package CBL.gitProject;
+package CBL.resources;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -40,7 +40,7 @@ public class GameHistory {
         mainMenu.gameHistory.setEnabled(false);
 
         // rule frame is initialized for the rulecustomization
-        JFrame history = new JFrame();
+        JFrame history = new JFrame("Game History");
 
         // history frame details are assigned
         history.setSize(1200, 855);
@@ -191,7 +191,7 @@ public class GameHistory {
      */
     void readFromFile() {
         try {
-            File txtFile = new File("CBL\\gitProject\\gameHistory.txt");
+            File txtFile = new File("CBL\\resources\\gameHistory.txt");
             BufferedReader reader = new BufferedReader(new FileReader(txtFile));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -353,8 +353,8 @@ class GameDetails {
      */
     public void writeToFile() {
         try {
-            File txtFile = new File("CBL\\gitProject\\gameHistory.txt");
-            FileWriter writer = new FileWriter("CBL\\gitProject\\gameHistory.txt", true);
+            File txtFile = new File("CBL\\resources\\gameHistory.txt");
+            FileWriter writer = new FileWriter("CBL\\resources\\gameHistory.txt", true);
             writer.write(getWinner()
                     + " " + getRules()
                     + "" + getRounds()

@@ -1,4 +1,4 @@
-package CBL.gitProject;
+package CBL.resources;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -59,7 +59,7 @@ public class StartGame {
         mainMenu.gameHistory.setEnabled(false);
 
         // JFrame is initialized for the gameplay
-        JFrame game = new JFrame();
+        JFrame game = new JFrame("ColorBingo");
 
         // Creation of JLabel that tells whose player's turn it is (initially player 1)
         JLabel turnLabel = new JLabel("Player 1's turn.");
@@ -795,7 +795,7 @@ public class StartGame {
     public static void postWin(int winner, JFrame game, MainMenu mainMenu) {
 
         // JFrame is initialized
-        JFrame winFrame = new JFrame();
+        JFrame winFrame = new JFrame("Winner");
 
         GameDetails details = new GameDetails(mainMenu, winner, mainMenu.rules,
             rounds, mainMenu.gridSize);
@@ -863,7 +863,7 @@ public class StartGame {
     public void giveUp(JFrame game) {
 
         // JFrame is initialized
-        JFrame giveUpNotice = new JFrame();
+        JFrame giveUpNotice = new JFrame("Give Up");
 
         // JLabel is initialized
         JLabel discontinueLabel = new JLabel("The game is discontinued.");

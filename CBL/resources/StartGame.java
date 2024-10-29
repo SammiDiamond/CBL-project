@@ -272,18 +272,6 @@ public class StartGame {
                 buttonGrid[i][j].setBackground(Color.WHITE);
                 buttonGrid[i][j].setBorder(
                     BorderFactory.createLineBorder(Color.DARK_GRAY));
-                // buttonGrid[i][j].setPreferredSize(new Dimension(800 / mainMenu.gridSize,
-                //     800 / mainMenu.gridSize));
-
-                // buttonGrid[i][j].setLocation(150 + i * (800 / mainMenu.gridSize),
-                // j * (800 / mainMenu.gridSize));
-                // buttonGrid[i][j].setBounds(350 + i * (800 / mainMenu.gridSize),
-                //     800 + j * (800 / mainMenu.gridSize),
-                //     800 / mainMenu.gridSize, 800 / mainMenu.gridSize);
-                // i * (800 / mainMenu.gridSize),
-                // j * (800 / mainMenu.gridSize),
-
-
                 buttonGrid[i][j].setEnabled(false);
 
                 // All grid buttons are added to the panel
@@ -752,7 +740,8 @@ public class StartGame {
             for (int j = 0; j < mainMenu.gridSize - 3; j++) {
 
                 // Condition for an increasing diagonal
-                if (buttonGrid[i][j].getBackground() == buttonGrid[i + 1][j + 1].getBackground()
+                if (buttonGrid[i][j].getBackground()
+                    == buttonGrid[i + 1][j + 1].getBackground()
                     && buttonGrid[i + 1][j + 1].getBackground()
                     == buttonGrid[i + 2][j + 2].getBackground()
                     && buttonGrid[i + 2][j + 2].getBackground()
@@ -761,7 +750,7 @@ public class StartGame {
                     && buttonGrid[i][j].getBackground() != Color.WHITE) {
                     if (buttonGrid[i][j].getBackground() == mainMenu.p1Color) {
                         return 1;
-                    } else if (buttonGrid[i][j + 3].getBackground() == mainMenu.p2Color) {
+                    } else if (buttonGrid[i][j].getBackground() == mainMenu.p2Color) {
                         return 2;
                     }
                     // Condition for a decreasing diagonal
